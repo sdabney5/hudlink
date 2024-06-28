@@ -21,10 +21,12 @@ The project follows these key steps:
 
 ## Installation
 To get started, clone the repository and install the required dependencies:
+
 ```bash
 git clone https://github.com/sdabney5/HCVGAPS.git
 cd HCVGAPS
 pip install -r requirements.txt
+```
 
 ## Configuration
 Update the `config.py` file with paths to your data files:
@@ -41,7 +43,7 @@ CONFIG = {
     'verbose': True,
     'display_race_stats': True,
 }
-
+```
 
 ## Usage
 To run the main script and process the data, follow these steps:
@@ -54,10 +56,12 @@ To run the main script and process the data, follow these steps:
    - Use the `cd` command to change the directory to where you cloned the repository. For example:
    ```bash
    cd path/to/HCVGAPS
+   ```
 3. **Run the Main Script:**
    - Once you are in the project directory, type the following command and press Enter
    ```bash
    python main.py
+   ``` 
    - This will execute the main script and process the data according to the configuration specified in config.py.
 
 ## License
