@@ -15,17 +15,12 @@ Thank you for considering contributing to the HCVGAPS project! Here are a few gu
 6. **Push to your fork**: Push your changes to your forked repository.
 7. **Submit a pull request**: Go to the original repository and submit a pull request from your forked branch.
 
-## Code of Conduct
-
-Please adhere to the project's code of conduct in all interactions.
-
 ## Reporting Issues
 
 If you encounter any issues, please open an issue on GitHub with detailed information.
 
 ## Coding Standards
 
-- Follow PEP 8 for Python code style.
 - Write clear and concise commit messages.
 - Ensure your code is well-documented and tested.
 
