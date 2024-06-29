@@ -4,7 +4,7 @@
 This repository contains modules that can be used to calculate voucher gaps at the county level. The code was designed specifically to handle ACS data for Florida, but it can be adjusted easily as needed for other states.
 
 ## Objectives
-- Demonstrate the functionality of the HCV Gap Calculation program.
+- Demonstrate the functionality of the HCV Gap Calculation methodology.
 - Provide a step-by-step guide to loading, processing, and analyzing the data.
 - Visualize the results and provide a summary of the findings.
 
