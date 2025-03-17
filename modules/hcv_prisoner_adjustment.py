@@ -25,7 +25,9 @@ Example:
     adjusted_ipums_df = hcv_prisoner.stratified_selection_for_incarcerated_individuals(ipums_df, incarceration_df)
 """
 
-import pandas as pd
+import logging
+
+logging.info("This is a log message from hcv_prisoner_adjustment.py")
 
 def stratified_selection_for_incarcerated_individuals(eligibility_df, incarceration_df=None,
                                                       prisoners_identified_by_GQTYPE2=False, race_sampling=False, verbose=False):
@@ -72,16 +74,16 @@ def stratified_selection_for_incarcerated_individuals(eligibility_df, incarcerat
             prisoners_count = county_group['REALHHWT'].sum()
             eligibility_df.loc[county_group.index, eligibility_columns] = 0
             if verbose:
-                print(f"County: {county_name}, Removed Prisoner Count: {prisoners_count}")
+                logging.info(f"County: {county_name}, Removed Prisoner Count: {prisoners_count}")
 
         total_prisoners_removed = prisoners_df['REALHHWT'].sum()
         if verbose:
-            print(f"Total Prisoners Marked Ineligible: {total_prisoners_removed}")
+            logging.info(f"Total Prisoners Marked Ineligible: {total_prisoners_removed}")
         return eligibility_df
 
     if incarceration_df is None:
         if verbose:
-            print("No incarceration data provided, returning eligibility_df unchanged.")
+            logging.info("No incarceration data provided, returning eligibility_df unchanged.")
         return eligibility_df
 
     potential_inmates = eligibility_df[
@@ -91,8 +93,8 @@ def stratified_selection_for_incarcerated_individuals(eligibility_df, incarcerat
     ]
 
     if verbose:
-        print("Potential inmates dataframe:")
-        print(potential_inmates.head())
+        logging.info("Potential inmates dataframe:")
+        logging.info(potential_inmates.head())
 
     def select_inmates(target_count, inmates):
         selected_count = 0
@@ -113,11 +115,11 @@ def stratified_selection_for_incarcerated_individuals(eligibility_df, incarcerat
         total_incarc = incar_row['Ttl_Incarc']
 
         if verbose:
-            print(f"Processing county: {county_name}, Total Incarcerated: {total_incarc}, Race Sampling: {race_sampling}")
+            logging.info(f"Processing county: {county_name}, Total Incarcerated: {total_incarc}, Race Sampling: {race_sampling}")
 
         county_inmates = potential_inmates[potential_inmates['County_Name_state_abbr'] == county_name]
         if verbose and county_inmates.empty:
-            print(f"No potential inmates found for county: {county_name}")
+            logging.info(f"No potential inmates found for county: {county_name}")
 
         if race_sampling:
             total_white_incarc = incar_row['Ttl_White_Incarc']
@@ -135,18 +137,18 @@ def stratified_selection_for_incarcerated_individuals(eligibility_df, incarcerat
             if verbose:
                 white_removed_count = sum(eligibility_df.loc[selected_white_indices, 'REALHHWT'])
                 minority_removed_count = sum(eligibility_df.loc[selected_minority_indices, 'REALHHWT'])
-                print(f"County: {county_name}, Adjusted White REALHHWT: {white_removed_count}")
-                print(f"County: {county_name}, Adjusted Minority REALHHWT: {minority_removed_count}")
+                logging.info(f"County: {county_name}, Adjusted White REALHHWT: {white_removed_count}")
+                logging.info(f"County: {county_name}, Adjusted Minority REALHHWT: {minority_removed_count}")
         else:
             selected_indices = select_inmates(total_incarc, county_inmates)
 
             if verbose and len(selected_indices) == 0:
-                print(f"No inmates selected for county: {county_name}, Total Incarcerated: {total_incarc}")
+                logging.info(f"No inmates selected for county: {county_name}, Total Incarcerated: {total_incarc}")
 
             eligibility_df.loc[selected_indices, eligibility_columns] = 0
 
             if verbose:
                 removed_count = sum(eligibility_df.loc[selected_indices, 'REALHHWT'])
-                print(f"County: {county_name}, Adjusted Total REALHHWT: {removed_count}")
+                logging.info(f"County: {county_name}, Adjusted Total REALHHWT: {removed_count}")
 
     return eligibility_df

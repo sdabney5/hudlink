@@ -1,26 +1,26 @@
 """
-This module contains functions for loading various datasets required for Housing Choice Voucher (HCV) analysis.
-Each function performs necessary checks to ensure the data is correctly loaded and contains all required columns.
+This module contains functions for loading required datasets.
+Each function performs checks.
 
 Functions:
 
 1. load_ipums_data(filepath):
-    - Loads IPUMS data from a CSV file and checks for required columns and missing values.
+    - Loads IPUMS data from a CSV and checks for required columns and missing values.
 
 2. load_crosswalk_data(filepath):
-    - Loads MCDC crosswalk data from a CSV file and performs checks to ensure data integrity.
+    - Loads MCDC crosswalk data from a CSV and performs checks.
 
 3. load_income_limits(filepath):
-    - Loads income limits data from a CSV file and ensures it follows the HUD API naming convention.
+    - Loads income limits data from a CSV and checks for the HUD API naming convention.
 
-4. load_incarceration_df(file_path=None):
-    - Loads and validates the incarceration dataset, checking for required columns and missing values.
+4. load_incarceration_df(filepath):
+    - Loads and validates the incarceration dataset from a CSV; checks for required columns and missing values.
 
 5. load_hud_hcv_data(filepath):
-    - Loads HUD Picture of Subsidized Housing data from a CSV file and checks for required columns and missing values.
+    - Loads HUD Picture of Subsidized Housing data from a CSV and checks for required columns and missing values.
 
 Usage:
-To use, import this module and call the desired data loading functions with the appropriate file paths.
+To use, import this module and call the loading functions with the correct file paths.
 
 Example:
     import hcv_data_loading as hcv_data
@@ -34,6 +34,10 @@ Example:
 
 #imports
 import pandas as pd
+import logging
+
+logging.info("This is a log message from hcv_data_loading.py")
+
 
 def load_ipums_data(filepath):
     """
@@ -45,24 +49,22 @@ def load_ipums_data(filepath):
     Returns:
     pd.DataFrame: Loaded IPUMS data (if all checks pass).
 
-    Notes:
-    - Ensure the IPUMS dataset includes the columns 'PUMA', 'COUNTYICP', and all relevant income-related columns ( see required_columns).
-    - Verify that the 'PUMA' column contains values that can be converted to integers.
+    Raises:
+    ValueError: If issues are found.
     """
     try:
         # Load the dataset
         ipums_df = pd.read_csv(filepath)
     except Exception as e:
-        print(f"Error loading file: {e}")
-        return None
+        raise ValueError(f"Error loading IPUMS file: {e}")
 
     # Check for required columns
-    required_columns = ['PUMA', 'COUNTYICP', 'HHINCOME', 'FTOTINC', 'INCWAGE', 'INCSS', 'INCWELFR', 'INCINVST', 'INCRETIR', 'INCSUPP', 'INCEARN', 'INCOTHER', 'NFAMS', 'FAMUNIT', 'CBSERIAL']
+    required_columns = ['PUMA', 'COUNTYICP', 'HHINCOME', 'FTOTINC', 'INCWAGE', 'INCSS', 'INCWELFR', 'HHWT',
+                        'INCINVST', 'INCRETIR', 'INCSUPP', 'INCEARN', 'INCOTHER', 'NFAMS', 'FAMUNIT', 'CBSERIAL']
     missing_columns = [col for col in required_columns if col not in ipums_df.columns]
     if missing_columns:
-        print(f"Missing required columns: {', '.join(missing_columns)}")
-        print("Ensure the IPUMS dataset includes columns named 'PUMA', 'COUNTYICP', and relevant income-related columns.")
-        return None
+        raise ValueError(f"Missing required columns: {', '.join(missing_columns)}. "
+                         "Make sure the IPUMS dataset includes all necessary variables.")
 
     # Check for missing values
     missing_pumas = ipums_df['PUMA'].isnull().sum()
@@ -70,267 +72,251 @@ def load_ipums_data(filepath):
     missing_income_columns = {col: ipums_df[col].isnull().sum() for col in required_columns if ipums_df[col].isnull().sum() > 0}
 
     if missing_pumas > 0 or missing_countyicp > 0 or missing_income_columns:
-        print(f"Number of rows with missing PUMA values: {missing_pumas}")
-        print(f"Number of rows with missing COUNTYICP values: {missing_countyicp}")
+        error_message = [f"Number of rows with missing PUMA values: {missing_pumas}",
+                         f"Number of rows with missing COUNTYICP values: {missing_countyicp}"]
         for col, count in missing_income_columns.items():
-            print(f"Number of rows with missing {col} values: {count}")
-        print("Ensure there are no missing values in the 'PUMA', 'COUNTYICP', and relevant income-related columns.")
-        return None
+            error_message.append(f"Number of rows with missing {col} values: {count}")
+        raise ValueError(" | ".join(error_message) + ". Ensure there are no missing values in columns.")
 
-    # Convert columns to appropriate types
+    # Convert columns to appropriate types and clean string fields
     try:
-        ipums_df['PUMA'] = ipums_df['PUMA'].astype(str)
-        ipums_df['COUNTYICP'] = ipums_df['COUNTYICP'].astype(str)
+        # Convert PUMA and COUNTYICP to strings and strip whitespace
+        ipums_df['PUMA'] = ipums_df['PUMA'].astype(str).str.strip()
+        ipums_df['COUNTYICP'] = ipums_df['COUNTYICP'].astype(str).str.strip()
         ipums_df['HHWT'] = ipums_df['HHWT'].astype(float)
         income_columns = ['HHINCOME', 'FTOTINC', 'INCWAGE', 'INCSS', 'INCWELFR', 'INCINVST', 'INCRETIR', 'INCSUPP', 'INCEARN', 'INCOTHER']
         ipums_df[income_columns] = ipums_df[income_columns].apply(pd.to_numeric, errors='coerce')
     except ValueError as e:
-        print(f"Error converting columns to appropriate types: {e}")
-        return None
+        raise ValueError(f"Error converting columns to appropriate types: {e}")
 
-    print("IPUMS data loaded successfully and all checks passed.")
+    logging.info("IPUMS data loaded successfully and all checks passed.")
     return ipums_df
 
-import pandas as pd
 
-
-
-def load_crosswalk_data(filepath):
+def load_crosswalk_data(filepath_2012, filepath_2022):
     """
-    Load MCDC crosswalk data from a CSV file and perform checks.
+    Load, clean, and normalize the 2012 and 2022 MCDC crosswalk datasets.
 
     Parameters:
-    filepath (str): Path to the CSV file.
+    filepath_2012 (str): Path to the 2012 crosswalk CSV file.
+    filepath_2022 (str): Path to the 2022 crosswalk CSV file.
 
     Returns:
-    pd.DataFrame: Loaded crosswalk data if all checks pass.
+    tuple: Two cleaned and normalized DataFrames (crosswalk_2012_df, crosswalk_2022_df).
+
+    Raises:
+    ValueError: If the files have missing required columns, missing values, or invalid data types.
     """
     try:
-        # Load the dataset
-        crosswalk_df = pd.read_csv(filepath)
+        # Load the datasets
+        crosswalk_2012_df = pd.read_csv(filepath_2012)
+        crosswalk_2022_df = pd.read_csv(filepath_2022)
 
-        # Remove the first row and set the second row as the header
-        crosswalk_df.columns = crosswalk_df.iloc[0]
-        crosswalk_df = crosswalk_df[1:].reset_index(drop=True)
+        # Define required columns
+        required_columns = ['State code', 'PUMA', 'County code', 'State abbr.', 'County_Name', 'allocation factor']
 
-        # Rename columns for consistency
-        if 'PUMA (2022)' in crosswalk_df.columns:
-            crosswalk_df = crosswalk_df.rename(columns={
-                'PUMA (2022)': 'PUMA',
-                'PUMA22 name': 'PUMA_Name',
-                'puma22-to-county allocation factor': 'allocation_factor'
-            })
-        elif 'PUMA (2012)' in crosswalk_df.columns:
-            crosswalk_df = crosswalk_df.rename(columns={
-                'PUMA (2012)': 'PUMA',
-                'PUMA12 name': 'PUMA_Name',
-                'puma12 to county allocation factor': 'allocation_factor'
-            })
+        # Validate 2012 dataset
+        missing_columns_2012 = [col for col in required_columns if col not in crosswalk_2012_df.columns]
+        if missing_columns_2012:
+            raise ValueError(f"2012 crosswalk dataset is missing required columns: {missing_columns_2012}")
+        if crosswalk_2012_df.isnull().any().any():
+            missing_details_2012 = crosswalk_2012_df.isnull().sum()
+            raise ValueError(f"2012 crosswalk dataset contains missing values:\n{missing_details_2012}")
+
+        # Validate 2022 dataset
+        missing_columns_2022 = [col for col in required_columns if col not in crosswalk_2022_df.columns]
+        if missing_columns_2022:
+            raise ValueError(f"2022 crosswalk dataset is missing required columns: {missing_columns_2022}")
+        if crosswalk_2022_df.isnull().any().any():
+            missing_details_2022 = crosswalk_2022_df.isnull().sum()
+            raise ValueError(f"2022 crosswalk dataset contains missing values:\n{missing_details_2022}")
+
+        # Convert columns to appropriate types and clean the PUMA field for 2012 dataset
+        crosswalk_2012_df['PUMA'] = crosswalk_2012_df['PUMA'].astype(str).str.strip().str.lstrip('0')
+        crosswalk_2012_df['allocation factor'] = crosswalk_2012_df['allocation factor'].astype(float)
+
+        # Convert columns to appropriate types and clean the PUMA field for 2022 dataset
+        crosswalk_2022_df['PUMA'] = crosswalk_2022_df['PUMA'].astype(str).str.strip().str.lstrip('0')
+        crosswalk_2022_df['allocation factor'] = crosswalk_2022_df['allocation factor'].astype(float)
+
+        # **STEP 1: Drop Duplicate Rows on (PUMA + County_Name)**
+        crosswalk_2012_df = crosswalk_2012_df.drop_duplicates(subset=['PUMA', 'County_Name'])
+        crosswalk_2022_df = crosswalk_2022_df.drop_duplicates(subset=['PUMA', 'County_Name'])
+
+        # **STEP 2: Normalize Allocation Factors (so they sum to 1 within each PUMA)**
+        crosswalk_2012_df['allocation factor'] /= crosswalk_2012_df.groupby('PUMA')['allocation factor'].transform('sum')
+        crosswalk_2022_df['allocation factor'] /= crosswalk_2022_df.groupby('PUMA')['allocation factor'].transform('sum')
+
+        # New Validation: Check if allocation factors sum to 1 per PUMA
+        sum_check_2012 = crosswalk_2012_df.groupby('PUMA')['allocation factor'].sum().round(6)
+        sum_check_2022 = crosswalk_2022_df.groupby('PUMA')['allocation factor'].sum().round(6)
+
+        # Find any PUMAs that are still not summing to 1
+        incorrect_2012 = sum_check_2012[sum_check_2012 != 1]
+        incorrect_2022 = sum_check_2022[sum_check_2022 != 1]
+
+        if not incorrect_2012.empty:
+            raise ValueError(f"2012 Crosswalk Error: Some PUMAs do not sum to 1 after normalization:\n{incorrect_2012}")
+
+        if not incorrect_2022.empty:
+            raise ValueError(f"2022 Crosswalk Error: Some PUMAs do not sum to 1 after normalization:\n{incorrect_2022}")
+
+        logging.info("Both 2012 and 2022 crosswalk datasets loaded, cleaned, and normalized successfully.")
+        return crosswalk_2012_df, crosswalk_2022_df
 
     except Exception as e:
-        print(f"Error loading file: {e}")
-        return None
-
-    # Define the required columns for each version
-    required_columns = ['PUMA', 'County name', 'PUMA_Name', 'County code', 'allocation_factor']
-
-    # Check for required columns
-    if not all(col in crosswalk_df.columns for col in required_columns):
-        print("Missing required columns. Ensure the crosswalk dataset includes the correct columns.")
-        return None
-
-def load_crosswalk_data(filepath):
-    """
-    Load MCDC crosswalk data from a CSV file and perform checks.
-
-    Parameters:
-    filepath (str): Path to the CSV file.
-
-    Returns:
-    pd.DataFrame: Loaded crosswalk data if all checks pass.
-    """
-    try:
-        # Load the dataset
-        crosswalk_df = pd.read_csv(filepath)
-
-        # Remove the first row and set the second row as the header
-        crosswalk_df.columns = crosswalk_df.iloc[0]
-        crosswalk_df = crosswalk_df[1:].reset_index(drop=True)
-
-        # Rename columns for consistency
-        if 'PUMA (2022)' in crosswalk_df.columns:
-            crosswalk_df = crosswalk_df.rename(columns={
-                'PUMA (2022)': 'PUMA',
-                'PUMA22 name': 'PUMA_Name',
-                'puma22-to-county allocation factor': 'allocation_factor'
-            })
-        elif 'PUMA (2012)' in crosswalk_df.columns:
-            crosswalk_df = crosswalk_df.rename(columns={
-                'PUMA (2012)': 'PUMA',
-                'PUMA12 name': 'PUMA_Name',
-                'puma12-to-county allocation factor': 'allocation_factor'
-            })
-
-    except Exception as e:
-        print(f"Error loading file: {e}")
-        return None
-
-    # Define the required columns for each version
-    required_columns = ['PUMA', 'County name', 'PUMA_Name', 'County code', 'allocation_factor']
-
-    # Check for required columns
-    if not all(col in crosswalk_df.columns for col in required_columns):
-        print("Missing required columns. Ensure the crosswalk dataset includes the correct columns.")
-        return None
-
-    # Check for missing values
-    missing_pumas = crosswalk_df['PUMA'].isnull().sum()
-    missing_county_names = crosswalk_df['County name'].isnull().sum()
-    if missing_pumas > 0 or missing_county_names > 0:
-        print(f"Number of rows with missing PUMA values: {missing_pumas}")
-        print(f"Number of rows with missing County name values: {missing_county_names}")
-        print("Ensure there are no missing values in the 'PUMA' or 'County name' columns.")
-        return None
-
-    # Convert columns to appropriate types
-    try:
-        crosswalk_df['PUMA'] = crosswalk_df['PUMA'].astype(str).str.lstrip('0')  # Remove leading zeros
-        crosswalk_df['County code'] = crosswalk_df['County code'].astype(str)
-        crosswalk_df['allocation_factor'] = crosswalk_df['allocation_factor'].astype(float)
-    except ValueError as e:
-        print(f"Error converting columns to appropriate types: {e}")
-        return None
-
-    print("Crosswalk data loaded successfully and all checks passed.")
-    return crosswalk_df
-
+        raise ValueError(f"Error loading crosswalk data: {e}")
 
 
 def load_income_limits(filepath):
     """
-    Load income limits data from a CSV file and perform checks.
+    Load income limits data from a CSV file and perform validation checks.
 
     Parameters:
     filepath (str): Path to the CSV file.
 
     Returns:
-    pd.DataFrame: Loaded income limits data if all checks pass.
+    pd.DataFrame: Loaded and validated income limits data.
 
-    Notes:
-    - Ensure the income limits dataset follows the HUD API naming convention (e.g., 'il50_p1', 'il30_p1', 'il80_p1').
-    - Ensure that the `County_Name` column values match the format used in the IPUMS dataset (e.g., 'Alachua FL').
+    Raises:
+    ValueError: If required columns are missing, data contains missing values, or invalid data types are found.
     """
     try:
         # Load the dataset
         income_limits_df = pd.read_csv(filepath)
-    except Exception as e:
-        print(f"Error loading file: {e}")
-        return None
 
-    # Check for required columns
-    required_columns = ['County_Name'] + [f'il{threshold}_p{size}' for threshold in [30, 50, 80] for size in range(1, 9)]
-    missing_columns = [col for col in required_columns if col not in income_limits_df.columns]
-    if missing_columns:
-        print(f"Missing required columns: {', '.join(missing_columns)}")
-        print("Ensure the income limits dataset includes the County_Name column and follows the HUD API naming convention for income limit columns.")
-        return None
+        # Define required columns
+        required_columns = ['County_Name'] + [f'il{threshold}_p{size}' for threshold in [30, 50, 80] for size in range(1, 9)]
 
-    # Check for missing values
-    missing_county_names = income_limits_df['County_Name'].isnull().sum()
-    if missing_county_names > 0:
-        print(f"Number of rows with missing County_Name values: {missing_county_names}")
-        return None
+        # Check for missing columns
+        missing_columns = [col for col in required_columns if col not in income_limits_df.columns]
+        if missing_columns:
+            raise ValueError(f"Income limits data is missing required columns: {missing_columns}")
 
-    for threshold in [30, 50, 80]:
-        for size in range(1, 9):
-            col_name = f'il{threshold}_p{size}'
-            missing_values = income_limits_df[col_name].isnull().sum()
-            if missing_values > 0:
-                print(f"Number of rows with missing values in {col_name}: {missing_values}")
-                return None
-    try:
+        # Check for missing values
+        missing_county_names = income_limits_df['County_Name'].isnull().sum()
+        if missing_county_names > 0:
+            raise ValueError(f"Income limits data contains {missing_county_names} rows with missing 'County_Name' values.")
+
+        missing_values_summary = {
+            col: income_limits_df[col].isnull().sum()
+            for col in required_columns
+            if income_limits_df[col].isnull().sum() > 0
+        }
+        if missing_values_summary:
+            missing_info = "\n".join([f"{col}: {count} missing values" for col, count in missing_values_summary.items()])
+            raise ValueError(f"Income limits data contains missing values in the following columns:\n{missing_info}")
+
+        # Convert columns to numeric
         income_limit_columns = [f'il{threshold}_p{size}' for threshold in [30, 50, 80] for size in range(1, 9)]
         income_limits_df[income_limit_columns] = income_limits_df[income_limit_columns].apply(pd.to_numeric, errors='coerce')
-    except ValueError as e:
-        print(f"Error converting columns to appropriate types: {e}")
-        return None
 
-    print("Income limits data loaded successfully and all checks passed.")
+        # Re-check for any non-numeric values
+        invalid_values = income_limits_df[income_limit_columns].isnull().sum()
+        if invalid_values.sum() > 0:
+            invalid_columns = [col for col in income_limit_columns if income_limits_df[col].isnull().sum() > 0]
+            raise ValueError(f"Income limits data contains invalid or non-numeric values in the following columns: {', '.join(invalid_columns)}")
+
+    except Exception as e:
+        raise ValueError(f"Error loading or validating income limits data from {filepath}: {e}")
+
+    logging.info("Income limits data loaded successfully and all checks passed.")
     return income_limits_df
 
-def load_incarceration_df(file_path=None):
-    if file_path is None:
-        print("No incarceration data provided.")
+def load_incarceration_df(filepath=None):
+    """
+    Load incarceration data from a CSV file and validate its structure.
+
+    Parameters:
+    filepath (str or None): Path to the incarceration CSV file. If None, function exits gracefully.
+
+    Returns:
+    pd.DataFrame or None: Loaded and validated incarceration data, or None if no file is provided.
+    """
+    if filepath is None:
+        logging.info("No incarceration data provided.")
         return None
 
     try:
-        incarceration_df = pd.read_csv(file_path)
+        incarceration_df = pd.read_csv(filepath)
     except Exception as e:
-        print(f"Error loading file: {e}")
+        logging.info(f"Error loading file: {e}")
         return None
 
     required_columns = ['County_Name', 'Ttl_Incarc']
     race_columns = ['Ttl_Minority_Incarc', 'Ttl_White_Incarc']
 
+    # Check for required columns
     missing_required_columns = [col for col in required_columns if col not in incarceration_df.columns]
     if missing_required_columns:
-        print(f"Missing required columns: {', '.join(missing_required_columns)}. Please ensure the file has these columns.")
+        logging.info(f"Missing required columns: {', '.join(missing_required_columns)}. Please ensure the file has these columns.")
         return None
 
     missing_race_columns = [col for col in race_columns if col not in incarceration_df.columns]
     if missing_race_columns:
-        print(f"Attention: Missing columns {', '.join(missing_race_columns)}. Race sampling will not be available.")
+        logging.info(f"Attention: Missing columns {', '.join(missing_race_columns)}. Race sampling will not be available.")
 
-    # Remove commas and convert columns to integers
-    try:
-        incarceration_df['Ttl_Incarc'] = incarceration_df['Ttl_Incarc'].str.replace(',', '').astype(int)
-        if 'Ttl_Minority_Incarc' in incarceration_df.columns:
-            incarceration_df['Ttl_Minority_Incarc'] = incarceration_df['Ttl_Minority_Incarc'].str.replace(',', '').astype(int)
-        if 'Ttl_White_Incarc' in incarceration_df.columns:
-            incarceration_df['Ttl_White_Incarc'] = incarceration_df['Ttl_White_Incarc'].str.replace(',', '').astype(int)
-    except ValueError as e:
-        print(f"Error converting columns to integers: {e}")
-        return None
+    # Convert numeric columns, handling errors and missing values
+    for col in required_columns + race_columns:
+        if col in incarceration_df.columns:
+            incarceration_df[col] = pd.to_numeric(incarceration_df[col], errors='coerce').fillna(0).astype(int)
 
-    print("Incarceration data loaded successfully.")
+    logging.info("Incarceration data loaded successfully.")
     return incarceration_df
 
 def load_hud_hcv_data(filepath):
     """
-    Load HUD Picture of Subsidized Housing data from a CSV file and perform checks.
+    Load and validate HUD Picture of Subsidized Housing data from a CSV file.
 
     Parameters:
-    filepath (str): Path to the CSV file.
+    ----------
+    filepath : str
+        Path to the HUD HCV data CSV file.
 
     Returns:
-    pd.DataFrame: Loaded HUD HCV data if all checks pass.
+    -------
+    pd.DataFrame
+        Loaded and validated HUD HCV data.
+
+    Raises:
+    -------
+    ValueError: If the file is missing required columns, contains missing values, or has invalid data types.
 
     Notes:
-    - Ensure the HUD dataset includes columns named 'Name', 'Subsidized units available',
-      '% Minority', and '% White Non-Hispanic'.
+    ------
+    - Required columns: 'Name', 'Subsidized units available', '% Minority', '%White Non-Hispanic'
     """
     try:
-        # Load the huc hcv dataset
+        # Load the dataset
         hud_hcv_df = pd.read_csv(filepath)
     except Exception as e:
-        print(f"Error loading file: {e}")
-        return None
+        raise ValueError(f"Error loading HUD HCV data from {filepath}: {e}")
+
+    # Define required columns
+    required_columns = ['Name', 'Subsidized units available', '% Minority', '%White Non-Hispanic']
 
     # Check for required columns
-    required_columns = ['Name', 'Subsidized units available', '% Minority', '%White Non-Hispanic']
     missing_columns = [col for col in required_columns if col not in hud_hcv_df.columns]
     if missing_columns:
-        print(f"Missing required columns: {', '.join(missing_columns)}")
-        print("Ensure the HUD dataset includes columns named 'Name', 'Subsidized units available', '% Minority', and '%White Non-Hispanic'.")
-        return None
+        raise ValueError(f"HUD HCV data is missing required columns: {', '.join(missing_columns)}. Ensure the file includes these columns.")
 
-    # Check for missing values
-    missing_values = {col: hud_hcv_df[col].isnull().sum() for col in required_columns if hud_hcv_df[col].isnull().sum() > 0}
-    if missing_values:
-        for col, count in missing_values.items():
-            print(f"Number of rows with missing {col} values: {count}")
-        return None
+    # Check for missing values in required columns
+    for col in required_columns:
+        missing_values = hud_hcv_df[col].isnull().sum()
+        if missing_values > 0:
+            raise ValueError(f"HUD HCV data contains {missing_values} missing values in the '{col}' column. Please address these issues.")
 
-    print("HUD HCV data loaded successfully and all checks passed.")
+    # Validate numerical columns
+    try:
+        hud_hcv_df['Subsidized units available'] = pd.to_numeric(hud_hcv_df['Subsidized units available'], errors='coerce')
+        hud_hcv_df['% Minority'] = pd.to_numeric(hud_hcv_df['% Minority'], errors='coerce')
+        hud_hcv_df['%White Non-Hispanic'] = pd.to_numeric(hud_hcv_df['%White Non-Hispanic'], errors='coerce')
+
+        # Check for any resulting NaN values after conversion
+        if hud_hcv_df[['Subsidized units available', '% Minority', '%White Non-Hispanic']].isnull().any().any():
+            raise ValueError("HUD HCV data contains invalid values in numerical columns ('Subsidized units available', '% Minority', '%White Non-Hispanic').")
+    except ValueError as e:
+        raise ValueError(f"Error validating numerical data types in HUD HCV dataset: {e}")
+
+    logging.info("HUD HCV data loaded successfully and all checks passed.")
     return hud_hcv_df
-

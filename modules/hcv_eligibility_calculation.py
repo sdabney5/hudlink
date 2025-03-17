@@ -23,9 +23,12 @@ Example:
 
     ipums_df = hcv_eligibility.calculate_hcv_eligibility(ipums_df, income_limits_df)
 """
-
 #imports
 import pandas as pd
+import logging
+
+logging.info("This is a log message from hcv_eligibility_calculation.py")
+
 
 def calculate_hcv_eligibility(df, income_limits_df):
     """
@@ -65,7 +68,7 @@ def calculate_hcv_eligibility(df, income_limits_df):
     # Check for missing County_Name_Alt values
     missing_counties = df.loc[~df['County_Name_Alt'].isin(income_limits_df['County_Name']), 'County_Name_Alt'].unique()
     if len(missing_counties) > 0:
-        print(f"Warning: The following counties are missing in the income limits data: {', '.join(missing_counties)}")
+        logging.warning(f"Warning: The following counties are missing in the income limits data: {', '.join(missing_counties)}")
 
     # Merge dataframes on the 'County_Name_Alt' column to get the income limits for each household
     merged_df = df.merge(income_limits_df, left_on='County_Name_Alt', right_on='County_Name', how='left')

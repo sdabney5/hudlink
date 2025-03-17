@@ -27,6 +27,8 @@ Example:
 
 #imports
 import pandas as pd
+import logging
+logging.info("This is a log message from hcv_family_feature_engineering")
 
 
 def family_feature_engineering(df):
@@ -59,14 +61,27 @@ def family_feature_engineering(df):
     """
     # Helper function to categorize race based on head of household
     def categorize_race_by_head(relate_codes, race_codes):
-        race = None
-        if 1 in relate_codes:
-            race = race_codes[relate_codes.index(1)]
-        elif 2 in relate_codes:
-            race = race_codes[relate_codes.index(2)]
-        else:
-            race = race_codes[0]
-
+        """
+        Determines the household's race based on the head of household.
+        If no head (RELATE == 1) is found, it uses the spouse (RELATE == 2).
+        If neither are found, it defaults to the first person's race.
+        """
+    
+        # Find the race of the head of household (RELATE == 1)
+        for relate, race in zip(relate_codes, race_codes):
+            if relate == 1:  # Head of Household
+                return categorize_race(race)  # Function to categorize race
+    
+        # If no head of household, check for spouse (RELATE == 2)
+        for relate, race in zip(relate_codes, race_codes):
+            if relate == 2:  # Spouse
+                return categorize_race(race)
+    
+        # If no head or spouse, return the first available race
+        return categorize_race(race_codes[0])
+    
+    # Helper function to categorize race labels
+    def categorize_race(race):
         if race == 1:
             return "White"
         elif race == 2:
@@ -79,7 +94,7 @@ def family_feature_engineering(df):
             return "Mixed Race"
         else:
             return "Other_Race"
-
+    
     # Education categorization function
     def categorize_education(educ_codes):
         if educ_codes.max() in range(2, 63):
@@ -92,52 +107,53 @@ def family_feature_engineering(df):
             return "Master's & Above"
         else:
             return "No Schooling"
-
+    
     # Dictionary for groupby aggregation
     aggregation = {
-        'AGE': [
-            ('SENIOR_HOUSEHOLD', lambda x: 1 if (x > 64).any() else 0),
-            ('NUM_CHILDREN', lambda x: (x < 18).sum())
-        ],
-        'VETSTAT': [('VET_HOUSEHOLD', lambda x: 1 if (x == 2).any() else 0)],
-        'EDUCD': [
-            ('HIGHEST_EDUC', categorize_education),
-            ('HS_COMPLETE', lambda x: 1 if (x >= 62).any() else 0),
-            ('BACHELOR_COMPLETE', lambda x: 1 if x.eq(101).any() else 0),
-            ('GRAD_SCHOOL', lambda x: 1 if (x > 101).any() else 0),
-            ('TWO_COLLEGE_GRADS', lambda x: 1 if x[x.eq(101)].count() >= 2 else 0)
-        ],
-        'HHTYPE': [
-            ('MARRIED_FAMILY_HH', lambda x: 1 if (x == 1).any() else 0),
-            ('SINGLE_PARENT_HH', lambda x: 1 if (x == 2).any() or (x == 3).any() else 0)
-        ],
-        'EMPSTAT': [('EMPLOYED', lambda x: 1 if (x == 1).any() else 0)],
+     'AGE': [
+        ('SENIOR_HOUSEHOLD', lambda x: 1 if (x > 64).any() else 0),
+        ('NUM_CHILDREN', lambda x: (x < 18).sum())
+     ],
+     'VETSTAT': [('VET_HOUSEHOLD', lambda x: 1 if (x == 2).any() else 0)],
+     'EDUCD': [
+        ('HIGHEST_EDUC', categorize_education),
+        ('HS_COMPLETE', lambda x: 1 if (x >= 62).any() else 0),
+        ('BACHELOR_COMPLETE', lambda x: 1 if x.eq(101).any() else 0),
+       ('GRAD_SCHOOL', lambda x: 1 if (x > 101).any() else 0),
+       ('TWO_COLLEGE_GRADS', lambda x: 1 if x[x.eq(101)].count() >= 2 else 0)
+     ],
+     'HHTYPE': [
+        ('MARRIED_FAMILY_HH', lambda x: 1 if (x == 1).any() else 0),
+        ('SINGLE_PARENT_HH', lambda x: 1 if (x == 2).any() or (x == 3).any() else 0)
+     ],
+     'EMPSTAT': [('EMPLOYED', lambda x: 1 if (x == 1).any() else 0)],
         'RACE': [('HOUSEHOLD_RACE', lambda x: categorize_race_by_head(x.tolist(), x.tolist()))],
         'RELATE': [('RELATE_CODES', lambda x: x.tolist())]
     }
-
+    
     # Perform a single groupby operation
-    print('Aggregating Family Features....')
+    logging.info('Aggregating Family Features....')
     family_features = df.groupby('FAMILYNUMBER').agg(aggregation)
-
+    
     # Flatten the multi-index columns
     family_features.columns = [col[1] for col in family_features.columns.values]
-
+    
     # Add binary columns for each race category
     family_features['White_HH'] = family_features['HOUSEHOLD_RACE'] == 'White'
     family_features['Black_HH'] = family_features['HOUSEHOLD_RACE'] == 'Black'
     family_features['Asian_HH'] = family_features['HOUSEHOLD_RACE'] == 'Asian'
     family_features['Mixed_Race_HH'] = family_features['HOUSEHOLD_RACE'] == 'Mixed Race'
     family_features['Other_Race_HH'] = family_features['HOUSEHOLD_RACE'] == 'Other_Race'
-
-    # Drop the RELATE_CODES column that used for categorization
+    
+    # Drop the RELATE_CODES column that was used for categorization
     family_features.drop(columns=['RELATE_CODES'], inplace=True)
-
+    
     # Merge the aggregated features back to the main df
-    print('Merging aggregated features back to main df')
+    logging.info('Merging aggregated features back to main df')
     df = df.merge(family_features, on='FAMILYNUMBER', how='left')
-
+    
     return df
+
 
 #Function to condense families/households to a single row
 def flatten_households_to_single_rows(df):
@@ -204,12 +220,12 @@ def flatten_households_to_single_rows(df):
     cols_sum_value = ['UHRSWORK']
 
     # Group by FAMILYNUMBER and aggregate
-    aggregation = {col: 'first' for col in cols_first_value if col in df.columns}
-    aggregation.update({col: 'sum' for col in cols_sum_value if col in df.columns})
+    aggregation = {col: 'first' for col in df.columns.intersection(cols_first_value)}
+    aggregation.update({col: 'sum' for col in df.columns.intersection(cols_sum_value)})
 
     # Capture extra columns not specified
     all_columns = set(df.columns)
-    specified_columns = set(cols_first_value + cols_sum_value)
+    specified_columns = set(df.columns.intersection(cols_first_value)) | set(df.columns.intersection(cols_sum_value))
     extra_columns = all_columns - specified_columns
 
     # Add extra columns to the aggregation dictionary with 'first'
@@ -218,12 +234,15 @@ def flatten_households_to_single_rows(df):
 
     # Print message if there are extra columns
     if extra_columns:
-        print("FYI: The following extra columns were found and their first values were taken for each household:")
-        print(", ".join(extra_columns))
+        logging.info("FYI: The following extra columns were found and their first values were taken for each household:")
+        logging.info(", ".join(extra_columns))
 
     # Group, aggregate, then put FAMILYNUMBER back as a column and reset the index
     condensed_df = df.groupby('FAMILYNUMBER').agg(aggregation)
     condensed_df['FAMILYNUMBER'] = condensed_df.index
     condensed_df.reset_index(drop=True, inplace=True)
+        
+    # **Ensure each FAMILYNUMBER is unique after flattening**
+    assert condensed_df['FAMILYNUMBER'].is_unique, "Error: Duplicate FAMILYNUMBER values exist after flattening!"
 
     return condensed_df

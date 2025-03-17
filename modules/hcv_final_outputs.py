@@ -36,6 +36,9 @@ Example:
 # Imports
 import os
 import pandas as pd
+import logging
+
+logging.info("This is a log message from hcv_final_outputs.py")
 
 def extract_state_code_and_year(ipums_df):
     """
@@ -113,13 +116,15 @@ def save_eligibility_dataframe(eligibility_df, output_dir):
 
     try:
         eligibility_df.to_csv(file_path, index=False)
-        print(f"Unaggregated Eligibility dataframe saved successfully to {file_path}")
+        logging.info(f"Unaggregated Eligibility dataframe saved successfully to {file_path}")
     except Exception as e:
-        print(f"Error saving file: {e}")
+        logging.error(f"Error saving file: {e}")
 
 def calculate_voucher_gap_and_save(ipums_eligibility_df, hud_hcv_df, output_dir, display_race_stats=False):
     """
-    Calculates the voucher gap and HCV allocation rate for each county and optionally displays race stats.
+    Calculates the voucher gap and HCV allocation rate for each county, including additional renter-only
+    eligibility counts, renter-specific voucher gap, and race-specific renter eligibility percentages. Also,
+    calculates the number of minority subsidy recipients based on HUD data.
 
     Parameters:
     ----------
@@ -134,21 +139,15 @@ def calculate_voucher_gap_and_save(ipums_eligibility_df, hud_hcv_df, output_dir,
 
     Returns:
     -------
-    None
-
-    Notes:
-    -----
-    - Summarizes the eligibility data by county and merges it with HUD HCV data.
-    - Calculates the voucher gap and HCV allocation rate at each threshold.
-    - Optionally adds race statistics to the summary.
-    - Saves the summary dataframe to a CSV file named with the state name and year.
+    pd.DataFrame
+        The summary dataframe with calculated voucher gaps, allocation rates, and renter-specific statistics.
     """
     def add_race_stats(df, hud_hcv_df):
         # Merge with HUD HCV data to get race stats
         df = df.merge(hud_hcv_df[['Name', '% Minority', '%White Non-Hispanic']],
                       left_on='County_Name', right_on='Name', how='left')
 
-        # Add weighted counts for minorities and whites
+        # Add weighted counts for minorities and whites (for all eligible households)
         df['Weighted_Minority_Count_30%'] = ipums_eligibility_df.groupby('County_Name')['Weighted_Minority_HH_Eligibility_Count_30%'].sum().values
         df['Weighted_White_Count_30%'] = ipums_eligibility_df.groupby('County_Name')['Weighted_White_HH_Eligibility_Count_30%'].sum().values
 
@@ -158,7 +157,7 @@ def calculate_voucher_gap_and_save(ipums_eligibility_df, hud_hcv_df, output_dir,
         df['Weighted_Minority_Count_80%'] = ipums_eligibility_df.groupby('County_Name')['Weighted_Minority_HH_Eligibility_Count_80%'].sum().values
         df['Weighted_White_Count_80%'] = ipums_eligibility_df.groupby('County_Name')['Weighted_White_HH_Eligibility_Count_80%'].sum().values
 
-        # Calculate percentages of eligible households that are minority and white at each threshold
+        # Calculate percentages for overall eligible households
         df['% Eligible Minority at 30%'] = (df['Weighted_Minority_Count_30%'] / df['Weighted_Eligibility_Count_30%']) * 100
         df['% Eligible White at 30%'] = (df['Weighted_White_Count_30%'] / df['Weighted_Eligibility_Count_30%']) * 100
 
@@ -170,26 +169,94 @@ def calculate_voucher_gap_and_save(ipums_eligibility_df, hud_hcv_df, output_dir,
 
         return df
 
-    # Summarize the eligibility data by county
+    # Summarize overall eligibility data by county
     summary_df = ipums_eligibility_df.groupby('County_Name').agg({
         'Weighted_Eligibility_Count_30%': 'sum',
         'Weighted_Eligibility_Count_50%': 'sum',
         'Weighted_Eligibility_Count_80%': 'sum'
     }).reset_index()
 
-    # Merge with HUD HCV data to get the number of subsidized units available
-    summary_df = summary_df.merge(hud_hcv_df[['Name', 'Subsidized units available']],
-                                  left_on='County_Name', right_on='Name', how='left')
+    # --- Compute renter-only aggregates ---
+    renters_df = ipums_eligibility_df[ipums_eligibility_df['OWNERSHP'] == 2]
 
-    # Calculate the voucher gap at each threshold
+    renter_elig = renters_df.groupby('County_Name').agg({
+        'Weighted_Eligibility_Count_30%': 'sum',
+        'Weighted_Eligibility_Count_50%': 'sum',
+        'Weighted_Eligibility_Count_80%': 'sum'
+    }).rename(columns={
+        'Weighted_Eligibility_Count_30%': 'Weighted_Renter_Eligibility_Count_30%',
+        'Weighted_Eligibility_Count_50%': 'Weighted_Renter_Eligibility_Count_50%',
+        'Weighted_Eligibility_Count_80%': 'Weighted_Renter_Eligibility_Count_80%'
+    }).reset_index()
+
+    renter_minority = renters_df.groupby('County_Name').agg({
+        'Weighted_Minority_HH_Eligibility_Count_30%': 'sum',
+        'Weighted_Minority_HH_Eligibility_Count_50%': 'sum',
+        'Weighted_Minority_HH_Eligibility_Count_80%': 'sum'
+    }).rename(columns={
+        'Weighted_Minority_HH_Eligibility_Count_30%': 'Weighted_Renter_Minority_Count_30%',
+        'Weighted_Minority_HH_Eligibility_Count_50%': 'Weighted_Renter_Minority_Count_50%',
+        'Weighted_Minority_HH_Eligibility_Count_80%': 'Weighted_Renter_Minority_Count_80%'
+    }).reset_index()
+
+    renter_white = renters_df.groupby('County_Name').agg({
+        'Weighted_White_HH_Eligibility_Count_30%': 'sum',
+        'Weighted_White_HH_Eligibility_Count_50%': 'sum',
+        'Weighted_White_HH_Eligibility_Count_80%': 'sum'
+    }).rename(columns={
+        'Weighted_White_HH_Eligibility_Count_30%': 'Weighted_Renter_White_Count_30%',
+        'Weighted_White_HH_Eligibility_Count_50%': 'Weighted_Renter_White_Count_50%',
+        'Weighted_White_HH_Eligibility_Count_80%': 'Weighted_Renter_White_Count_80%'
+    }).reset_index()
+
+    # Merge the renter-only aggregates into the summary_df
+    summary_df = summary_df.merge(renter_elig, on='County_Name', how='left')
+    summary_df = summary_df.merge(renter_minority, on='County_Name', how='left')
+    summary_df = summary_df.merge(renter_white, on='County_Name', how='left')
+
+    # Calculate renter percentages (only among renter-eligible households)
+    summary_df['% Eligible Minority (Renters) at 30%'] = (summary_df['Weighted_Renter_Minority_Count_30%'] / summary_df['Weighted_Renter_Eligibility_Count_30%']) * 100
+    summary_df['% Eligible White (Renters) at 30%'] = (summary_df['Weighted_Renter_White_Count_30%'] / summary_df['Weighted_Renter_Eligibility_Count_30%']) * 100
+
+    summary_df['% Eligible Minority (Renters) at 50%'] = (summary_df['Weighted_Renter_Minority_Count_50%'] / summary_df['Weighted_Renter_Eligibility_Count_50%']) * 100
+    summary_df['% Eligible White (Renters) at 50%'] = (summary_df['Weighted_Renter_White_Count_50%'] / summary_df['Weighted_Renter_Eligibility_Count_50%']) * 100
+
+    summary_df['% Eligible Minority (Renters) at 80%'] = (summary_df['Weighted_Renter_Minority_Count_80%'] / summary_df['Weighted_Renter_Eligibility_Count_80%']) * 100
+    summary_df['% Eligible White (Renters) at 80%'] = (summary_df['Weighted_Renter_White_Count_80%'] / summary_df['Weighted_Renter_Eligibility_Count_80%']) * 100
+
+    # --- Normalize County Names for merging with HUD data ---
+    summary_df['County_Name_Normalized'] = summary_df['County_Name'] \
+        .str.lower().str.strip().str.replace(r"[.'’]", "", regex=True)
+    hud_hcv_df['Name_Normalized'] = hud_hcv_df['Name'] \
+        .str.lower().str.strip().str.replace(r"[.'’]", "", regex=True)
+
+    # Merge summary_df with HUD data using the normalized columns
+    summary_df = summary_df.merge(
+        hud_hcv_df[['Name_Normalized', 'Subsidized units available', '% Minority']],
+        left_on='County_Name_Normalized', right_on='Name_Normalized', how='left'
+    )
+
+    # Drop temporary normalized columns (retain original County_Name)
+    summary_df.drop(columns=['Name_Normalized', 'County_Name_Normalized'], inplace=True)
+
+    # Calculate the overall voucher gap at each threshold
     summary_df['Voucher_Gap_30%'] = summary_df['Weighted_Eligibility_Count_30%'] - summary_df['Subsidized units available']
     summary_df['Voucher_Gap_50%'] = summary_df['Weighted_Eligibility_Count_50%'] - summary_df['Subsidized units available']
     summary_df['Voucher_Gap_80%'] = summary_df['Weighted_Eligibility_Count_80%'] - summary_df['Subsidized units available']
 
-    # Calculate the HCV allocation rate at each threshold
+    # Calculate the renter-specific voucher gap at each threshold
+    summary_df['Renter_Voucher_Gap_30%'] = summary_df['Weighted_Renter_Eligibility_Count_30%'] - summary_df['Subsidized units available']
+    summary_df['Renter_Voucher_Gap_50%'] = summary_df['Weighted_Renter_Eligibility_Count_50%'] - summary_df['Subsidized units available']
+    summary_df['Renter_Voucher_Gap_80%'] = summary_df['Weighted_Renter_Eligibility_Count_80%'] - summary_df['Subsidized units available']
+
+    # Calculate the HCV allocation rate at each threshold (overall)
     summary_df['HCV_Allocation_Rate_30%'] = (summary_df['Subsidized units available'] / summary_df['Weighted_Eligibility_Count_30%']) * 100
     summary_df['HCV_Allocation_Rate_50%'] = (summary_df['Subsidized units available'] / summary_df['Weighted_Eligibility_Count_50%']) * 100
     summary_df['HCV_Allocation_Rate_80%'] = (summary_df['Subsidized units available'] / summary_df['Weighted_Eligibility_Count_80%']) * 100
+
+    # Calculate the number of minority subsidy recipients per county.
+    # '% Minority' in hud_hcv_df is assumed to be a whole number (e.g., 89 for 89%).
+    summary_df['Minority_Subsidy_Recipients'] = summary_df['Subsidized units available'] * (summary_df['% Minority'] / 100)
 
     if display_race_stats:
         summary_df = add_race_stats(summary_df, hud_hcv_df)
@@ -200,17 +267,15 @@ def calculate_voucher_gap_and_save(ipums_eligibility_df, hud_hcv_df, output_dir,
         file_name = f"{state_name}_{year}_HCV_Gap_Summary_Table_with_race_stats.csv"
     else:
         file_name = f"{state_name}_{year}_HCV_Gap_Summary_Table.csv"
-
     file_path = os.path.join(output_dir, file_name)
     try:
         summary_df.to_csv(file_path, index=False)
-        print(f"HCV Gap Summary dataframe saved successfully to {file_path}")
+        logging.info(f"HCV Gap Summary dataframe saved successfully to {file_path}")
     except Exception as e:
-        print(f"Error saving file: {e}")
+        logging.error(f"Error saving file: {e}")
 
     # Save the eligibility dataframe
     save_eligibility_dataframe(ipums_eligibility_df, output_dir)
 
-    print(f"Finished processing {state_name}, {year}")
+    logging.info(f"Finished processing {state_name}, {year}")
     return summary_df
-
