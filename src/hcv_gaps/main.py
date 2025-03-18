@@ -19,24 +19,24 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-from config import CONFIG
-from hcv_data_loading import (
+from .config import CONFIG
+from .hcv_data_loading import (
     load_ipums_data,
     load_crosswalk_data,
     load_income_limits,
     load_incarceration_df,
     load_hud_hcv_data
 )
-from hcv_fill_counties_and_allocation import fill_missing_county_values
-from hcv_income_cleaning_and_household_splitting import (
+from .hcv_fill_counties_and_allocation import fill_missing_county_values
+from .hcv_income_cleaning_and_household_splitting import (
     clean_single_family_income_data,
     split_multifamily_households,
     process_multi_family_income_data
 )
-from hcv_family_feature_engineering import family_feature_engineering, flatten_households_to_single_rows
-from hcv_eligibility_calculation import calculate_hcv_eligibility
-from hcv_prisoner_adjustment import stratified_selection_for_incarcerated_individuals
-from hcv_final_outputs import calculate_voucher_gap_and_save
+from .hcv_family_feature_engineering import family_feature_engineering, flatten_households_to_single_rows
+from .hcv_eligibility_calculation import calculate_hcv_eligibility
+from .hcv_prisoner_adjustment import stratified_selection_for_incarcerated_individuals
+from .hcv_final_outputs import calculate_voucher_gap_and_save
 
 def process_hcv_eligibility(config):
     """
@@ -83,7 +83,6 @@ def process_hcv_eligibility(config):
         exit(1)
     logging.info("Loaded HUD HCV data")
     
-    
     # Process Counties and Allocation
     ipums_df = fill_missing_county_values(ipums_df, crosswalk_2012_df, crosswalk_2022_df)
     logging.info("Complete: processed missing county values")
@@ -113,10 +112,13 @@ def process_hcv_eligibility(config):
     logging.info("Complete: calculate HCV eligibility")
 
     # Adjust for Prisoners
-    ipums_df = stratified_selection_for_incarcerated_individuals(ipums_df, incarceration_df,
-                                                            config['prisoners_identified_by_GQTYPE2'],
-                                                            config['race_sampling'],
-                                                            config['verbose'])
+    ipums_df = stratified_selection_for_incarcerated_individuals(
+        ipums_df, 
+        incarceration_df,
+        config['prisoners_identified_by_GQTYPE2'],
+        config['race_sampling'],
+        config['verbose']
+    )
     logging.info("Complete: adjusted for prisoners")
 
     # Final Outputs
