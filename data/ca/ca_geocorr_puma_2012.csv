@@ -1,0 +1,959 @@
+State code,PUMA,County code,State abbr.,County_Name,allocation factor
+6,101,6001,CA,Alameda CA,1.0
+6,102,6001,CA,Alameda CA,1.0
+6,103,6001,CA,Alameda CA,1.0
+6,1302,6001,CA,Alameda CA,1.0
+6,1303,6001,CA,Alameda CA,1.0
+6,1304,6001,CA,Alameda CA,1.0
+6,101,6001,CA,Alameda CA,1.0
+6,102,6001,CA,Alameda CA,1.0
+6,103,6001,CA,Alameda CA,1.0
+6,105,6001,CA,Alameda CA,1.0
+6,101,6001,CA,Alameda CA,1.0
+6,102,6001,CA,Alameda CA,1.0
+6,103,6001,CA,Alameda CA,1.0
+6,105,6001,CA,Alameda CA,1.0
+6,106,6001,CA,Alameda CA,1.0
+6,1304,6001,CA,Alameda CA,1.0
+6,103,6001,CA,Alameda CA,1.0
+6,104,6001,CA,Alameda CA,1.0
+6,105,6001,CA,Alameda CA,1.0
+6,102,6001,CA,Alameda CA,1.0
+6,103,6001,CA,Alameda CA,1.0
+6,104,6001,CA,Alameda CA,1.0
+6,105,6001,CA,Alameda CA,1.0
+6,106,6001,CA,Alameda CA,1.0
+6,103,6001,CA,Alameda CA,1.0
+6,105,6001,CA,Alameda CA,1.0
+6,106,6001,CA,Alameda CA,1.0
+6,107,6001,CA,Alameda CA,1.0
+6,1304,6001,CA,Alameda CA,1.0
+6,1305,6001,CA,Alameda CA,1.0
+6,106,6001,CA,Alameda CA,1.0
+6,107,6001,CA,Alameda CA,1.0
+6,108,6001,CA,Alameda CA,1.0
+6,107,6001,CA,Alameda CA,1.0
+6,108,6001,CA,Alameda CA,1.0
+6,8502,6001,CA,Alameda CA,1.0
+6,8504,6001,CA,Alameda CA,1.0
+6,107,6001,CA,Alameda CA,1.0
+6,108,6001,CA,Alameda CA,1.0
+6,109,6001,CA,Alameda CA,1.0
+6,110,6001,CA,Alameda CA,1.0
+6,106,6001,CA,Alameda CA,1.0
+6,109,6001,CA,Alameda CA,1.0
+6,110,6001,CA,Alameda CA,1.0
+6,110,6001,CA,Alameda CA,1.0
+6,1309,6001,CA,Alameda CA,1.0
+6,108,6001,CA,Alameda CA,1.0
+6,109,6001,CA,Alameda CA,1.0
+6,110,6001,CA,Alameda CA,1.0
+6,8504,6001,CA,Alameda CA,1.0
+6,105,6001,CA,Alameda CA,1.0
+6,106,6001,CA,Alameda CA,1.0
+6,107,6001,CA,Alameda CA,1.0
+6,102,6001,CA,Alameda CA,1.0
+6,104,6001,CA,Alameda CA,1.0
+6,300,6003,CA,Alpine CA,0.0063
+6,300,6005,CA,Amador CA,0.211
+6,300,6009,CA,Calaveras CA,0.2361
+6,300,6027,CA,Inyo CA,0.0991
+6,300,6043,CA,Mariposa CA,0.0889
+6,300,6051,CA,Mono CA,0.0687
+6,300,6109,CA,Tuolumne CA,0.2899
+6,3900,6043,CA,Mariposa CA,0.9231
+6,3900,6051,CA,Mono CA,0.0769
+6,701,6007,CA,Butte CA,1.0
+6,702,6007,CA,Butte CA,1.0
+6,10100,6007,CA,Butte CA,1.0
+6,1100,6011,CA,Colusa CA,0.1646
+6,1100,6021,CA,Glenn CA,0.218
+6,1100,6103,CA,Tehama CA,0.4962
+6,1100,6105,CA,Trinity CA,0.1212
+6,8900,6105,CA,Trinity CA,1.0
+6,101,6013,CA,Contra Costa CA,1.0
+6,1301,6013,CA,Contra Costa CA,1.0
+6,1302,6013,CA,Contra Costa CA,1.0
+6,106,6013,CA,Contra Costa CA,1.0
+6,110,6013,CA,Contra Costa CA,1.0
+6,1304,6013,CA,Contra Costa CA,1.0
+6,1305,6013,CA,Contra Costa CA,1.0
+6,1307,6013,CA,Contra Costa CA,1.0
+6,1308,6013,CA,Contra Costa CA,1.0
+6,1309,6013,CA,Contra Costa CA,1.0
+6,110,6013,CA,Contra Costa CA,1.0
+6,1308,6013,CA,Contra Costa CA,1.0
+6,1309,6013,CA,Contra Costa CA,1.0
+6,101,6013,CA,Contra Costa CA,1.0
+6,1301,6013,CA,Contra Costa CA,1.0
+6,1302,6013,CA,Contra Costa CA,1.0
+6,1303,6013,CA,Contra Costa CA,1.0
+6,101,6013,CA,Contra Costa CA,1.0
+6,1302,6013,CA,Contra Costa CA,1.0
+6,1303,6013,CA,Contra Costa CA,1.0
+6,1304,6013,CA,Contra Costa CA,1.0
+6,1306,6013,CA,Contra Costa CA,1.0
+6,103,6013,CA,Contra Costa CA,1.0
+6,1303,6013,CA,Contra Costa CA,1.0
+6,1304,6013,CA,Contra Costa CA,1.0
+6,1305,6013,CA,Contra Costa CA,1.0
+6,1303,6013,CA,Contra Costa CA,1.0
+6,1304,6013,CA,Contra Costa CA,1.0
+6,1305,6013,CA,Contra Costa CA,1.0
+6,1306,6013,CA,Contra Costa CA,1.0
+6,1307,6013,CA,Contra Costa CA,1.0
+6,1303,6013,CA,Contra Costa CA,1.0
+6,1307,6013,CA,Contra Costa CA,1.0
+6,1308,6013,CA,Contra Costa CA,1.0
+6,1100,6093,CA,Siskiyou CA,1.0
+6,1500,6015,CA,Del Norte CA,0.2086
+6,1500,6035,CA,Lassen CA,0.246
+6,1500,6049,CA,Modoc CA,0.0654
+6,1500,6063,CA,Plumas CA,0.1488
+6,1500,6093,CA,Siskiyou CA,0.3312
+6,1700,6017,CA,El Dorado CA,1.0
+6,6711,6017,CA,El Dorado CA,1.0
+6,6712,6017,CA,El Dorado CA,1.0
+6,1901,6019,CA,Fresno CA,1.0
+6,3100,6019,CA,Fresno CA,1.0
+6,1902,6019,CA,Fresno CA,1.0
+6,1904,6019,CA,Fresno CA,1.0
+6,1903,6019,CA,Fresno CA,1.0
+6,1904,6019,CA,Fresno CA,1.0
+6,1905,6019,CA,Fresno CA,1.0
+6,1905,6019,CA,Fresno CA,1.0
+6,1903,6019,CA,Fresno CA,1.0
+6,1906,6019,CA,Fresno CA,1.0
+6,1907,6019,CA,Fresno CA,1.0
+6,1902,6019,CA,Fresno CA,1.0
+6,1906,6019,CA,Fresno CA,1.0
+6,1907,6019,CA,Fresno CA,1.0
+6,2300,6023,CA,Humboldt CA,1.0
+6,3300,6023,CA,Humboldt CA,1.0
+6,2500,6025,CA,Imperial CA,1.0
+6,2903,6029,CA,Kern CA,1.0
+6,2905,6029,CA,Kern CA,1.0
+6,2904,6029,CA,Kern CA,1.0
+6,300,6029,CA,Kern CA,1.0
+6,2903,6029,CA,Kern CA,1.0
+6,2905,6029,CA,Kern CA,1.0
+6,3701,6029,CA,Kern CA,1.0
+6,3703,6029,CA,Kern CA,1.0
+6,7101,6029,CA,Kern CA,1.0
+6,10703,6029,CA,Kern CA,1.0
+6,2901,6029,CA,Kern CA,1.0
+6,2902,6029,CA,Kern CA,1.0
+6,3100,6029,CA,Kern CA,1.0
+6,3701,6029,CA,Kern CA,1.0
+6,7902,6029,CA,Kern CA,1.0
+6,10703,6029,CA,Kern CA,1.0
+6,11105,6029,CA,Kern CA,1.0
+6,2901,6029,CA,Kern CA,1.0
+6,2902,6029,CA,Kern CA,1.0
+6,2901,6029,CA,Kern CA,1.0
+6,2902,6029,CA,Kern CA,1.0
+6,2904,6029,CA,Kern CA,1.0
+6,2901,6031,CA,Kings CA,1.0
+6,3100,6031,CA,Kings CA,1.0
+6,3300,6033,CA,Lake CA,0.426
+6,3300,6045,CA,Mendocino CA,0.574
+6,5500,6033,CA,Lake CA,1.0
+6,9701,6045,CA,Mendocino CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3703,6037,CA,Los Angeles CA,1.0
+6,3704,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3703,6037,CA,Los Angeles CA,1.0
+6,3704,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3705,6037,CA,Los Angeles CA,1.0
+6,3724,6037,CA,Los Angeles CA,1.0
+6,3725,6037,CA,Los Angeles CA,1.0
+6,11102,6037,CA,Los Angeles CA,1.0
+6,3706,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3706,6037,CA,Los Angeles CA,1.0
+6,3707,6037,CA,Los Angeles CA,1.0
+6,3708,6037,CA,Los Angeles CA,1.0
+6,3708,6037,CA,Los Angeles CA,1.0
+6,3719,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3707,6037,CA,Los Angeles CA,1.0
+6,3709,6037,CA,Los Angeles CA,1.0
+6,3710,6037,CA,Los Angeles CA,1.0
+6,3711,6037,CA,Los Angeles CA,1.0
+6,3718,6037,CA,Los Angeles CA,1.0
+6,3719,6037,CA,Los Angeles CA,1.0
+6,7104,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3710,6037,CA,Los Angeles CA,1.0
+6,3711,6037,CA,Los Angeles CA,1.0
+6,3713,6037,CA,Los Angeles CA,1.0
+6,3715,6037,CA,Los Angeles CA,1.0
+6,3716,6037,CA,Los Angeles CA,1.0
+6,3717,6037,CA,Los Angeles CA,1.0
+6,3710,6037,CA,Los Angeles CA,1.0
+6,3711,6037,CA,Los Angeles CA,1.0
+6,3712,6037,CA,Los Angeles CA,1.0
+6,3713,6037,CA,Los Angeles CA,1.0
+6,7112,6037,CA,Los Angeles CA,1.0
+6,3711,6037,CA,Los Angeles CA,1.0
+6,3712,6037,CA,Los Angeles CA,1.0
+6,3714,6037,CA,Los Angeles CA,1.0
+6,7112,6037,CA,Los Angeles CA,1.0
+6,7114,6037,CA,Los Angeles CA,1.0
+6,3713,6037,CA,Los Angeles CA,1.0
+6,3714,6037,CA,Los Angeles CA,1.0
+6,3715,6037,CA,Los Angeles CA,1.0
+6,3712,6037,CA,Los Angeles CA,1.0
+6,3714,6037,CA,Los Angeles CA,1.0
+6,5906,6037,CA,Los Angeles CA,1.0
+6,7114,6037,CA,Los Angeles CA,1.0
+6,3710,6037,CA,Los Angeles CA,1.0
+6,3713,6037,CA,Los Angeles CA,1.0
+6,3714,6037,CA,Los Angeles CA,1.0
+6,3715,6037,CA,Los Angeles CA,1.0
+6,3716,6037,CA,Los Angeles CA,1.0
+6,3714,6037,CA,Los Angeles CA,1.0
+6,3715,6037,CA,Los Angeles CA,1.0
+6,3716,6037,CA,Los Angeles CA,1.0
+6,3710,6037,CA,Los Angeles CA,1.0
+6,3717,6037,CA,Los Angeles CA,1.0
+6,3718,6037,CA,Los Angeles CA,1.0
+6,3736,6037,CA,Los Angeles CA,1.0
+6,3738,6037,CA,Los Angeles CA,1.0
+6,3709,6037,CA,Los Angeles CA,1.0
+6,3717,6037,CA,Los Angeles CA,1.0
+6,3718,6037,CA,Los Angeles CA,1.0
+6,3719,6037,CA,Los Angeles CA,1.0
+6,3735,6037,CA,Los Angeles CA,1.0
+6,3736,6037,CA,Los Angeles CA,1.0
+6,3708,6037,CA,Los Angeles CA,1.0
+6,3709,6037,CA,Los Angeles CA,1.0
+6,3718,6037,CA,Los Angeles CA,1.0
+6,3719,6037,CA,Los Angeles CA,1.0
+6,3720,6037,CA,Los Angeles CA,1.0
+6,3735,6037,CA,Los Angeles CA,1.0
+6,3719,6037,CA,Los Angeles CA,1.0
+6,3720,6037,CA,Los Angeles CA,1.0
+6,3721,6037,CA,Los Angeles CA,1.0
+6,3727,6037,CA,Los Angeles CA,1.0
+6,3732,6037,CA,Los Angeles CA,1.0
+6,3720,6037,CA,Los Angeles CA,1.0
+6,3721,6037,CA,Los Angeles CA,1.0
+6,3727,6037,CA,Los Angeles CA,1.0
+6,3721,6037,CA,Los Angeles CA,1.0
+6,3722,6037,CA,Los Angeles CA,1.0
+6,3723,6037,CA,Los Angeles CA,1.0
+6,3724,6037,CA,Los Angeles CA,1.0
+6,3724,6037,CA,Los Angeles CA,1.0
+6,3725,6037,CA,Los Angeles CA,1.0
+6,3726,6037,CA,Los Angeles CA,1.0
+6,11102,6037,CA,Los Angeles CA,1.0
+6,3727,6037,CA,Los Angeles CA,1.0
+6,3728,6037,CA,Los Angeles CA,1.0
+6,3730,6037,CA,Los Angeles CA,1.0
+6,3746,6037,CA,Los Angeles CA,1.0
+6,3747,6037,CA,Los Angeles CA,1.0
+6,3727,6037,CA,Los Angeles CA,1.0
+6,3731,6037,CA,Los Angeles CA,1.0
+6,3720,6037,CA,Los Angeles CA,1.0
+6,3732,6037,CA,Los Angeles CA,1.0
+6,3734,6037,CA,Los Angeles CA,1.0
+6,3733,6037,CA,Los Angeles CA,1.0
+6,3734,6037,CA,Los Angeles CA,1.0
+6,3734,6037,CA,Los Angeles CA,1.0
+6,3718,6037,CA,Los Angeles CA,1.0
+6,3719,6037,CA,Los Angeles CA,1.0
+6,3735,6037,CA,Los Angeles CA,1.0
+6,3736,6037,CA,Los Angeles CA,1.0
+6,3717,6037,CA,Los Angeles CA,1.0
+6,3735,6037,CA,Los Angeles CA,1.0
+6,3736,6037,CA,Los Angeles CA,1.0
+6,3717,6037,CA,Los Angeles CA,1.0
+6,3737,6037,CA,Los Angeles CA,1.0
+6,3738,6037,CA,Los Angeles CA,1.0
+6,3743,6037,CA,Los Angeles CA,1.0
+6,3716,6037,CA,Los Angeles CA,1.0
+6,3717,6037,CA,Los Angeles CA,1.0
+6,3737,6037,CA,Los Angeles CA,1.0
+6,3738,6037,CA,Los Angeles CA,1.0
+6,3740,6037,CA,Los Angeles CA,1.0
+6,3716,6037,CA,Los Angeles CA,1.0
+6,3739,6037,CA,Los Angeles CA,1.0
+6,3754,6037,CA,Los Angeles CA,1.0
+6,3737,6037,CA,Los Angeles CA,1.0
+6,3738,6037,CA,Los Angeles CA,1.0
+6,3739,6037,CA,Los Angeles CA,1.0
+6,3740,6037,CA,Los Angeles CA,1.0
+6,3743,6037,CA,Los Angeles CA,1.0
+6,3741,6037,CA,Los Angeles CA,1.0
+6,3742,6037,CA,Los Angeles CA,1.0
+6,3743,6037,CA,Los Angeles CA,1.0
+6,3752,6037,CA,Los Angeles CA,1.0
+6,3753,6037,CA,Los Angeles CA,1.0
+6,3741,6037,CA,Los Angeles CA,1.0
+6,3742,6037,CA,Los Angeles CA,1.0
+6,3737,6037,CA,Los Angeles CA,1.0
+6,3740,6037,CA,Los Angeles CA,1.0
+6,3741,6037,CA,Los Angeles CA,1.0
+6,3743,6037,CA,Los Angeles CA,1.0
+6,3735,6037,CA,Los Angeles CA,1.0
+6,3744,6037,CA,Los Angeles CA,1.0
+6,3745,6037,CA,Los Angeles CA,1.0
+6,3746,6037,CA,Los Angeles CA,1.0
+6,3747,6037,CA,Los Angeles CA,1.0
+6,3747,6037,CA,Los Angeles CA,1.0
+6,3748,6037,CA,Los Angeles CA,1.0
+6,3749,6037,CA,Los Angeles CA,1.0
+6,3748,6037,CA,Los Angeles CA,1.0
+6,3750,6037,CA,Los Angeles CA,1.0
+6,3758,6037,CA,Los Angeles CA,1.0
+6,3742,6037,CA,Los Angeles CA,1.0
+6,3751,6037,CA,Los Angeles CA,1.0
+6,3752,6037,CA,Los Angeles CA,1.0
+6,3757,6037,CA,Los Angeles CA,1.0
+6,3741,6037,CA,Los Angeles CA,1.0
+6,3742,6037,CA,Los Angeles CA,1.0
+6,3752,6037,CA,Los Angeles CA,1.0
+6,3753,6037,CA,Los Angeles CA,1.0
+6,3756,6037,CA,Los Angeles CA,1.0
+6,3757,6037,CA,Los Angeles CA,1.0
+6,3741,6037,CA,Los Angeles CA,1.0
+6,3752,6037,CA,Los Angeles CA,1.0
+6,3753,6037,CA,Los Angeles CA,1.0
+6,3754,6037,CA,Los Angeles CA,1.0
+6,3755,6037,CA,Los Angeles CA,1.0
+6,5907,6037,CA,Los Angeles CA,1.0
+6,5908,6037,CA,Los Angeles CA,1.0
+6,3752,6037,CA,Los Angeles CA,1.0
+6,3757,6037,CA,Los Angeles CA,1.0
+6,3763,6037,CA,Los Angeles CA,1.0
+6,3758,6037,CA,Los Angeles CA,1.0
+6,3767,6037,CA,Los Angeles CA,1.0
+6,3749,6037,CA,Los Angeles CA,1.0
+6,3759,6037,CA,Los Angeles CA,1.0
+6,3760,6037,CA,Los Angeles CA,1.0
+6,3760,6037,CA,Los Angeles CA,1.0
+6,3761,6037,CA,Los Angeles CA,1.0
+6,3768,6037,CA,Los Angeles CA,1.0
+6,3758,6037,CA,Los Angeles CA,1.0
+6,3760,6037,CA,Los Angeles CA,1.0
+6,3761,6037,CA,Los Angeles CA,1.0
+6,3768,6037,CA,Los Angeles CA,1.0
+6,3757,6037,CA,Los Angeles CA,1.0
+6,3762,6037,CA,Los Angeles CA,1.0
+6,3763,6037,CA,Los Angeles CA,1.0
+6,3767,6037,CA,Los Angeles CA,1.0
+6,3756,6037,CA,Los Angeles CA,1.0
+6,3757,6037,CA,Los Angeles CA,1.0
+6,3763,6037,CA,Los Angeles CA,1.0
+6,3766,6037,CA,Los Angeles CA,1.0
+6,3769,6037,CA,Los Angeles CA,1.0
+6,3755,6037,CA,Los Angeles CA,1.0
+6,3756,6037,CA,Los Angeles CA,1.0
+6,3763,6037,CA,Los Angeles CA,1.0
+6,3764,6037,CA,Los Angeles CA,1.0
+6,3765,6037,CA,Los Angeles CA,1.0
+6,5908,6037,CA,Los Angeles CA,1.0
+6,3766,6037,CA,Los Angeles CA,1.0
+6,3769,6037,CA,Los Angeles CA,1.0
+6,3762,6037,CA,Los Angeles CA,1.0
+6,3766,6037,CA,Los Angeles CA,1.0
+6,3767,6037,CA,Los Angeles CA,1.0
+6,3768,6037,CA,Los Angeles CA,1.0
+6,3761,6037,CA,Los Angeles CA,1.0
+6,3767,6037,CA,Los Angeles CA,1.0
+6,3768,6037,CA,Los Angeles CA,1.0
+6,3729,6037,CA,Los Angeles CA,1.0
+6,3730,6037,CA,Los Angeles CA,1.0
+6,3731,6037,CA,Los Angeles CA,1.0
+6,3748,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3702,6037,CA,Los Angeles CA,1.0
+6,2905,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3702,6037,CA,Los Angeles CA,1.0
+6,3704,6037,CA,Los Angeles CA,1.0
+6,3705,6037,CA,Los Angeles CA,1.0
+6,3706,6037,CA,Los Angeles CA,1.0
+6,7102,6037,CA,Los Angeles CA,1.0
+6,11101,6037,CA,Los Angeles CA,1.0
+6,11105,6037,CA,Los Angeles CA,1.0
+6,3701,6037,CA,Los Angeles CA,1.0
+6,3702,6037,CA,Los Angeles CA,1.0
+6,3726,6037,CA,Los Angeles CA,1.0
+6,3727,6037,CA,Los Angeles CA,1.0
+6,3728,6037,CA,Los Angeles CA,1.0
+6,3729,6037,CA,Los Angeles CA,1.0
+6,3722,6037,CA,Los Angeles CA,1.0
+6,3727,6037,CA,Los Angeles CA,1.0
+6,3731,6037,CA,Los Angeles CA,1.0
+6,3728,6037,CA,Los Angeles CA,1.0
+6,3729,6037,CA,Los Angeles CA,1.0
+6,3747,6037,CA,Los Angeles CA,1.0
+6,3749,6037,CA,Los Angeles CA,1.0
+6,3759,6037,CA,Los Angeles CA,1.0
+6,3764,6037,CA,Los Angeles CA,1.0
+6,3765,6037,CA,Los Angeles CA,1.0
+6,5908,6037,CA,Los Angeles CA,1.0
+6,3763,6037,CA,Los Angeles CA,1.0
+6,3765,6037,CA,Los Angeles CA,1.0
+6,3769,6037,CA,Los Angeles CA,1.0
+6,3755,6037,CA,Los Angeles CA,1.0
+6,3764,6037,CA,Los Angeles CA,1.0
+6,3752,6037,CA,Los Angeles CA,1.0
+6,3755,6037,CA,Los Angeles CA,1.0
+6,3756,6037,CA,Los Angeles CA,1.0
+6,3757,6037,CA,Los Angeles CA,1.0
+6,3764,6037,CA,Los Angeles CA,1.0
+6,1901,6039,CA,Madera CA,1.0
+6,1902,6039,CA,Madera CA,1.0
+6,3900,6039,CA,Madera CA,1.0
+6,4101,6041,CA,Marin CA,1.0
+6,4102,6041,CA,Marin CA,1.0
+6,7501,6041,CA,Marin CA,1.0
+6,4101,6041,CA,Marin CA,1.0
+6,4102,6041,CA,Marin CA,1.0
+6,7501,6041,CA,Marin CA,1.0
+6,3900,6047,CA,Merced CA,1.0
+6,4701,6047,CA,Merced CA,1.0
+6,4702,6047,CA,Merced CA,1.0
+6,4701,6047,CA,Merced CA,1.0
+6,4702,6047,CA,Merced CA,1.0
+6,5301,6053,CA,Monterey CA,1.0
+6,5302,6053,CA,Monterey CA,1.0
+6,8701,6053,CA,Monterey CA,1.0
+6,5301,6053,CA,Monterey CA,1.0
+6,5302,6053,CA,Monterey CA,1.0
+6,5303,6053,CA,Monterey CA,0.549
+6,5303,6069,CA,San Benito CA,0.451
+6,3300,6055,CA,Napa CA,1.0
+6,5500,6055,CA,Napa CA,1.0
+6,9502,6055,CA,Napa CA,1.0
+6,9503,6055,CA,Napa CA,1.0
+6,9701,6055,CA,Napa CA,1.0
+6,5700,6057,CA,Nevada CA,0.9693
+6,5700,6091,CA,Sierra CA,0.0307
+6,6103,6057,CA,Nevada CA,1.0
+6,3714,6059,CA,Orange CA,1.0
+6,3754,6059,CA,Orange CA,1.0
+6,5906,6059,CA,Orange CA,1.0
+6,5907,6059,CA,Orange CA,1.0
+6,5910,6059,CA,Orange CA,1.0
+6,6513,6059,CA,Orange CA,1.0
+6,7114,6059,CA,Orange CA,1.0
+6,3754,6059,CA,Orange CA,1.0
+6,5906,6059,CA,Orange CA,1.0
+6,5907,6059,CA,Orange CA,1.0
+6,5908,6059,CA,Orange CA,1.0
+6,5910,6059,CA,Orange CA,1.0
+6,3754,6059,CA,Orange CA,1.0
+6,3764,6059,CA,Orange CA,1.0
+6,3765,6059,CA,Orange CA,1.0
+6,5907,6059,CA,Orange CA,1.0
+6,5908,6059,CA,Orange CA,1.0
+6,5909,6059,CA,Orange CA,1.0
+6,5908,6059,CA,Orange CA,1.0
+6,5909,6059,CA,Orange CA,1.0
+6,5912,6059,CA,Orange CA,1.0
+6,5913,6059,CA,Orange CA,1.0
+6,5908,6059,CA,Orange CA,1.0
+6,5909,6059,CA,Orange CA,1.0
+6,5912,6059,CA,Orange CA,1.0
+6,5914,6059,CA,Orange CA,1.0
+6,5913,6059,CA,Orange CA,1.0
+6,5908,6059,CA,Orange CA,1.0
+6,5914,6059,CA,Orange CA,1.0
+6,5916,6059,CA,Orange CA,1.0
+6,5918,6059,CA,Orange CA,1.0
+6,5917,6059,CA,Orange CA,1.0
+6,5916,6059,CA,Orange CA,1.0
+6,5918,6059,CA,Orange CA,1.0
+6,5905,6059,CA,Orange CA,1.0
+6,5906,6059,CA,Orange CA,1.0
+6,5910,6059,CA,Orange CA,1.0
+6,5911,6059,CA,Orange CA,1.0
+6,5913,6059,CA,Orange CA,1.0
+6,5916,6059,CA,Orange CA,1.0
+6,5910,6059,CA,Orange CA,1.0
+6,5911,6059,CA,Orange CA,1.0
+6,5902,6059,CA,Orange CA,1.0
+6,5904,6059,CA,Orange CA,1.0
+6,5905,6059,CA,Orange CA,1.0
+6,5910,6059,CA,Orange CA,1.0
+6,5911,6059,CA,Orange CA,1.0
+6,5915,6059,CA,Orange CA,1.0
+6,5904,6059,CA,Orange CA,1.0
+6,5905,6059,CA,Orange CA,1.0
+6,5911,6059,CA,Orange CA,1.0
+6,5904,6059,CA,Orange CA,1.0
+6,5903,6059,CA,Orange CA,1.0
+6,5904,6059,CA,Orange CA,1.0
+6,5905,6059,CA,Orange CA,1.0
+6,5901,6059,CA,Orange CA,1.0
+6,5903,6059,CA,Orange CA,1.0
+6,5902,6059,CA,Orange CA,1.0
+6,5903,6059,CA,Orange CA,1.0
+6,5905,6059,CA,Orange CA,1.0
+6,5915,6059,CA,Orange CA,1.0
+6,5901,6059,CA,Orange CA,1.0
+6,5902,6059,CA,Orange CA,1.0
+6,5905,6059,CA,Orange CA,1.0
+6,5915,6059,CA,Orange CA,1.0
+6,5901,6059,CA,Orange CA,1.0
+6,5915,6059,CA,Orange CA,1.0
+6,7301,6059,CA,Orange CA,1.0
+6,6101,6061,CA,Placer CA,1.0
+6,6102,6061,CA,Placer CA,1.0
+6,6103,6061,CA,Placer CA,1.0
+6,6701,6061,CA,Placer CA,1.0
+6,6706,6061,CA,Placer CA,1.0
+6,6101,6061,CA,Placer CA,1.0
+6,6102,6061,CA,Placer CA,1.0
+6,6103,6061,CA,Placer CA,1.0
+6,6102,6061,CA,Placer CA,1.0
+6,6103,6061,CA,Placer CA,1.0
+6,6501,6065,CA,Riverside CA,1.0
+6,6515,6065,CA,Riverside CA,1.0
+6,6502,6065,CA,Riverside CA,1.0
+6,6507,6065,CA,Riverside CA,1.0
+6,6515,6065,CA,Riverside CA,1.0
+6,6502,6065,CA,Riverside CA,1.0
+6,6506,6065,CA,Riverside CA,1.0
+6,6507,6065,CA,Riverside CA,1.0
+6,6508,6065,CA,Riverside CA,1.0
+6,7105,6065,CA,Riverside CA,1.0
+6,6505,6065,CA,Riverside CA,1.0
+6,6508,6065,CA,Riverside CA,1.0
+6,6509,6065,CA,Riverside CA,1.0
+6,6510,6065,CA,Riverside CA,1.0
+6,6511,6065,CA,Riverside CA,1.0
+6,6512,6065,CA,Riverside CA,1.0
+6,6514,6065,CA,Riverside CA,1.0
+6,6511,6065,CA,Riverside CA,1.0
+6,6513,6065,CA,Riverside CA,1.0
+6,6514,6065,CA,Riverside CA,1.0
+6,7106,6065,CA,Riverside CA,1.0
+6,7110,6065,CA,Riverside CA,1.0
+6,7114,6065,CA,Riverside CA,1.0
+6,7115,6065,CA,Riverside CA,1.0
+6,6501,6065,CA,Riverside CA,1.0
+6,6502,6065,CA,Riverside CA,1.0
+6,6515,6065,CA,Riverside CA,1.0
+6,6504,6065,CA,Riverside CA,1.0
+6,6505,6065,CA,Riverside CA,1.0
+6,6505,6065,CA,Riverside CA,1.0
+6,6506,6065,CA,Riverside CA,1.0
+6,6508,6065,CA,Riverside CA,1.0
+6,6510,6065,CA,Riverside CA,1.0
+6,6508,6065,CA,Riverside CA,1.0
+6,6509,6065,CA,Riverside CA,1.0
+6,6510,6065,CA,Riverside CA,1.0
+6,6508,6065,CA,Riverside CA,1.0
+6,6509,6065,CA,Riverside CA,1.0
+6,6510,6065,CA,Riverside CA,1.0
+6,6512,6065,CA,Riverside CA,1.0
+6,6510,6065,CA,Riverside CA,1.0
+6,6512,6065,CA,Riverside CA,1.0
+6,6513,6065,CA,Riverside CA,1.0
+6,6511,6065,CA,Riverside CA,1.0
+6,6512,6065,CA,Riverside CA,1.0
+6,6513,6065,CA,Riverside CA,1.0
+6,6514,6065,CA,Riverside CA,1.0
+6,6503,6065,CA,Riverside CA,1.0
+6,6506,6065,CA,Riverside CA,1.0
+6,7302,6065,CA,Riverside CA,1.0
+6,6503,6065,CA,Riverside CA,1.0
+6,6504,6065,CA,Riverside CA,1.0
+6,6506,6065,CA,Riverside CA,1.0
+6,6505,6065,CA,Riverside CA,1.0
+6,6506,6065,CA,Riverside CA,1.0
+6,6701,6067,CA,Sacramento CA,1.0
+6,6704,6067,CA,Sacramento CA,1.0
+6,6703,6067,CA,Sacramento CA,1.0
+6,6703,6067,CA,Sacramento CA,1.0
+6,6704,6067,CA,Sacramento CA,1.0
+6,6707,6067,CA,Sacramento CA,1.0
+6,6705,6067,CA,Sacramento CA,1.0
+6,6704,6067,CA,Sacramento CA,1.0
+6,6705,6067,CA,Sacramento CA,1.0
+6,6706,6067,CA,Sacramento CA,1.0
+6,6704,6067,CA,Sacramento CA,1.0
+6,6707,6067,CA,Sacramento CA,1.0
+6,6708,6067,CA,Sacramento CA,1.0
+6,6707,6067,CA,Sacramento CA,1.0
+6,6708,6067,CA,Sacramento CA,1.0
+6,6709,6067,CA,Sacramento CA,1.0
+6,6712,6067,CA,Sacramento CA,1.0
+6,6702,6067,CA,Sacramento CA,1.0
+6,6703,6067,CA,Sacramento CA,1.0
+6,6708,6067,CA,Sacramento CA,1.0
+6,6709,6067,CA,Sacramento CA,1.0
+6,6710,6067,CA,Sacramento CA,1.0
+6,6711,6067,CA,Sacramento CA,1.0
+6,6710,6067,CA,Sacramento CA,1.0
+6,6711,6067,CA,Sacramento CA,1.0
+6,300,6067,CA,Sacramento CA,1.0
+6,6702,6067,CA,Sacramento CA,1.0
+6,6708,6067,CA,Sacramento CA,1.0
+6,6710,6067,CA,Sacramento CA,1.0
+6,6711,6067,CA,Sacramento CA,1.0
+6,7704,6067,CA,Sacramento CA,1.0
+6,7101,6071,CA,San Bernardino CA,1.0
+6,7102,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,3701,6071,CA,San Bernardino CA,1.0
+6,7102,6071,CA,San Bernardino CA,1.0
+6,7103,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7101,6071,CA,San Bernardino CA,1.0
+6,7102,6071,CA,San Bernardino CA,1.0
+6,7103,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,3701,6071,CA,San Bernardino CA,1.0
+6,7102,6071,CA,San Bernardino CA,1.0
+6,7103,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7105,6071,CA,San Bernardino CA,1.0
+6,7107,6071,CA,San Bernardino CA,1.0
+6,7108,6071,CA,San Bernardino CA,1.0
+6,7111,6071,CA,San Bernardino CA,1.0
+6,7115,6071,CA,San Bernardino CA,1.0
+6,6507,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7105,6071,CA,San Bernardino CA,1.0
+6,7106,6071,CA,San Bernardino CA,1.0
+6,7107,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7105,6071,CA,San Bernardino CA,1.0
+6,7107,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7106,6071,CA,San Bernardino CA,1.0
+6,7107,6071,CA,San Bernardino CA,1.0
+6,7108,6071,CA,San Bernardino CA,1.0
+6,7109,6071,CA,San Bernardino CA,1.0
+6,7110,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7111,6071,CA,San Bernardino CA,1.0
+6,7112,6071,CA,San Bernardino CA,1.0
+6,7115,6071,CA,San Bernardino CA,1.0
+6,3711,6071,CA,San Bernardino CA,1.0
+6,3712,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7111,6071,CA,San Bernardino CA,1.0
+6,7112,6071,CA,San Bernardino CA,1.0
+6,7113,6071,CA,San Bernardino CA,1.0
+6,7114,6071,CA,San Bernardino CA,1.0
+6,6514,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7109,6071,CA,San Bernardino CA,1.0
+6,7110,6071,CA,San Bernardino CA,1.0
+6,7111,6071,CA,San Bernardino CA,1.0
+6,7115,6071,CA,San Bernardino CA,1.0
+6,6507,6071,CA,San Bernardino CA,1.0
+6,6508,6071,CA,San Bernardino CA,1.0
+6,6510,6071,CA,San Bernardino CA,1.0
+6,6514,6071,CA,San Bernardino CA,1.0
+6,7105,6071,CA,San Bernardino CA,1.0
+6,7106,6071,CA,San Bernardino CA,1.0
+6,7108,6071,CA,San Bernardino CA,1.0
+6,7109,6071,CA,San Bernardino CA,1.0
+6,7104,6071,CA,San Bernardino CA,1.0
+6,7108,6071,CA,San Bernardino CA,1.0
+6,7109,6071,CA,San Bernardino CA,1.0
+6,7115,6071,CA,San Bernardino CA,1.0
+6,6514,6071,CA,San Bernardino CA,1.0
+6,7112,6071,CA,San Bernardino CA,1.0
+6,7113,6071,CA,San Bernardino CA,1.0
+6,7114,6071,CA,San Bernardino CA,1.0
+6,3712,6071,CA,San Bernardino CA,1.0
+6,3714,6071,CA,San Bernardino CA,1.0
+6,5906,6071,CA,San Bernardino CA,1.0
+6,6514,6071,CA,San Bernardino CA,1.0
+6,7112,6071,CA,San Bernardino CA,1.0
+6,7113,6071,CA,San Bernardino CA,1.0
+6,7114,6071,CA,San Bernardino CA,1.0
+6,5901,6073,CA,San Diego CA,1.0
+6,7301,6073,CA,San Diego CA,1.0
+6,7303,6073,CA,San Diego CA,1.0
+6,2500,6073,CA,San Diego CA,1.0
+6,6503,6073,CA,San Diego CA,1.0
+6,7302,6073,CA,San Diego CA,1.0
+6,7306,6073,CA,San Diego CA,1.0
+6,7307,6073,CA,San Diego CA,1.0
+6,7302,6073,CA,San Diego CA,1.0
+6,7306,6073,CA,San Diego CA,1.0
+6,7302,6073,CA,San Diego CA,1.0
+6,7307,6073,CA,San Diego CA,1.0
+6,7319,6073,CA,San Diego CA,1.0
+6,7308,6073,CA,San Diego CA,1.0
+6,7312,6073,CA,San Diego CA,1.0
+6,7310,6073,CA,San Diego CA,1.0
+6,7311,6073,CA,San Diego CA,1.0
+6,7316,6073,CA,San Diego CA,1.0
+6,7322,6073,CA,San Diego CA,1.0
+6,7309,6073,CA,San Diego CA,1.0
+6,7310,6073,CA,San Diego CA,1.0
+6,7311,6073,CA,San Diego CA,1.0
+6,7312,6073,CA,San Diego CA,1.0
+6,7307,6073,CA,San Diego CA,1.0
+6,7313,6073,CA,San Diego CA,1.0
+6,7314,6073,CA,San Diego CA,1.0
+6,7313,6073,CA,San Diego CA,1.0
+6,7314,6073,CA,San Diego CA,1.0
+6,7317,6073,CA,San Diego CA,1.0
+6,7312,6073,CA,San Diego CA,1.0
+6,7315,6073,CA,San Diego CA,1.0
+6,7317,6073,CA,San Diego CA,1.0
+6,7310,6073,CA,San Diego CA,1.0
+6,7316,6073,CA,San Diego CA,1.0
+6,7314,6073,CA,San Diego CA,1.0
+6,7315,6073,CA,San Diego CA,1.0
+6,7317,6073,CA,San Diego CA,1.0
+6,7320,6073,CA,San Diego CA,1.0
+6,7321,6073,CA,San Diego CA,1.0
+6,7322,6073,CA,San Diego CA,1.0
+6,7303,6073,CA,San Diego CA,1.0
+6,7304,6073,CA,San Diego CA,1.0
+6,7305,6073,CA,San Diego CA,1.0
+6,7301,6073,CA,San Diego CA,1.0
+6,7304,6073,CA,San Diego CA,1.0
+6,7309,6073,CA,San Diego CA,1.0
+6,7304,6073,CA,San Diego CA,1.0
+6,7305,6073,CA,San Diego CA,1.0
+6,7306,6073,CA,San Diego CA,1.0
+6,7309,6073,CA,San Diego CA,1.0
+6,7305,6073,CA,San Diego CA,1.0
+6,7309,6073,CA,San Diego CA,1.0
+6,7310,6073,CA,San Diego CA,1.0
+6,7311,6073,CA,San Diego CA,1.0
+6,7318,6073,CA,San Diego CA,1.0
+6,7321,6073,CA,San Diego CA,1.0
+6,7313,6073,CA,San Diego CA,1.0
+6,7318,6073,CA,San Diego CA,1.0
+6,7319,6073,CA,San Diego CA,1.0
+6,7322,6073,CA,San Diego CA,1.0
+6,7318,6073,CA,San Diego CA,1.0
+6,7319,6073,CA,San Diego CA,1.0
+6,7320,6073,CA,San Diego CA,1.0
+6,7318,6073,CA,San Diego CA,1.0
+6,7320,6073,CA,San Diego CA,1.0
+6,7321,6073,CA,San Diego CA,1.0
+6,7502,6075,CA,San Francisco CA,1.0
+6,7504,6075,CA,San Francisco CA,1.0
+6,7506,6075,CA,San Francisco CA,1.0
+6,7507,6075,CA,San Francisco CA,1.0
+6,8101,6075,CA,San Francisco CA,1.0
+6,8102,6075,CA,San Francisco CA,1.0
+6,7501,6075,CA,San Francisco CA,1.0
+6,7502,6075,CA,San Francisco CA,1.0
+6,7502,6075,CA,San Francisco CA,1.0
+6,7503,6075,CA,San Francisco CA,1.0
+6,7503,6075,CA,San Francisco CA,1.0
+6,7504,6075,CA,San Francisco CA,1.0
+6,7503,6075,CA,San Francisco CA,1.0
+6,7504,6075,CA,San Francisco CA,1.0
+6,7505,6075,CA,San Francisco CA,1.0
+6,7506,6075,CA,San Francisco CA,1.0
+6,7501,6075,CA,San Francisco CA,1.0
+6,7505,6075,CA,San Francisco CA,1.0
+6,7506,6075,CA,San Francisco CA,1.0
+6,8101,6075,CA,San Francisco CA,1.0
+6,7501,6075,CA,San Francisco CA,1.0
+6,7502,6075,CA,San Francisco CA,1.0
+6,7504,6075,CA,San Francisco CA,1.0
+6,7701,6077,CA,San Joaquin CA,1.0
+6,7702,6077,CA,San Joaquin CA,1.0
+6,7704,6077,CA,San Joaquin CA,1.0
+6,7702,6077,CA,San Joaquin CA,1.0
+6,7704,6077,CA,San Joaquin CA,1.0
+6,110,6077,CA,San Joaquin CA,1.0
+6,7703,6077,CA,San Joaquin CA,1.0
+6,9901,6077,CA,San Joaquin CA,1.0
+6,6711,6077,CA,San Joaquin CA,1.0
+6,7703,6077,CA,San Joaquin CA,1.0
+6,7704,6077,CA,San Joaquin CA,1.0
+6,9903,6077,CA,San Joaquin CA,1.0
+6,7703,6077,CA,San Joaquin CA,1.0
+6,7901,6079,CA,San Luis Obispo CA,1.0
+6,7902,6079,CA,San Luis Obispo CA,1.0
+6,2901,6079,CA,San Luis Obispo CA,1.0
+6,3100,6079,CA,San Luis Obispo CA,1.0
+6,7901,6079,CA,San Luis Obispo CA,1.0
+6,7902,6079,CA,San Luis Obispo CA,1.0
+6,8101,6081,CA,San Mateo CA,1.0
+6,8102,6081,CA,San Mateo CA,1.0
+6,8104,6081,CA,San Mateo CA,1.0
+6,7507,6081,CA,San Mateo CA,1.0
+6,8101,6081,CA,San Mateo CA,1.0
+6,8102,6081,CA,San Mateo CA,1.0
+6,8103,6081,CA,San Mateo CA,1.0
+6,8104,6081,CA,San Mateo CA,1.0
+6,8102,6081,CA,San Mateo CA,1.0
+6,8103,6081,CA,San Mateo CA,1.0
+6,8104,6081,CA,San Mateo CA,1.0
+6,8103,6081,CA,San Mateo CA,1.0
+6,8104,6081,CA,San Mateo CA,1.0
+6,8105,6081,CA,San Mateo CA,1.0
+6,8106,6081,CA,San Mateo CA,1.0
+6,8501,6081,CA,San Mateo CA,1.0
+6,8104,6081,CA,San Mateo CA,1.0
+6,8105,6081,CA,San Mateo CA,1.0
+6,8106,6081,CA,San Mateo CA,1.0
+6,8104,6081,CA,San Mateo CA,1.0
+6,8105,6081,CA,San Mateo CA,1.0
+6,8106,6081,CA,San Mateo CA,1.0
+6,8501,6081,CA,San Mateo CA,1.0
+6,8301,6083,CA,Santa Barbara CA,1.0
+6,8302,6083,CA,Santa Barbara CA,1.0
+6,7902,6083,CA,Santa Barbara CA,1.0
+6,8301,6083,CA,Santa Barbara CA,1.0
+6,8302,6083,CA,Santa Barbara CA,1.0
+6,8303,6083,CA,Santa Barbara CA,1.0
+6,8303,6083,CA,Santa Barbara CA,1.0
+6,11105,6083,CA,Santa Barbara CA,1.0
+6,8505,6085,CA,Santa Clara CA,1.0
+6,8513,6085,CA,Santa Clara CA,1.0
+6,8514,6085,CA,Santa Clara CA,1.0
+6,8505,6085,CA,Santa Clara CA,1.0
+6,8506,6085,CA,Santa Clara CA,1.0
+6,8512,6085,CA,Santa Clara CA,1.0
+6,8701,6085,CA,Santa Clara CA,1.0
+6,8501,6085,CA,Santa Clara CA,1.0
+6,8507,6085,CA,Santa Clara CA,1.0
+6,8508,6085,CA,Santa Clara CA,1.0
+6,8507,6085,CA,Santa Clara CA,1.0
+6,8508,6085,CA,Santa Clara CA,1.0
+6,8509,6085,CA,Santa Clara CA,1.0
+6,8510,6085,CA,Santa Clara CA,1.0
+6,8509,6085,CA,Santa Clara CA,1.0
+6,8510,6085,CA,Santa Clara CA,1.0
+6,8507,6085,CA,Santa Clara CA,1.0
+6,8508,6085,CA,Santa Clara CA,1.0
+6,8511,6085,CA,Santa Clara CA,1.0
+6,8506,6085,CA,Santa Clara CA,1.0
+6,8507,6085,CA,Santa Clara CA,1.0
+6,8512,6085,CA,Santa Clara CA,1.0
+6,8106,6085,CA,Santa Clara CA,1.0
+6,8501,6085,CA,Santa Clara CA,1.0
+6,8507,6085,CA,Santa Clara CA,1.0
+6,8501,6085,CA,Santa Clara CA,1.0
+6,8502,6085,CA,Santa Clara CA,1.0
+6,8503,6085,CA,Santa Clara CA,1.0
+6,8507,6085,CA,Santa Clara CA,1.0
+6,8509,6085,CA,Santa Clara CA,1.0
+6,8504,6085,CA,Santa Clara CA,1.0
+6,8505,6085,CA,Santa Clara CA,1.0
+6,8502,6085,CA,Santa Clara CA,1.0
+6,8503,6085,CA,Santa Clara CA,1.0
+6,8508,6085,CA,Santa Clara CA,1.0
+6,8509,6085,CA,Santa Clara CA,1.0
+6,8505,6085,CA,Santa Clara CA,1.0
+6,8506,6085,CA,Santa Clara CA,1.0
+6,8510,6085,CA,Santa Clara CA,1.0
+6,8513,6085,CA,Santa Clara CA,1.0
+6,8514,6085,CA,Santa Clara CA,1.0
+6,8503,6085,CA,Santa Clara CA,1.0
+6,8504,6085,CA,Santa Clara CA,1.0
+6,8514,6085,CA,Santa Clara CA,1.0
+6,8501,6085,CA,Santa Clara CA,1.0
+6,8502,6085,CA,Santa Clara CA,1.0
+6,8507,6085,CA,Santa Clara CA,1.0
+6,5301,6087,CA,Santa Cruz CA,1.0
+6,5303,6087,CA,Santa Cruz CA,1.0
+6,8701,6087,CA,Santa Cruz CA,1.0
+6,8702,6087,CA,Santa Cruz CA,1.0
+6,8701,6087,CA,Santa Cruz CA,1.0
+6,8702,6087,CA,Santa Cruz CA,1.0
+6,1500,6089,CA,Shasta CA,1.0
+6,8900,6089,CA,Shasta CA,1.0
+6,5500,6095,CA,Solano CA,1.0
+6,9501,6095,CA,Solano CA,1.0
+6,9502,6095,CA,Solano CA,1.0
+6,5500,6095,CA,Solano CA,1.0
+6,9501,6095,CA,Solano CA,1.0
+6,9502,6095,CA,Solano CA,1.0
+6,9503,6095,CA,Solano CA,1.0
+6,5500,6095,CA,Solano CA,1.0
+6,9502,6095,CA,Solano CA,1.0
+6,9503,6095,CA,Solano CA,1.0
+6,11300,6095,CA,Solano CA,1.0
+6,4101,6097,CA,Sonoma CA,1.0
+6,9701,6097,CA,Sonoma CA,1.0
+6,9702,6097,CA,Sonoma CA,1.0
+6,3300,6097,CA,Sonoma CA,1.0
+6,5500,6097,CA,Sonoma CA,1.0
+6,9701,6097,CA,Sonoma CA,1.0
+6,9702,6097,CA,Sonoma CA,1.0
+6,9703,6097,CA,Sonoma CA,1.0
+6,9701,6097,CA,Sonoma CA,1.0
+6,9702,6097,CA,Sonoma CA,1.0
+6,9703,6097,CA,Sonoma CA,1.0
+6,5500,6097,CA,Sonoma CA,1.0
+6,9701,6097,CA,Sonoma CA,1.0
+6,9702,6097,CA,Sonoma CA,1.0
+6,9703,6097,CA,Sonoma CA,1.0
+6,8506,6099,CA,Stanislaus CA,1.0
+6,9901,6099,CA,Stanislaus CA,1.0
+6,9902,6099,CA,Stanislaus CA,1.0
+6,9903,6099,CA,Stanislaus CA,1.0
+6,9904,6099,CA,Stanislaus CA,1.0
+6,9901,6099,CA,Stanislaus CA,1.0
+6,9902,6099,CA,Stanislaus CA,1.0
+6,300,6099,CA,Stanislaus CA,1.0
+6,4701,6099,CA,Stanislaus CA,1.0
+6,9901,6099,CA,Stanislaus CA,1.0
+6,9902,6099,CA,Stanislaus CA,1.0
+6,9903,6099,CA,Stanislaus CA,1.0
+6,9904,6099,CA,Stanislaus CA,1.0
+6,9901,6099,CA,Stanislaus CA,1.0
+6,9902,6099,CA,Stanislaus CA,1.0
+6,9903,6099,CA,Stanislaus CA,1.0
+6,9904,6099,CA,Stanislaus CA,1.0
+6,5700,6115,CA,Yuba CA,1.0
+6,6101,6101,CA,Sutter CA,0.7266
+6,6101,6115,CA,Yuba CA,0.2734
+6,6103,6115,CA,Yuba CA,1.0
+6,10100,6101,CA,Sutter CA,0.55
+6,10100,6115,CA,Yuba CA,0.45
+6,10701,6107,CA,Tulare CA,1.0
+6,10703,6107,CA,Tulare CA,1.0
+6,10702,6107,CA,Tulare CA,1.0
+6,10703,6107,CA,Tulare CA,1.0
+6,2901,6107,CA,Tulare CA,1.0
+6,2905,6107,CA,Tulare CA,1.0
+6,10701,6107,CA,Tulare CA,1.0
+6,10702,6107,CA,Tulare CA,1.0
+6,10703,6107,CA,Tulare CA,1.0
+6,3705,6111,CA,Ventura CA,1.0
+6,3726,6111,CA,Ventura CA,1.0
+6,11101,6111,CA,Ventura CA,1.0
+6,11102,6111,CA,Ventura CA,1.0
+6,11106,6111,CA,Ventura CA,1.0
+6,11103,6111,CA,Ventura CA,1.0
+6,11106,6111,CA,Ventura CA,1.0
+6,11103,6111,CA,Ventura CA,1.0
+6,11104,6111,CA,Ventura CA,1.0
+6,11105,6111,CA,Ventura CA,1.0
+6,2901,6111,CA,Ventura CA,1.0
+6,3701,6111,CA,Ventura CA,1.0
+6,8302,6111,CA,Ventura CA,1.0
+6,11104,6111,CA,Ventura CA,1.0
+6,11105,6111,CA,Ventura CA,1.0
+6,11106,6111,CA,Ventura CA,1.0
+6,11101,6111,CA,Ventura CA,1.0
+6,11102,6111,CA,Ventura CA,1.0
+6,11105,6111,CA,Ventura CA,1.0
+6,11106,6111,CA,Ventura CA,1.0
+6,3726,6111,CA,Ventura CA,1.0
+6,11102,6111,CA,Ventura CA,1.0
+6,11103,6111,CA,Ventura CA,1.0
+6,11105,6111,CA,Ventura CA,1.0
+6,11106,6111,CA,Ventura CA,1.0
+6,3300,6113,CA,Yolo CA,1.0
+6,5500,6113,CA,Yolo CA,1.0
+6,9503,6113,CA,Yolo CA,1.0
+6,11300,6113,CA,Yolo CA,1.0
+6,9503,6113,CA,Yolo CA,1.0
+6,11300,6113,CA,Yolo CA,1.0

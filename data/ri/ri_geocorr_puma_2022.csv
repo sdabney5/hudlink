@@ -1,0 +1,9 @@
+State code,PUMA,County code,State abbr.,County_Name,allocation factor
+44,103,44007,RI,Providence RI,1.0
+44,105,44007,RI,Providence RI,1.0
+44,106,44007,RI,Providence RI,1.0
+44,107,44007,RI,Providence RI,1.0
+44,200,44003,RI,Kent RI,1.0
+44,300,44001,RI,Bristol RI,0.3723
+44,300,44005,RI,Newport RI,0.6277
+44,400,44009,RI,Washington RI,1.0

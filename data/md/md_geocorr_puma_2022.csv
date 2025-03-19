@@ -1,0 +1,58 @@
+State code,PUMA,County code,State abbr.,County_Name,allocation factor
+24,101,24001,MD,Allegany MD,0.6132
+24,101,24023,MD,Garrett MD,0.2593
+24,101,24043,MD,Washington MD,0.1275
+24,201,24043,MD,Washington MD,1.0
+24,301,24021,MD,Frederick MD,1.0
+24,302,24021,MD,Frederick MD,1.0
+24,400,24013,MD,Carroll MD,1.0
+24,501,24005,MD,Baltimore MD,1.0
+24,502,24005,MD,Baltimore MD,1.0
+24,503,24005,MD,Baltimore MD,1.0
+24,504,24005,MD,Baltimore MD,1.0
+24,505,24005,MD,Baltimore MD,1.0
+24,506,24005,MD,Baltimore MD,1.0
+24,507,24005,MD,Baltimore MD,1.0
+24,601,24025,MD,Harford MD,1.0
+24,602,24025,MD,Harford MD,1.0
+24,700,24015,MD,Cecil MD,1.0
+24,801,24510,MD,Baltimore city MD,1.0
+24,802,24510,MD,Baltimore city MD,1.0
+24,803,24510,MD,Baltimore city MD,1.0
+24,804,24510,MD,Baltimore city MD,1.0
+24,805,24510,MD,Baltimore city MD,1.0
+24,901,24027,MD,Howard MD,1.0
+24,902,24027,MD,Howard MD,1.0
+24,903,24027,MD,Howard MD,1.0
+24,1001,24031,MD,Montgomery MD,1.0
+24,1002,24031,MD,Montgomery MD,1.0
+24,1003,24031,MD,Montgomery MD,1.0
+24,1004,24031,MD,Montgomery MD,1.0
+24,1005,24031,MD,Montgomery MD,1.0
+24,1006,24031,MD,Montgomery MD,1.0
+24,1007,24031,MD,Montgomery MD,1.0
+24,1008,24031,MD,Montgomery MD,1.0
+24,1101,24033,MD,Prince Georges MD,1.0
+24,1102,24033,MD,Prince Georges MD,1.0
+24,1103,24033,MD,Prince Georges MD,1.0
+24,1104,24033,MD,Prince Georges MD,1.0
+24,1105,24033,MD,Prince Georges MD,1.0
+24,1106,24033,MD,Prince Georges MD,1.0
+24,1107,24033,MD,Prince Georges MD,1.0
+24,1201,24003,MD,Anne Arundel MD,1.0
+24,1202,24003,MD,Anne Arundel MD,1.0
+24,1203,24003,MD,Anne Arundel MD,1.0
+24,1204,24003,MD,Anne Arundel MD,1.0
+24,1205,24003,MD,Anne Arundel MD,1.0
+24,1300,24011,MD,Caroline MD,0.1931
+24,1300,24019,MD,Dorchester MD,0.1887
+24,1300,24029,MD,Kent MD,0.1113
+24,1300,24035,MD,Queen Annes MD,0.2893
+24,1300,24041,MD,Talbot MD,0.2176
+24,1400,24039,MD,Somerset MD,0.1363
+24,1400,24045,MD,Wicomico MD,0.5734
+24,1400,24047,MD,Worcester MD,0.2904
+24,1501,24009,MD,Calvert MD,0.893
+24,1501,24037,MD,St. Marys MD,0.107
+24,1601,24037,MD,St. Marys MD,1.0
+24,1700,24017,MD,Charles MD,1.0

@@ -139,7 +139,4 @@ cython_debug/
 # PyCharm
 # .idea/
 
-# CSV files
-*.csv
-!data/*.csv
 
