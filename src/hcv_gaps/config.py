@@ -44,15 +44,11 @@ will be updated dynamically using the template strings.
 
 CONFIG = {
     # User defined file paths:
-    "ipums_data_path": "path_to_ipums_data.csv",
-    "output_directory": "path_to_output_directory",
+    "ipums_data_path": r"C:\Users\shane\OneDrive - Florida State University\Attachments\Desktop\National Voucher Gap Data\FL\FL_ipums_data.csv",
+    "output_directory": r"C:\Users\shane\OneDrive - Florida State University\Attachments\Desktop\Test Ouput directory",
 
     # List of state abbreviations to process (users can add or remove as needed):
-    "states": ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id",
-               "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms",
-               "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok",
-               "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv",
-               "wi", "wy", "dc"],
+    "states": ["fl"],
 
     # Base directory for state-specific data (relative to the repository root)
     "data_dir": "data",
