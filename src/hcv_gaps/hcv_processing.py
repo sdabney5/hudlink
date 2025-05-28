@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 19 16:44:43 2025
-
-@author: shane
-"""
-
-"""
 HCV Processing Module for Housing Choice Voucher (HCV) Eligibility Analysis.
 
-This module contains the core function that processes HCV eligibility data for a single state.
+This module contains the core function that processes HCV eligibility data for a single state-year combination.
 The workflow includes:
   1. Loading data from various CSV sources.
   2. Processing counties and allocation using crosswalk data.
@@ -18,7 +12,8 @@ The workflow includes:
   6. Adjusting for incarcerated individuals.
   7. Generating final outputs.
 
-The function expects a configuration dictionary with file paths and processing options.
+The function expects a configuration dictionary with file paths and processing options,
+including keys "state" and "year" that specify the current state and year.
 """
 
 import logging
@@ -47,45 +42,52 @@ from .hcv_final_outputs import calculate_voucher_gap_and_save
 
 def process_hcv_eligibility(config):
     """
-    Process Housing Choice Voucher (HCV) eligibility data.
+    Process Housing Choice Voucher (HCV) eligibility data for a single state-year combination.
 
     Workflow:
-      1. Load Data from various sources.
-      2. Process Counties and Allocation using crosswalk data.
-      3. Clean and Split Data.
-      4. Perform Feature Engineering.
-      5. Calculate HCV Eligibility.
-      6. Adjust for Prisoners.
-      7. Generate Final Outputs.
+      1. Load data from various sources.
+      2. Process counties and allocation using crosswalk data.
+      3. Clean and split data.
+      4. Perform feature engineering.
+      5. Calculate HCV eligibility.
+      6. Adjust for prisoners.
+      7. Generate final outputs.
 
     Parameters:
-        config (dict): Configuration dictionary containing paths to data files and processing options.
+        config (dict): A configuration dictionary containing file paths and processing options,
+                       including "state" and "year" keys.
     """
-    # Load Data
+    # Load Data: IPUMS data is read from the file path provided in config.
     ipums_df = load_ipums_data(config['ipums_data_path'])
     if ipums_df is None:
         logging.error("Error: Failed to load IPUMS data. Exiting script.")
         exit(1)
     logging.info("Loaded IPUMS data")
 
-    crosswalk_2012_df, crosswalk_2022_df = load_crosswalk_data(config['crosswalk_2012_path'], config['crosswalk_2022_path'])
+    # Load Crosswalk Data
+    crosswalk_2012_df, crosswalk_2022_df = load_crosswalk_data(
+        config['crosswalk_2012_path'], config['crosswalk_2022_path']
+    )
     if crosswalk_2012_df is None or crosswalk_2022_df is None:
         logging.error("Error: Failed to load crosswalk data. Exiting script.")
         exit(1)
     logging.info("Loaded 2012 and 2022 crosswalk data")
 
+    # Load Income Limits Data
     income_limits_df = load_income_limits(config['income_limits_path'])
     if income_limits_df is None:
         logging.error("Error: Failed to load income limits data. Exiting script.")
         exit(1)
     logging.info("Loaded income limits data")
     
+    # Load Incarceration Data
     incarceration_df = load_incarceration_df(config['incarceration_data_path'])
     if incarceration_df is None:
         logging.error("Error: Failed to load incarceration data. Exiting script.")
         exit(1)
     logging.info("Loaded incarceration data")
     
+    # Load HUD HCV Data
     hud_hcv_df = load_hud_hcv_data(config['hud_hcv_data_path'])
     if hud_hcv_df is None:
         logging.error("Error: Failed to load HUD HCV data. Exiting script.")
@@ -130,5 +132,13 @@ def process_hcv_eligibility(config):
     )
     logging.info("Complete: adjusted for prisoners")
 
-    # Final Outputs
-    calculate_voucher_gap_and_save(ipums_df, hud_hcv_df, config['output_directory'], config['display_race_stats'])
+    # Final Outputs:
+    # Call the final outputs function.
+    calculate_voucher_gap_and_save(
+        ipums_df,
+        hud_hcv_df,
+        config['output_directory'],
+        config['state'],
+        config['year'],    
+        display_race_stats=config['display_race_stats']
+    )

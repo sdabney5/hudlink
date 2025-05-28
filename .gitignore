@@ -139,4 +139,9 @@ cython_debug/
 # PyCharm
 # .idea/
 
+# --- Project-specific directories ---
+# Final analysis outputs
+outputs/
 
+# API downloaded data (e.g., IPUMS extracts)
+data/api_downloads/
