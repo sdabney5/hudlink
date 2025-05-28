@@ -97,16 +97,13 @@ def process_hcv_eligibility(config):
     # Process Counties and Allocation
     ipums_df = fill_missing_county_values(ipums_df, crosswalk_2012_df, crosswalk_2022_df)
     logging.info("Complete: processed missing county values")
-    logging.info(ipums_df.head())
     
     # Clean and Split Data
     ipums_df = clean_single_family_income_data(ipums_df)
     logging.info("Complete: clean single-family income data")
-    logging.info(ipums_df.head())
 
     ipums_df = split_multifamily_households(ipums_df)
     logging.info("Complete: split multifamily households")
-    logging.info(ipums_df.head())
 
     ipums_df = process_multi_family_income_data(ipums_df)
     logging.info("Complete: process multi-family income data")
