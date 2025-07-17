@@ -1,105 +1,90 @@
 """
-hcv_eligibility_calculation.py
-
-This module contains the function to calculate Housing Choice Voucher (HCV) eligibility based on household income
-and family size using the income limits for each county. The eligibility is determined for 30%, 50%, and 80% of
-the median income levels as defined by HUD. It also calculates weighted eligibility counts by race.
+Calculate Housing Choice Voucher (HCV) eligibility based on household income and family size
+using HUD income limits. Adds eligibility flags for 30%, 50%, and 80% thresholds and computes
+weighted eligibility counts.
 
 Functions:
 
-1. calculate_hcv_eligibility(df, income_limits_df):
-    Merges the IPUMS dataset with income limits data, adjusts family size, and adds eligibility columns for each
-    income threshold (30%, 50%, 80%). It also calculates weighted eligibility counts by race.
-
-Usage:
-To use, import this module and call the `calculate_hcv_eligibility` function with the cleaned IPUMS dataframe and
-the income limits dataframe.
-
-Example:
-    import hcv_eligibility_calculation as hcv_eligibility
-
-    ipums_df = load_ipums_data('path_to_ipums_data.csv')
-    income_limits_df = load_income_limits('path_to_income_limits.csv')
-
-    ipums_df = hcv_eligibility.calculate_hcv_eligibility(ipums_df, income_limits_df)
+- calculate_hcv_eligibility: Merges IPUMS data with income limits, adjusts family size,
+  adds eligibility flags for each threshold, and computes weighted eligibility counts.
 """
-#imports
-import pandas as pd
+
 import logging
 
-logging.info("This is a log message from hcv_eligibility_calculation.py")
 
-
-def calculate_hcv_eligibility(df, income_limits_df):
+def calculate_hcv_eligibility(df, income_limits_df, weight_col, exclude_group_quarters=False):
     """
-    Calculate Housing Choice Voucher (HCV) eligibility based on household income and family size.
-
-    This function calculates HCV eligibility for households based on their income and family size, relative to
-    the income limits for their county. It adds eligibility columns for thresholds at 30%, 50%, and 80% of
-    the median income for the area, and calculates weighted eligibility counts by race.
+    Calculate HCV eligibility for each household.
 
     Parameters:
-    ----------
-    df : pd.DataFrame
-        The cleaned and prepared IPUMS data.
-    income_limits_df : pd.DataFrame
-        The income limits data with columns named according to the HUD API convention.
+        df (pd.DataFrame):
+            The cleaned IPUMS DataFrame containing at least:
+            - 'FAMSIZE' (household size)
+            - 'County_Name_Alt' (county key matching income_limits_df)
+            - 'ACTUAL_HH_INCOME' (household income)
+            - weight_col (e.g. 'Allocated_HHWT' or 'REALHHWT') indicating the household weight.
+
+        income_limits_df (pd.DataFrame):
+            Income limits data with column 'County_Name' matching 'County_Name_Alt'
+            and income limit columns named like 'il30_p1', 'il50_p1', 'il80_p1', etc.
+            
+        weight_col (str):
+            Name of the weight column to use when computing the
+            weighted eligibility counts.
+            
+        exclude_group_quarters (bool, optional):
+            If True, zeroes out eligibility and weighted counts for any household
+            where GQTYPE == 2 (institutional group quarters).
 
     Returns:
-    -------
-    pd.DataFrame
-        The DataFrame with added eligibility columns and weighted eligibility counts by race.
-
-    Notes:
-    -----
-    - Ensure the income limits dataset follows the HUD API naming convention (e.g., 'il50_p1', 'il30_p1', 'il80_p1').
-    - Adjusts family size to a maximum of 8, as HUD's income limits max out at a family size of 8.
-    - Merges the IPUMS dataset with income limits data on the 'County_Name_Alt' column.
-    - Adds eligibility columns for each income threshold (30%, 50%, 80%) based on household income and family size.
-    - Calculates weighted eligibility counts by race, distinguishing between white and minority households.
+        pd.DataFrame:
+            The merged DataFrame with added columns:
+            - 'ADJUSTED_FAMSIZE' (family size capped at 8)
+            - 'Eligible_at_30%', 'Eligible_at_50%', 'Eligible_at_80%'
+            - 'Weighted_Eligibility_Count_30%', etc.
     """
-
-    # Create a copy of the cleaned IPUMS df
     df = df.copy()
-
-    # Adjust family size, capping at 8 (because HUD's income limits max out at a family size of 8)
     df['ADJUSTED_FAMSIZE'] = df['FAMSIZE'].apply(lambda x: 8 if x > 8 else x)
-
-    # Check for missing County_Name_Alt values
-    missing_counties = df.loc[~df['County_Name_Alt'].isin(income_limits_df['County_Name']), 'County_Name_Alt'].unique()
+    missing_counties = df.loc[
+        ~df['County_Name_Alt'].isin(income_limits_df['County_Name']),
+        'County_Name_Alt'
+    ].unique()
     if len(missing_counties) > 0:
-        logging.warning(f"Warning: The following counties are missing in the income limits data: {', '.join(missing_counties)}")
-
-    # Merge dataframes on the 'County_Name_Alt' column to get the income limits for each household
-    merged_df = df.merge(income_limits_df, left_on='County_Name_Alt', right_on='County_Name', how='left')
-
-    # Rename the columns to avoid conflicts
-    merged_df.rename(columns={'County_Name_x': 'County_Name_state_abbr', 'County_Name_y': 'County_Name'}, inplace=True)
-
-    # Define income limit prefixes based on HUD API convention
-    thresholds = {
-        "30%": "il30_p",
-        "50%": "il50_p",
-        "80%": "il80_p"
-    }
-
-    # Determine eligibility for each income threshold and calculate weighted eligibility counts
+        logging.warning(
+            f"Warning: The following counties are missing in the income limits data: "
+            f"{', '.join(missing_counties)}"
+        )
+    merged_df = df.merge(
+        income_limits_df,
+        left_on='County_Name_Alt',
+        right_on='County_Name',
+        how='left'
+    )
+    merged_df.rename(
+        columns={
+            'County_Name_x': 'County_Name_state_abbr',
+            'County_Name_y': 'County_Name'
+        },
+        inplace=True
+    )
+    thresholds = {"30%": "il30_p", "50%": "il50_p", "80%": "il80_p"}
     for threshold, prefix in thresholds.items():
         eligibility_col = f'Eligible_at_{threshold}'
         weighted_col = f'Weighted_Eligibility_Count_{threshold}'
-        white_weighted_col = f'Weighted_White_HH_Eligibility_Count_{threshold}'
-        minority_weighted_col = f'Weighted_Minority_HH_Eligibility_Count_{threshold}'
-
-        # Determine eligibility using the income limits
         merged_df[eligibility_col] = merged_df.apply(
-            lambda row: 1 if row['ACTUAL_HH_INCOME'] <= row[f'{prefix}{int(row["ADJUSTED_FAMSIZE"])}'] else 0, axis=1
+            lambda row: 1
+            if row['ACTUAL_HH_INCOME'] <= row[f'{prefix}{int(row["ADJUSTED_FAMSIZE"])}']
+            else 0,
+            axis=1
         )
-
-        # Calculate weighted eligibility count
-        merged_df[weighted_col] = merged_df[eligibility_col] * merged_df['Allocated_HHWT']
-
-        # Calculate weighted eligibility counts by race
-        merged_df[white_weighted_col] = merged_df[weighted_col] * merged_df['White_HH'].apply(lambda x: 1 if x else 0)
-        merged_df[minority_weighted_col] = merged_df[weighted_col] * merged_df['White_HH'].apply(lambda x: 0 if x else 1)
+        merged_df[weighted_col] = merged_df[eligibility_col] * merged_df[weight_col]
+        
+    # Exclude group-quarter households if requested
+    if exclude_group_quarters and 'GQTYPE' in merged_df.columns:
+        mask = merged_df['GQTYPE'] == 2
+        for threshold in thresholds:
+            elig_col = f'Eligible_at_{threshold}'
+            wt_col   = f'Weighted_Eligibility_Count_{threshold}'
+            merged_df.loc[mask, [elig_col, wt_col]] = 0
 
     return merged_df

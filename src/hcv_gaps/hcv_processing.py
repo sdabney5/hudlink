@@ -1,24 +1,31 @@
-# -*- coding: utf-8 -*-
 """
-HCV Processing Module for Housing Choice Voucher (HCV) Eligibility Analysis.
+HCV Processing Module
 
 This module contains the core function that processes HCV eligibility data for a single state-year combination.
 The workflow includes:
-  1. Loading data from various CSV sources.
-  2. Processing counties and allocation using crosswalk data.
-  3. Cleaning and splitting the data.
-  4. Performing feature engineering.
-  5. Calculating HCV eligibility.
-  6. Adjusting for incarcerated individuals.
-  7. Generating final outputs.
+  1. Load IPUMS person-level data.
+  2. Load crosswalk data.
+  3. Load income limits.
+  4. Load HUD PSH data.
+  5. Fill missing county values.
+  6. Clean and split multi-family households.
+  7. Engineer household-level flags.
+  8. Flatten to one row per household.
+  9. Calculate HCV eligibility at 30/50/80% thresholds.
+  10. Generate one program-linked summary CSV per HUD program.
+  11. Optionally clear the IPUMS API cache.
 
-The function expects a configuration dictionary with file paths and processing options,
-including keys "state" and "year" that specify the current state and year.
+This script is intended for use by policy researchers and analysts and is designed to be run
+as part of a reproducible pipeline.
+
+The function expects a configuration dictionary with file paths and processing options.
 """
 
 import logging
+
+# Configure logging once at module load
 logging.basicConfig(
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    format="%(asctime)s - %(levelname)s - %(message)s",
     level=logging.INFO
 )
 
@@ -26,7 +33,6 @@ from .hcv_data_loading import (
     load_ipums_data,
     load_crosswalk_data,
     load_income_limits,
-    load_incarceration_df,
     load_hud_hcv_data
 )
 from .hcv_fill_counties_and_allocation import fill_missing_county_values
@@ -35,107 +41,120 @@ from .hcv_income_cleaning_and_household_splitting import (
     split_multifamily_households,
     process_multi_family_income_data
 )
-from .hcv_family_feature_engineering import family_feature_engineering, flatten_households_to_single_rows
+from .hcv_family_feature_engineering import (
+    family_feature_engineering,
+    flatten_households_to_single_rows
+)
 from .hcv_eligibility_calculation import calculate_hcv_eligibility
-from .hcv_prisoner_adjustment import stratified_selection_for_incarcerated_individuals
-from .hcv_final_outputs import calculate_voucher_gap_and_save
+from .hcv_final_outputs import calculate_and_save_linked_summaries
+from .file_utils import clear_api_downloads
 
-def process_hcv_eligibility(config):
+
+def process_hcv_eligibility(config: dict) -> None:
     """
     Process Housing Choice Voucher (HCV) eligibility data for a single state-year combination.
 
-    Workflow:
-      1. Load data from various sources.
-      2. Process counties and allocation using crosswalk data.
-      3. Clean and split data.
-      4. Perform feature engineering.
-      5. Calculate HCV eligibility.
-      6. Adjust for prisoners.
-      7. Generate final outputs.
-
     Parameters:
-        config (dict): A configuration dictionary containing file paths and processing options,
-                       including "state" and "year" keys.
+        config (dict): Configuration dictionary containing:
+            - 'ipums_data_path'
+            - 'crosswalk_2012_path', 'crosswalk_2022_path'
+            - 'income_limits_path'
+            - 'hud_hcv_data_path'
+            - 'output_directory'
+            - 'state', 'year'
+            - 'split_households_into_families' (bool)
+            - 'race_sampling' (bool)
+            - 'verbose' (bool)
+            - 'exclude_group_quarters' (bool)
+            - 'program_labels' (list of str)
+            - 'api_settings': {
+                  'use_ipums_api', 'ipums_api_token',
+                  'download_dir', 'clear_api_cache'
+              }
     """
-    # Load Data: IPUMS data is read from the file path provided in config.
-    ipums_df = load_ipums_data(config['ipums_data_path'])
+    # 1. Load IPUMS person-level data
+    ipums_df = load_ipums_data(config["ipums_data_path"])
     if ipums_df is None:
-        logging.error("Error: Failed to load IPUMS data. Exiting script.")
-        exit(1)
+        logging.error("Failed to load IPUMS data; exiting.")
+        return
     logging.info("Loaded IPUMS data")
 
-    # Load Crosswalk Data
+    # 2. Load crosswalk data
     crosswalk_2012_df, crosswalk_2022_df = load_crosswalk_data(
-        config['crosswalk_2012_path'], config['crosswalk_2022_path']
+        config["crosswalk_2012_path"], config["crosswalk_2022_path"]
     )
     if crosswalk_2012_df is None or crosswalk_2022_df is None:
-        logging.error("Error: Failed to load crosswalk data. Exiting script.")
-        exit(1)
-    logging.info("Loaded 2012 and 2022 crosswalk data")
+        logging.error("Failed to load crosswalk data; exiting.")
+        return
+    logging.info("Loaded crosswalk data")
 
-    # Load Income Limits Data
-    income_limits_df = load_income_limits(config['income_limits_path'])
+    # 3. Load income limits
+    income_limits_df = load_income_limits(config["income_limits_path"], config["income_limit_agg"])
     if income_limits_df is None:
-        logging.error("Error: Failed to load income limits data. Exiting script.")
-        exit(1)
-    logging.info("Loaded income limits data")
-    
-    # Load Incarceration Data
-    incarceration_df = load_incarceration_df(config['incarceration_data_path'])
-    if incarceration_df is None:
-        logging.error("Error: Failed to load incarceration data. Exiting script.")
-        exit(1)
-    logging.info("Loaded incarceration data")
-    
-    # Load HUD HCV Data
-    hud_hcv_df = load_hud_hcv_data(config['hud_hcv_data_path'])
-    if hud_hcv_df is None:
-        logging.error("Error: Failed to load HUD HCV data. Exiting script.")
-        exit(1)
-    logging.info("Loaded HUD HCV data")
-    
-    # Process Counties and Allocation
-    ipums_df = fill_missing_county_values(ipums_df, crosswalk_2012_df, crosswalk_2022_df)
-    logging.info("Complete: processed missing county values")
-    
-    # Clean and Split Data
+        logging.error("Failed to load income limits; exiting.")
+        return
+    logging.info("Loaded income limits")
+
+    # 4. Load HUD PSH data
+    hud_psh_df = load_hud_hcv_data(config)
+    if hud_psh_df is None:
+        logging.error("Failed to load HUD PSH data; exiting.")
+        return
+    logging.info("Loaded HUD PSH data")
+
+    # 5. Fill missing county values in IPUMS
+    ipums_df = fill_missing_county_values(
+        ipums_df, crosswalk_2012_df, crosswalk_2022_df
+    )
+    logging.info("Processed missing county values")
+
+    # 6. Clean and split multi-family households
     ipums_df = clean_single_family_income_data(ipums_df)
-    logging.info("Complete: clean single-family income data")
-
+    logging.info("Cleaned single-family income data")
     ipums_df = split_multifamily_households(ipums_df)
-    logging.info("Complete: split multifamily households")
-
+    logging.info("Split multifamily households")
     ipums_df = process_multi_family_income_data(ipums_df)
-    logging.info("Complete: process multi-family income data")
+    logging.info("Processed multi-family income data")
 
-    # Feature Engineering
+    # 7. Feature engineering: attach household-level elig_ flags
     ipums_df = family_feature_engineering(ipums_df)
-    logging.info("Complete: perform family feature engineering")
+    logging.info("Completed family feature engineering")
 
+    # 8. Flatten to one row per household
     ipums_df = flatten_households_to_single_rows(ipums_df)
-    logging.info("Complete: flatten households to single rows")
+    logging.info("Flattened households to single rows")
 
-    # Eligibility Calculation
-    ipums_df = calculate_hcv_eligibility(ipums_df, income_limits_df)
-    logging.info("Complete: calculate HCV eligibility")
+    # 9. Calculate eligibility thresholds
+    if config.get("split_households_into_families", False):
+        weight_col = "Allocated_HHWT"
+        weight_suffix = "_FAM"
+    else:
+        weight_col = "REALHHWT"
+        weight_suffix = "_HH"
 
-    # Adjust for Prisoners
-    ipums_df = stratified_selection_for_incarcerated_individuals(
-        ipums_df, 
-        incarceration_df,
-        config['prisoners_identified_by_GQTYPE2'],
-        config['race_sampling'],
-        config['verbose']
-    )
-    logging.info("Complete: adjusted for prisoners")
-
-    # Final Outputs:
-    # Call the final outputs function.
-    calculate_voucher_gap_and_save(
+    ipums_df = calculate_hcv_eligibility(
         ipums_df,
-        hud_hcv_df,
-        config['output_directory'],
-        config['state'],
-        config['year'],    
-        display_race_stats=config['display_race_stats']
+        income_limits_df,
+        weight_col=weight_col,
+        exclude_group_quarters=config.get("exclude_group_quarters", False)
     )
+    logging.info("Calculated HCV eligibility at 30/50/80% thresholds")
+
+    # 10. Final outputs: one linked summary per program label
+    calculate_and_save_linked_summaries(
+        elig_df=ipums_df,
+        hud_psh_df=hud_psh_df,
+        program_labels=config["program_labels"],
+        output_dir=config["output_directory"],
+        state=config["state"],
+        year=config["year"],
+        weight_suffix=weight_suffix
+    )
+    logging.info("Saved program-linked summaries")
+
+    # 11. Optionally clear IPUMS API cache
+    api_cfg = config.get("api_settings", {})
+    if api_cfg.get("clear_api_cache", False):
+        cache_dir = api_cfg.get("download_dir", "data/api_downloads")
+        clear_api_downloads(cache_dir)
+        logging.info("Cleared IPUMS API downloads cache")

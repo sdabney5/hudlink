@@ -1,0 +1,65 @@
+fmr_0,fmr_1,fmr_2,fmr_3,fmr_4,state_code,County_Name,pop2017,state,metro
+492,529,696,980,1049,22,Acadia Parish County,62605,LA,1
+529,532,696,947,1061,22,Allen Parish County,25665,LA,0
+744,781,917,1161,1447,22,Ascension Parish County,119130,LA,1
+601,648,738,1019,1158,22,Assumption Parish County,22880,LA,1
+471,539,709,918,1092,22,Avoyelles Parish County,41095,LA,0
+600,611,696,959,1191,22,Beauregard Parish County,36600,LA,0
+529,611,696,989,1086,22,Bienville Parish County,13805,LA,0
+632,756,897,1112,1249,22,Bossier Parish County,125700,LA,1
+632,756,897,1112,1249,22,Caddo Parish County,251070,LA,1
+660,688,884,1107,1241,22,Calcasieu Parish County,198755,LA,1
+617,635,812,1004,1101,22,Caldwell Parish County,10000,LA,0
+660,688,884,1107,1241,22,Cameron Parish County,6805,LA,1
+572,611,696,989,1020,22,Catahoula Parish County,10045,LA,0
+546,557,696,865,944,22,Claiborne Parish County,16295,LA,0
+529,611,696,940,961,22,Concordia Parish County,20210,LA,0
+632,756,897,1112,1249,22,De Soto Parish County,27165,LA,1
+744,781,917,1161,1447,22,East Baton Rouge Parish County,446165,LA,1
+529,529,696,947,1030,22,East Carroll Parish County,7320,LA,0
+744,781,917,1161,1447,22,East Feliciana Parish County,19555,LA,1
+529,574,696,890,985,22,Evangeline Parish County,33750,LA,0
+529,532,696,882,944,22,Franklin Parish County,20390,LA,0
+543,637,818,1097,1195,22,Grant Parish County,22305,LA,1
+614,629,828,1054,1262,22,Iberia Parish County,73345,LA,1
+604,630,742,1016,1135,22,Iberville Parish County,33120,LA,1
+529,589,696,919,944,22,Jackson Parish County,15950,LA,0
+786,927,1089,1404,1623,22,Jefferson Parish County,437040,LA,1
+577,611,696,940,944,22,Jefferson Davis Parish County,31405,LA,0
+608,781,890,1202,1387,22,Lafayette Parish County,238230,LA,1
+598,700,890,1186,1350,22,Lafourche Parish County,98110,LA,1
+529,544,696,894,980,22,La Salle Parish County,14930,LA,0
+593,653,780,1060,1335,22,Lincoln Parish County,47535,LA,0
+744,781,917,1161,1447,22,Livingston Parish County,137095,LA,1
+549,552,696,989,1074,22,Madison Parish County,11615,LA,0
+584,588,696,921,1191,22,Morehouse Parish County,26290,LA,1
+539,616,811,1022,1100,22,Natchitoches Parish County,39050,LA,0
+786,927,1089,1404,1623,22,Orleans Parish County,388180,LA,1
+615,619,815,1011,1115,22,Ouachita Parish County,156435,LA,1
+786,927,1089,1404,1623,22,Plaquemines Parish County,23395,LA,1
+744,781,917,1161,1447,22,Pointe Coupee Parish County,22270,LA,1
+543,637,818,1097,1195,22,Rapides Parish County,132080,LA,1
+530,545,697,862,963,22,Red River Parish County,8725,LA,0
+525,529,696,860,1166,22,Richland Parish County,20620,LA,0
+496,567,746,941,1108,22,Sabine Parish County,24145,LA,0
+786,927,1089,1404,1623,22,St. Bernard Parish County,45065,LA,1
+786,927,1089,1404,1623,22,St. Charles Parish County,52730,LA,1
+744,781,917,1161,1447,22,St. Helena Parish County,10510,LA,1
+590,621,817,1124,1220,22,St. James Parish County,21485,LA,1
+786,927,1089,1404,1623,22,St. John the Baptist Parish County,43565,LA,1
+533,537,706,910,1027,22,St. Landry Parish County,83580,LA,0
+608,781,890,1202,1387,22,St. Martin Parish County,53610,LA,1
+568,676,828,1045,1296,22,St. Mary Parish County,52580,LA,0
+786,927,1089,1404,1623,22,St. Tammany Parish County,249200,LA,1
+709,714,913,1129,1238,22,Tangipahoa Parish County,128850,LA,1
+529,611,696,989,1020,22,Tensas Parish County,4770,LA,0
+598,700,890,1186,1350,22,Terrebonne Parish County,113065,LA,1
+615,619,815,1011,1115,22,Union Parish County,22535,LA,1
+542,641,730,955,990,22,Vermilion Parish County,59840,LA,1
+663,705,928,1152,1387,22,Vernon Parish County,51905,LA,0
+590,611,696,989,1095,22,Washington Parish County,46450,LA,0
+529,537,696,977,992,22,Webster Parish County,40045,LA,0
+744,781,917,1161,1447,22,West Baton Rouge Parish County,25520,LA,1
+529,529,696,923,1020,22,West Carroll Parish County,11275,LA,0
+744,781,917,1161,1447,22,West Feliciana Parish County,15375,LA,1
+529,529,696,886,968,22,Winn Parish County,14630,LA,0

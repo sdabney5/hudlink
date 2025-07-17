@@ -10,9 +10,12 @@ authors = [{ name = "Shane Dabney", email = "sdabney@fsu.edu" }]
 readme = "README.md"
 requires-python = ">=3.9"
 
-# Setuptools looks inside the /src layout
+# setuptools should look for packages under src/
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[project.scripts]
+hcv-gaps = "hcv_gaps.main:main"

@@ -1,248 +1,212 @@
 """
 hcv_family_feature_engineering.py
-Engineers family/household level features in the IPUMS dataset.
 
-This module contains functions for engineering family-level features and condensing households
-into single rows within the IPUMS dataset.
+Engineer household-level eligibility flags and flatten to one row per FAMILYNUMBER.
 
 Functions:
-
-1. family_feature_engineering(df):
-    Adds family-level features to the dataset, including education metrics and race binary columns.
-
-2. flatten_households_to_single_rows(df):
-    Condenses the DataFrame to one representative row per family, aggregating specified columns and
-    notifying the user of any extra columns.
-
-Usage:
-To use, import this module and call the functions with the IPUMS dataframe as the argument.
-The functions will return the modified DataFrame with engineered family features and condensed households.
-
-Example:
-    import hcv_family_feature_engineering as hcv_engineering
-
-    ipums_df = hcv_engineering.family_feature_engineering(ipums_df)
-    ipums_df = hcv_engineering.flatten_households_to_single_rows(ipums_df)
+    - family_feature_engineering: Attach a broad set of binary elig_ flags to person-level rows.
+    - flatten_households_to_single_rows: Collapse to one household row, aggregating flags and core fields.
 """
 
-#imports
-import pandas as pd
 import logging
-logging.info("This is a log message from hcv_family_feature_engineering")
+import pandas as pd
 
 
-def family_feature_engineering(df):
+def family_feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Add family-level features to the dataset, including education metrics and race binary columns.
+    Attach household-level eligibility flags (prefixed 'elig_') to each person record.
 
-    This function processes census data to add representative family-level features, including education metrics
-    and race binary columns. It categorizes family-level race based on the race of the head of household,
-    consistent with HUD's method in HCV reports.
-
-    The function aggregates individual-level data to create family-level features while preserving the original
-    individual records. It also creates a new variable, REALHHWT. For single-family households, REALHHWT matches
-    HHWT. For previously multifamily households, REALHHWT is the original statistical weight (HHWT) divided by
-    the number of families originally in the household (NFAMS_B4_SPLIT).
+    Flags cover:
+      - Family structure: elig_2adults, elig_1adult,
+        elig_female_head, elig_female_head_child,
+        elig_male_head, elig_male_head_child
+      - Race/ethnicity: elig_minority, elig_white_nonhsp,
+        elig_black_nonhsp, elig_native_american_nonhsp,
+        elig_asian_nonhsp, elig_mixed_nonhsp,
+        elig_otherrace, elig_hispanic
+      - Citizenship & tenure: elig_noncitizen,
+        elig_owner, elig_renter, elig_mortgage_paid
+      - Veteran status: elig_veteran
+      - Disability: elig_disab_hearing_vision,
+        elig_disab_ambulatory, elig_disab_cognitative,
+        elig_disab_independent_living, elig_disab_any
+      - Age: elig_age62plus, elig_age75plus
+      - Education: elig_hs_complete,
+        elig_bachelor_complete, elig_grad_school
+      - Employment: elig_employed
 
     Parameters:
-    ----------
-    df : pd.DataFrame
-        The input DataFrame containing individual-level census data.
+        df: Person-level IPUMS DataFrame with columns including:
+            FAMILYNUMBER, RELATE, AGE, SEX, RACE, HISPAN, MARST, NCHILD,
+            CITIZEN, OWNERSHP, MORTGAGE, VETSTAT,
+            DIFFSENS, DIFFPHYS, DIFFREM, DIFFMOB,
+            EDUCD, EMPSTAT.
 
     Returns:
-    -------
-    pd.DataFrame
-        The updated DataFrame with added family-level features and adjusted household weights.
-
-    Notes:
-    -----
-    - This function assumes the DataFrame includes columns for family identification (FAMILYNUMBER),
-      relationship to head of household (RELATE), race (RACE), and various education and income variables.
+        pd.DataFrame: Input DataFrame with 'elig_' flags merged back onto each row.
     """
-    # Helper function to categorize race based on head of household
-    def categorize_race_by_head(relate_codes, race_codes):
-        """
-        Determines the household's race based on the head of household.
-        If no head (RELATE == 1) is found, it uses the spouse (RELATE == 2).
-        If neither are found, it defaults to the first person's race.
-        """
-    
-        # Find the race of the head of household (RELATE == 1)
-        for relate, race in zip(relate_codes, race_codes):
-            if relate == 1:  # Head of Household
-                return categorize_race(race)  # Function to categorize race
-    
-        # If no head of household, check for spouse (RELATE == 2)
-        for relate, race in zip(relate_codes, race_codes):
-            if relate == 2:  # Spouse
-                return categorize_race(race)
-    
-        # If no head or spouse, return the first available race
-        return categorize_race(race_codes[0])
-    
-    # Helper function to categorize race labels
-    def categorize_race(race):
-        if race == 1:
-            return "White"
-        elif race == 2:
-            return "Black"
-        elif race == 3:
-            return "Other"
-        elif race in {4, 5, 6}:
-            return "Asian"
-        elif race in {7, 8, 9}:
-            return "Mixed Race"
-        else:
-            return "Other_Race"
-    
-    # Education categorization function
-    def categorize_education(educ_codes):
-        if educ_codes.max() in range(2, 63):
-            return "High School or Below"
-        elif educ_codes.max() in range(63, 101):
-            return "Some College"
-        elif educ_codes.max() == 101:
-            return "Bachelor's Degree"
-        elif educ_codes.max() in range(102, 117):
-            return "Master's & Above"
-        else:
-            return "No Schooling"
-    
-    # Dictionary for groupby aggregation
-    aggregation = {
-     'AGE': [
-        ('SENIOR_HOUSEHOLD', lambda x: 1 if (x > 64).any() else 0),
-        ('NUM_CHILDREN', lambda x: (x < 18).sum())
-     ],
-     'VETSTAT': [('VET_HOUSEHOLD', lambda x: 1 if (x == 2).any() else 0)],
-     'EDUCD': [
-        ('HIGHEST_EDUC', categorize_education),
-        ('HS_COMPLETE', lambda x: 1 if (x >= 62).any() else 0),
-        ('BACHELOR_COMPLETE', lambda x: 1 if x.eq(101).any() else 0),
-       ('GRAD_SCHOOL', lambda x: 1 if (x > 101).any() else 0),
-       ('TWO_COLLEGE_GRADS', lambda x: 1 if x[x.eq(101)].count() >= 2 else 0)
-     ],
-     'HHTYPE': [
-        ('MARRIED_FAMILY_HH', lambda x: 1 if (x == 1).any() else 0),
-        ('SINGLE_PARENT_HH', lambda x: 1 if (x == 2).any() or (x == 3).any() else 0)
-     ],
-     'EMPSTAT': [('EMPLOYED', lambda x: 1 if (x == 1).any() else 0)],
-        'RACE': [('HOUSEHOLD_RACE', lambda x: categorize_race_by_head(x.tolist(), x.tolist()))],
-        'RELATE': [('RELATE_CODES', lambda x: x.tolist())]
+    # Guard required inputs
+    required_cols = {
+        'FAMILYNUMBER', 'RELATE', 'AGE', 'SEX', 'RACE', 'HISPAN',
+        'MARST', 'NCHILD', 'CITIZEN', 'OWNERSHP', 'MORTGAGE',
+        'VETSTAT', 'DIFFSENS', 'DIFFPHYS', 'DIFFREM', 'DIFFMOB',
+        'EDUCD', 'EMPSTAT'
     }
-    
-    # Perform a single groupby operation
-    logging.info('Aggregating Family Features....')
-    family_features = df.groupby('FAMILYNUMBER').agg(aggregation)
-    
-    # Flatten the multi-index columns
-    family_features.columns = [col[1] for col in family_features.columns.values]
-    
-    # Add binary columns for each race category
-    family_features['White_HH'] = family_features['HOUSEHOLD_RACE'] == 'White'
-    family_features['Black_HH'] = family_features['HOUSEHOLD_RACE'] == 'Black'
-    family_features['Asian_HH'] = family_features['HOUSEHOLD_RACE'] == 'Asian'
-    family_features['Mixed_Race_HH'] = family_features['HOUSEHOLD_RACE'] == 'Mixed Race'
-    family_features['Other_Race_HH'] = family_features['HOUSEHOLD_RACE'] == 'Other_Race'
-    
-    # Drop the RELATE_CODES column that was used for categorization
-    family_features.drop(columns=['RELATE_CODES'], inplace=True)
-    
-    # Merge the aggregated features back to the main df
-    logging.info('Merging aggregated features back to main df')
-    df = df.merge(family_features, on='FAMILYNUMBER', how='left')
-    
+    missing = required_cols - set(df.columns)
+    if missing:
+        raise KeyError(f"Missing required columns for family_feature_engineering: {missing}")
+
+    # 1) Person-level indicators for any-member flags
+    df['_IS_DISAB_HEARING_VISION']   = (df['DIFFSENS'] == 2).astype('uint8')
+    df['_IS_DISAB_AMBULATORY']       = (df['DIFFPHYS'] == 2).astype('uint8')
+    df['_IS_DISAB_COGNITIVE']        = (df['DIFFREM'] == 2).astype('uint8')
+    df['_IS_DISAB_INDEP_LIVING']     = (df['DIFFMOB'] == 2).astype('uint8')
+    df['_IS_VET']                    = (df['VETSTAT'] == 2).astype('uint8')
+
+    # Education & employment helpers
+    df['_EDU_HS_PLUS']    = (df['EDUCD'] >= 62).astype('uint8')
+    df['_EDU_BACHELOR']   = (df['EDUCD'] == 101).astype('uint8')
+    df['_EDU_GRAD']       = (df['EDUCD'] > 101).astype('uint8')
+    df['_EMPLOYED']       = (df['EMPSTAT'] == 1).astype('uint8')
+
+    # 2) Identify head-of-household: RELATE==1, then spouse, else first
+    priority = df['RELATE'].replace({1: 0, 2: 1}).fillna(2)
+    rep_idx  = priority.groupby(df['FAMILYNUMBER'], sort=False).idxmin()
+    rep = (
+        df.loc[rep_idx, [
+            'FAMILYNUMBER', 'RELATE', 'AGE', 'SEX',
+            'RACE', 'HISPAN', 'MARST', 'NCHILD',
+            'CITIZEN', 'OWNERSHP', 'MORTGAGE'
+        ]]
+        .set_index('FAMILYNUMBER')
+    )
+
+    # 3) Head-of-household flags
+    rep['elig_2adults']    = ((rep['MARST'] == 1) & (rep['NCHILD'] > 0)).astype('uint8')
+    rep['elig_1adult']     = ((rep['MARST'] != 1) & (rep['NCHILD'] > 0)).astype('uint8')
+    rep['elig_female_head']       = ((rep['RELATE'] == 1) & (rep['SEX'] == 2)).astype('uint8')
+    rep['elig_female_head_child'] = (rep['elig_female_head'] & (rep['NCHILD'] > 0)).astype('uint8')
+    rep['elig_male_head']         = ((rep['RELATE'] == 1) & (rep['SEX'] == 1)).astype('uint8')
+    rep['elig_male_head_child']   = (rep['elig_male_head'] & (rep['NCHILD'] > 0)).astype('uint8')
+    rep['elig_age62plus']         = ((rep['RELATE'] == 1) & (rep['AGE'] > 62)).astype('uint8')
+    rep['elig_age75plus']         = ((rep['RELATE'] == 1) & (rep['AGE'] > 74)).astype('uint8')
+
+    # Race/Ethnicity
+    rep['elig_minority']               = ((rep['HISPAN'] == 1) | (rep['RACE'] != 1)).astype('uint8')
+    rep['elig_white_nonhsp']           = ((rep['HISPAN'] == 0) & (rep['RACE'] == 1)).astype('uint8')
+    rep['elig_black_nonhsp']           = ((rep['HISPAN'] == 0) & (rep['RACE'] == 2)).astype('uint8')
+    rep['elig_native_american_nonhsp'] = ((rep['HISPAN'] == 0) & (rep['RACE'] == 3)).astype('uint8')
+    rep['elig_asian_nonhsp']           = ((rep['HISPAN'] == 0) & rep['RACE'].isin([4,5,6])).astype('uint8')
+    rep['elig_mixed_nonhsp']           = ((rep['HISPAN'] == 0) & rep['RACE'].isin([8,9])).astype('uint8')
+    rep['elig_otherrace']              = ((rep['HISPAN'] == 0) & (rep['RACE'] == 7)).astype('uint8')
+    rep['elig_hispanic']               = (rep['HISPAN'] == 1).astype('uint8')
+
+    # Citizenship & tenure
+    rep['elig_noncitizen']    = (rep['CITIZEN'] == 3).astype('uint8')
+    rep['elig_owner']         = (rep['OWNERSHP'] == 1).astype('uint8')
+    rep['elig_renter']        = rep['OWNERSHP'].isin([0,2]).astype('uint8')
+    rep['elig_mortgage_paid'] = (rep['MORTGAGE'] == 1).astype('uint8')
+
+    # drop raw head columns
+    rep.drop(columns=[
+        'RELATE','AGE','SEX','RACE','HISPAN',
+        'MARST','NCHILD','CITIZEN','OWNERSHP','MORTGAGE'
+    ], inplace=True)
+
+    # 4) Aggregate any-member and edu/employment flags to household level
+    fam = df.groupby('FAMILYNUMBER', sort=False).agg(
+        elig_disab_hearing_vision     = ('_IS_DISAB_HEARING_VISION','max'),
+        elig_disab_ambulatory         = ('_IS_DISAB_AMBULATORY','max'),
+        elig_disab_cognitative        = ('_IS_DISAB_COGNITIVE','max'),
+        elig_disab_independent_living = ('_IS_DISAB_INDEP_LIVING','max'),
+        elig_veteran                  = ('_IS_VET','max'),
+        elig_hs_complete              = ('_EDU_HS_PLUS','max'),
+        elig_bachelor_complete        = ('_EDU_BACHELOR','max'),
+        elig_grad_school              = ('_EDU_GRAD','max'),
+        elig_employed                 = ('_EMPLOYED','max'),
+    )
+
+    # disability-any flag
+    fam['elig_disab_any'] = fam[[
+        'elig_disab_hearing_vision',
+        'elig_disab_ambulatory',
+        'elig_disab_cognitative',
+        'elig_disab_independent_living'
+    ]].max(axis=1).astype('uint8')
+
+    # 5) Merge head & fam flags back onto person-level rows
+    df = (
+        df
+        .merge(rep.reset_index(), on='FAMILYNUMBER', how='left')
+        .merge(fam.reset_index(), on='FAMILYNUMBER', how='left')
+    )
+    logging.info("Merged household flags onto %d person rows", len(df))
+
+    # 6) Clean up temporary helper columns
+    df.drop(columns=[c for c in df.columns if c.startswith('_')], inplace=True)
     return df
 
 
-#Function to condense families/households to a single row
-def flatten_households_to_single_rows(df):
+def flatten_households_to_single_rows(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Condense the dataframe so there's only one representative row per family.
+    Collapse person-level DataFrame into one row per FAMILYNUMBER.
 
-    This function condenses the DataFrame so there's only one representative row per family. It drops specified
-    columns and retains unspecified columns. It aggregates certain columns by taking the first value for each
-    family, sums specified columns, and retains the first value for unspecified columns. If the DataFrame contains
-    additional columns not specified in the function, it takes the first value for these columns and notifies the user.
+    - Static fields (IDs, geography, income) use first().
+    - Binary elig_ flags use max() to capture any member’s flag.
+    - Numeric fields listed in sum_vars (default ['UHRSWORK']) use sum().
+    - Any other columns default to first().
 
     Parameters:
-    ----------
-    df : pd.DataFrame
-        The input dataframe.
+        df (pd.DataFrame): Person-level DataFrame with elig_ flags and core fields.
 
     Returns:
-    -------
-    pd.DataFrame
-        The condensed dataframe with one row per family.
-
-    Notes:
-    -----
-    - The function drops columns that are not needed for the analysis.
-    - The function aggregates certain columns by taking the first value for each family.
-    - For specified columns that require summation, the function aggregates them by summing.
-    - For columns that are not specifically listed, the function retains them and applies the 'first' aggregation.
-    - If the DataFrame contains additional columns not specified in the function, the function will take the first value
-      for these columns and notify the user.
-
-    Verification:
-    -------------
-    Verified on 2024-06-25 with:
-    - test_data_1
-    - production_data
+        pd.DataFrame: One row per FAMILYNUMBER, with aggregated fields.
     """
-    # Columns to drop
-    cols_to_drop = ['OTHERINCOME_FAMILY', 'OTHERINCOME_PERSONAL', 'HHINCOME', 'QOWNERSH', 'QRENTGRS', 'QHHINCOME',
-                    'PERNUM', 'PERWT', 'FAMUNIT', 'AGE', 'MARST', 'BIRTHYR', 'HCOVANY', 'SCHOOL', 'EDUC', 'EDUCD',
-                    'GRADEATT', 'GRADEATTD', 'SCHLTYPE', 'RELATE', 'RELATED', 'GCRESPON', 'QAGE', 'QMARST',
-                    'QSEX', 'QHINSEMP', 'QHINSPUR', 'QHINSTRI', 'QHINSCAI', 'QHINSCAR', 'QHINSVA', 'QHINSIHS',
-                    'QEDUC', 'QGRADEAT', 'QSCHOOL', 'QMIGRAT1', 'QMOVEDIN', 'QVETSTAT', 'QTRANTIM', 'QGCRESPO',
-                    'INCWAGE', 'INCSS', 'INCWELFR', 'INCINVST', 'INCRETIR', 'INCSUPP', 'INCOTHER', 'INCEARN',
-                    'VETSTAT', 'VETSTATD', 'FTOTINC']
+    # 1) Drop person-only temp columns
+    drop_cols = [
+        'OTHERINCOME_FAMILY','OTHERINCOME_PERSONAL','HHINCOME','QOWNERSH',
+        'QRENTGRS','QHHINCOME','PERNUM','PERWT','FAMUNIT','AGE','MARST',
+        'BIRTHYR','HCOVANY','SCHOOL','EDUC','EDUCD','GRADEATT','GRADEATTD',
+        'SCHLTYPE','RELATE','RELATED','GCRESPON','QAGE','QMARST','QSEX',
+        'QHINSEMP','QHINSPUR','QHINSTRI','QHINSCAR','QHINSVA','QHINSIHS',
+        'QEDUC','QGRADEAT','QSCHOOL','QMIGRAT1','QMOVEDIN','QVETSTAT',
+        'QTRANTIM','QGCRESPO','INCWAGE','INCSS','INCWELFR','INCINVST',
+        'INCRETIR','INCSUPP','INCOTHER','INCEARN','VETSTAT','VETSTATD','FTOTINC'
+    ]
+    df = df.drop(columns=[c for c in drop_cols if c in df.columns])
 
-    # Drop the columns
-    df = df.drop(columns=[col for col in cols_to_drop if col in df.columns])
+    # 2) Define aggregation categories
+    core_fields = [
+        'County_Name','County_Name_Alt','YEAR','STATEICP','COUNTYICP',
+        'COUNTYFIP','PUMA','CBHHTYPE','SERIAL','CBSERIAL','CLUSTER',
+        'REGION','METRO','FAMSIZE','ACTUAL_HH_INCOME','POVERTY',
+        'HHTYPE','REALHHWT','Allocated_HHWT','HHWT','MULTYEAR',
+        'SAMPLE','STRATA','GQ','GQTYPE','GQTYPED'
+    ]
+    static_cols = [c for c in core_fields if c in df.columns]
+    elig_flags   = [c for c in df.columns if c.startswith('elig_')]
 
-    # The columns where we'll just take the first value since they should all be the same for a family
-    cols_first_value = ['County_Name', 'YEAR', 'HHWT', 'MULTYEAR', 'SAMPLE', 'SERIAL', 'CBSERIAL', 'CBHHTYPE', 'CLUSTER',
-                        'REGION', 'STATEICP', 'COUNTYICP', 'COUNTYFIP', 'METRO', 'MET2013', 'MET2013ERR',
-                        'CITY', 'PUMA', 'STRATA', 'GQ', 'GQTYPE', 'GQTYPED', 'OWNERSHP', 'OWNERSHPD',
-                        'MORTGAGE', 'MORTAMT1', 'RENTGRS', 'FAMILYNUMBER', 'ACTUAL_HH_INCOME', 'NFAMS_B4_SPLIT',
-                        'HHTYPE', 'FOODSTMP', 'VEHICLES', 'NMOTHERS', 'NFATHERS', 'MULTGEN',
-                        'MULTGEND', 'FAMSIZE', 'POVERTY', 'SENIOR_HOUSEHOLD', 'NUM_CHILDREN', 'VET_HOUSEHOLD',
-                        'HIGHEST_EDUC', 'MARRIED_FAMILY HH', 'SINGLE_PARENT HH', 'REALHHWT', 'EMPLOYED', 'CITIZEN',
-                        'HISPAN', 'HISPAND', 'RACE', 'RACED', 'White', 'Black', 'Asian', 'Mixed Race',
-                        'Other_Race', 'HOUSEHOLD_RACE', 'HS_COMPLETE', 'BACHELOR_COMPLETE',
-                        'GRAD_SCHOOL', 'TWO_COLLEGE_GRADS', 'SEX', 'MCDC_PUMA_COUNTY_NAMES', 'Multi_County_Flag',
-                        'Black_HH', 'MARRIED_FAMILY_HH', 'Asian_HH', 'Mixed_Race_HH', 'EMPSTAT', 'Other_Race_HH',
-                        'SINGLE_PARENT_HH', 'White_HH']
+    # 3) Extendable sum_vars list
+    sum_vars   = ['UHRSWORK']
+    sum_fields = [c for c in sum_vars if c in df.columns]
 
-    # Columns where we'll take the sum value
-    cols_sum_value = ['UHRSWORK']
+    # 4) Build aggregation map
+    agg_map = {
+        **{c: 'first' for c in static_cols},
+        **{c: 'max'   for c in elig_flags},
+        **{c: 'sum'   for c in sum_fields}
+    }
 
-    # Group by FAMILYNUMBER and aggregate
-    aggregation = {col: 'first' for col in df.columns.intersection(cols_first_value)}
-    aggregation.update({col: 'sum' for col in df.columns.intersection(cols_sum_value)})
+    # 5) Catch extra columns via first()
+    extras = set(df.columns) - set(static_cols) - set(elig_flags) - set(sum_fields) - {'FAMILYNUMBER'}
+    if extras:
+        logging.info("Flatten: first() on extra columns: %s", ", ".join(sorted(extras)))
+        agg_map.update({c: 'first' for c in extras})
 
-    # Capture extra columns not specified
-    all_columns = set(df.columns)
-    specified_columns = set(df.columns.intersection(cols_first_value)) | set(df.columns.intersection(cols_sum_value))
-    extra_columns = all_columns - specified_columns
+    # 6) Group and aggregate
+    condensed = df.groupby('FAMILYNUMBER').agg(agg_map).reset_index()
 
-    # Add extra columns to the aggregation dictionary with 'first'
-    for col in extra_columns:
-        aggregation[col] = 'first'
+    # 7) Sanity check
+    assert condensed['FAMILYNUMBER'].is_unique, "Duplicate FAMILYNUMBER after flatten"
 
-    # Print message if there are extra columns
-    if extra_columns:
-        logging.info("FYI: The following extra columns were found and their first values were taken for each household:")
-        logging.info(", ".join(extra_columns))
-
-    # Group, aggregate, then put FAMILYNUMBER back as a column and reset the index
-    condensed_df = df.groupby('FAMILYNUMBER').agg(aggregation)
-    condensed_df['FAMILYNUMBER'] = condensed_df.index
-    condensed_df.reset_index(drop=True, inplace=True)
-        
-    # **Ensure each FAMILYNUMBER is unique after flattening**
-    assert condensed_df['FAMILYNUMBER'].is_unique, "Error: Duplicate FAMILYNUMBER values exist after flattening!"
-
-    return condensed_df
+    return condensed

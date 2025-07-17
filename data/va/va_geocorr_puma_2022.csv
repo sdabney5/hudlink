@@ -2,13 +2,13 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,7300,51001,VA,Accomack VA,0.1955
 51,10901,51003,VA,Albemarle VA,0.3379
 51,54001,51003,VA,Albemarle VA,0.5168
-51,51000,51510,VA,Alexandria city VA,1
+51,51000,51510,VA,Alexandria city VA,1.0
 51,16101,51005,VA,Alleghany VA,0.0751
 51,8300,51007,VA,Amelia VA,0.0733
 51,1900,51009,VA,Amherst VA,0.2467
 51,1900,51011,VA,Appomattox VA,0.127
-51,1301,51013,VA,Arlington VA,1
-51,1302,51013,VA,Arlington VA,1
+51,1301,51013,VA,Arlington VA,1.0
+51,1302,51013,VA,Arlington VA,1.0
 51,1500,51015,VA,Augusta VA,0.4599
 51,1500,51017,VA,Bath VA,0.025
 51,1900,51019,VA,Bedford VA,0.6262
@@ -25,12 +25,12 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,8501,51036,VA,Charles City VA,0.0667
 51,8300,51037,VA,Charlotte VA,0.0637
 51,54001,51540,VA,Charlottesville city VA,0.3352
-51,55001,51550,VA,Chesapeake city VA,1
-51,55002,51550,VA,Chesapeake city VA,1
+51,55001,51550,VA,Chesapeake city VA,1.0
+51,55002,51550,VA,Chesapeake city VA,1.0
 51,74001,51550,VA,Chesapeake city VA,0.1128
-51,4101,51041,VA,Chesterfield VA,1
-51,4102,51041,VA,Chesterfield VA,1
-51,4103,51041,VA,Chesterfield VA,1
+51,4101,51041,VA,Chesterfield VA,1.0
+51,4102,51041,VA,Chesterfield VA,1.0
+51,4103,51041,VA,Chesterfield VA,1.0
 51,6900,51043,VA,Clarke VA,0.1101
 51,14900,51570,VA,Colonial Heights city VA,0.1009
 51,16101,51580,VA,Covington city VA,0.0283
@@ -43,13 +43,13 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,14900,51595,VA,Emporia city VA,0.032
 51,7300,51057,VA,Essex VA,0.062
 51,60001,51600,VA,Fairfax city VA,0.1505
-51,5901,51059,VA,Fairfax VA,1
-51,5902,51059,VA,Fairfax VA,1
-51,5904,51059,VA,Fairfax VA,1
-51,5905,51059,VA,Fairfax VA,1
-51,5906,51059,VA,Fairfax VA,1
-51,5907,51059,VA,Fairfax VA,1
-51,5908,51059,VA,Fairfax VA,1
+51,5901,51059,VA,Fairfax VA,1.0
+51,5902,51059,VA,Fairfax VA,1.0
+51,5904,51059,VA,Fairfax VA,1.0
+51,5905,51059,VA,Fairfax VA,1.0
+51,5906,51059,VA,Fairfax VA,1.0
+51,5907,51059,VA,Fairfax VA,1.0
+51,5908,51059,VA,Fairfax VA,1.0
 51,60001,51059,VA,Fairfax VA,0.8495
 51,61001,51059,VA,Fairfax VA,0.8789
 51,61001,51610,VA,Falls Church city VA,0.1211
@@ -68,12 +68,12 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,54001,51079,VA,Greene VA,0.148
 51,14900,51081,VA,Greensville VA,0.0632
 51,8300,51083,VA,Halifax VA,0.1881
-51,65000,51650,VA,Hampton city VA,1
+51,65000,51650,VA,Hampton city VA,1.0
 51,8501,51085,VA,Hanover VA,0.5317
 51,14501,51085,VA,Hanover VA,0.5043
 51,16500,51660,VA,Harrisonburg city VA,0.3822
-51,8701,51087,VA,Henrico VA,1
-51,8702,51087,VA,Henrico VA,1
+51,8701,51087,VA,Henrico VA,1.0
+51,8702,51087,VA,Henrico VA,1.0
 51,14300,51089,VA,Henry VA,0.2752
 51,1500,51091,VA,Highland VA,0.0132
 51,14900,51670,VA,Hopewell city VA,0.1278
@@ -85,9 +85,9 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,7300,51103,VA,Lancaster VA,0.0639
 51,18500,51105,VA,Lee VA,0.1203
 51,1500,51678,VA,Lexington city VA,0.0434
-51,10701,51107,VA,Loudoun VA,1
-51,10702,51107,VA,Loudoun VA,1
-51,10703,51107,VA,Loudoun VA,1
+51,10701,51107,VA,Loudoun VA,1.0
+51,10702,51107,VA,Loudoun VA,1.0
+51,10703,51107,VA,Loudoun VA,1.0
 51,10901,51109,VA,Louisa VA,0.3126
 51,8300,51111,VA,Lunenburg VA,0.066
 51,68000,51680,VA,Lynchburg city VA,0.5865
@@ -101,9 +101,9 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,12100,51121,VA,Montgomery VA,0.5484
 51,10901,51125,VA,Nelson VA,0.1229
 51,8501,51127,VA,New Kent VA,0.2261
-51,70000,51700,VA,Newport News city VA,1
-51,71001,51710,VA,Norfolk city VA,1
-51,71002,51710,VA,Norfolk city VA,1
+51,70000,51700,VA,Newport News city VA,1.0
+51,71001,51710,VA,Norfolk city VA,1.0
+51,71002,51710,VA,Norfolk city VA,1.0
 51,7300,51131,VA,Northampton VA,0.0719
 51,7300,51133,VA,Northumberland VA,0.0693
 51,18500,51720,VA,Norton city VA,0.02
@@ -118,15 +118,15 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,14501,51145,VA,Powhatan VA,0.2731
 51,8300,51147,VA,Prince Edward VA,0.1208
 51,14900,51149,VA,Prince George VA,0.2387
-51,15301,51153,VA,Prince William VA,1
-51,15302,51153,VA,Prince William VA,1
-51,15303,51153,VA,Prince William VA,1
+51,15301,51153,VA,Prince William VA,1.0
+51,15302,51153,VA,Prince William VA,1.0
+51,15303,51153,VA,Prince William VA,1.0
 51,68701,51153,VA,Prince William VA,0.5559
 51,12100,51155,VA,Pulaski VA,0.1859
 51,12100,51750,VA,Radford city VA,0.0884
 51,6100,51157,VA,Rappahannock VA,0.0402
-51,76001,51760,VA,Richmond city VA,1
-51,76002,51760,VA,Richmond city VA,1
+51,76001,51760,VA,Richmond city VA,1.0
+51,76002,51760,VA,Richmond city VA,1.0
 51,7300,51159,VA,Richmond VA,0.0522
 51,77001,51770,VA,Roanoke city VA,0.7497
 51,16101,51161,VA,Roanoke VA,0.4383
@@ -146,9 +146,9 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 51,14900,51181,VA,Surry VA,0.0364
 51,14900,51183,VA,Sussex VA,0.0601
 51,18500,51185,VA,Tazewell VA,0.2194
-51,81001,51810,VA,Virginia Beach city VA,1
-51,81002,51810,VA,Virginia Beach city VA,1
-51,81003,51810,VA,Virginia Beach city VA,1
+51,81001,51810,VA,Virginia Beach city VA,1.0
+51,81002,51810,VA,Virginia Beach city VA,1.0
+51,81003,51810,VA,Virginia Beach city VA,1.0
 51,17100,51187,VA,Warren VA,0.3749
 51,19100,51191,VA,Washington VA,0.2889
 51,1500,51820,VA,Waynesboro city VA,0.1317

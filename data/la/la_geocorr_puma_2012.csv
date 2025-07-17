@@ -1,184 +1,165 @@
 State code,PUMA,County code,State abbr.,County_Name,allocation factor
-22,100,22017,LA,Caddo Parish LA,1.0
-22,101,22017,LA,Caddo Parish LA,1.0
-22,200,22017,LA,Caddo Parish LA,1.0
-22,100,22017,LA,Caddo Parish LA,1.0
-22,101,22017,LA,Caddo Parish LA,1.0
-22,200,22017,LA,Caddo Parish LA,1.0
-22,300,22017,LA,Caddo Parish LA,1.0
-22,100,22015,LA,Bossier Parish LA,1.0
-22,101,22015,LA,Bossier Parish LA,1.0
-22,200,22015,LA,Bossier Parish LA,0.775
-22,200,22119,LA,Webster Parish LA,0.225
-22,300,22015,LA,Bossier Parish LA,0.0977
-22,300,22119,LA,Webster Parish LA,0.9023
-22,101,22031,LA,De Soto Parish LA,1.0
-22,200,22013,LA,Bienville Parish LA,0.6522
-22,200,22027,LA,Claiborne Parish LA,0.3478
-22,300,22013,LA,Bienville Parish LA,0.0749
-22,300,22027,LA,Claiborne Parish LA,0.0831
-22,300,22031,LA,De Soto Parish LA,0.1592
-22,300,22061,LA,Lincoln Parish LA,0.2849
-22,300,22069,LA,Natchitoches Parish LA,0.2211
-22,300,22081,LA,Red River Parish LA,0.0453
-22,300,22085,LA,Sabine Parish LA,0.1316
-22,500,22013,LA,Bienville Parish LA,0.2036
-22,500,22027,LA,Claiborne Parish LA,0.0728
-22,500,22061,LA,Lincoln Parish LA,0.7235
-22,700,22069,LA,Natchitoches Parish LA,1.0
-22,300,22073,LA,Ouachita Parish LA,1.0
-22,400,22073,LA,Ouachita Parish LA,1.0
-22,500,22073,LA,Ouachita Parish LA,1.0
-22,300,22049,LA,Jackson Parish LA,0.7
-22,300,22111,LA,Union Parish LA,0.3
-22,400,22021,LA,Caldwell Parish LA,0.4573
-22,400,22049,LA,Jackson Parish LA,0.3442
-22,400,22067,LA,Morehouse Parish LA,0.0251
-22,400,22111,LA,Union Parish LA,0.1734
-22,500,22021,LA,Caldwell Parish LA,0.0661
-22,500,22035,LA,East Carroll Parish LA,0.0528
-22,500,22041,LA,Franklin Parish LA,0.1401
-22,500,22049,LA,Jackson Parish LA,0.1007
-22,500,22065,LA,Madison Parish LA,0.071
-22,500,22067,LA,Morehouse Parish LA,0.1815
-22,500,22083,LA,Richland Parish LA,0.142
-22,500,22107,LA,Tensas Parish LA,0.0293
-22,500,22111,LA,Union Parish LA,0.1473
-22,500,22123,LA,West Carroll Parish LA,0.0691
-22,600,22021,LA,Caldwell Parish LA,0.5135
-22,600,22049,LA,Jackson Parish LA,0.4672
-22,600,22107,LA,Tensas Parish LA,0.0193
-22,300,22127,LA,Winn Parish LA,1.0
-22,500,22025,LA,Catahoula Parish LA,0.0798
-22,500,22029,LA,Concordia Parish LA,0.3149
-22,500,22059,LA,La Salle Parish LA,0.3681
-22,500,22127,LA,Winn Parish LA,0.2372
-22,600,22009,LA,Avoyelles Parish LA,0.3361
-22,600,22025,LA,Catahoula Parish LA,0.0768
-22,600,22029,LA,Concordia Parish LA,0.1606
-22,600,22043,LA,Grant Parish LA,0.1822
-22,600,22059,LA,La Salle Parish LA,0.1266
-22,600,22127,LA,Winn Parish LA,0.1177
-22,700,22009,LA,Avoyelles Parish LA,0.416
-22,700,22043,LA,Grant Parish LA,0.584
-22,1000,22009,LA,Avoyelles Parish LA,1.0
-22,300,22079,LA,Rapides Parish LA,0.9963
-22,300,22115,LA,Vernon Parish LA,0.0037
-22,600,22079,LA,Rapides Parish LA,1.0
-22,700,22079,LA,Rapides Parish LA,0.7259
-22,700,22115,LA,Vernon Parish LA,0.2741
-22,800,22079,LA,Rapides Parish LA,0.5959
-22,800,22115,LA,Vernon Parish LA,0.4041
-22,1000,22079,LA,Rapides Parish LA,1.0
-22,700,22003,LA,Allen Parish LA,0.2537
-22,700,22011,LA,Beauregard Parish LA,0.7463
-22,800,22003,LA,Allen Parish LA,0.1503
-22,800,22011,LA,Beauregard Parish LA,0.2434
-22,800,22019,LA,Calcasieu Parish LA,0.6063
-22,900,22003,LA,Allen Parish LA,0.6043
-22,900,22019,LA,Calcasieu Parish LA,0.3957
-22,1000,22003,LA,Allen Parish LA,1.0
-22,800,22053,LA,Jefferson Davis Parish LA,1.0
-22,900,22019,LA,Calcasieu Parish LA,0.7731
-22,900,22023,LA,Cameron Parish LA,0.0337
-22,900,22053,LA,Jefferson Davis Parish LA,0.1932
-22,1100,22023,LA,Cameron Parish LA,1.0
-22,600,22039,LA,Evangeline Parish LA,0.3203
-22,600,22097,LA,St. Landry Parish LA,0.6797
-22,700,22039,LA,Evangeline Parish LA,1.0
-22,800,22039,LA,Evangeline Parish LA,1.0
-22,900,22039,LA,Evangeline Parish LA,1.0
-22,1000,22039,LA,Evangeline Parish LA,0.2808
-22,1000,22097,LA,St. Landry Parish LA,0.7192
-22,1100,22039,LA,Evangeline Parish LA,0.1439
-22,1100,22097,LA,St. Landry Parish LA,0.8561
-22,900,22113,LA,Vermilion Parish LA,1.0
-22,1000,22001,LA,Acadia Parish LA,1.0
-22,1100,22001,LA,Acadia Parish LA,0.4998
-22,1100,22113,LA,Vermilion Parish LA,0.5002
-22,1200,22001,LA,Acadia Parish LA,0.234
-22,1200,22113,LA,Vermilion Parish LA,0.766
-22,1300,22113,LA,Vermilion Parish LA,1.0
-22,1000,22055,LA,Lafayette Parish LA,1.0
-22,1100,22055,LA,Lafayette Parish LA,1.0
-22,1200,22055,LA,Lafayette Parish LA,1.0
-22,1201,22055,LA,Lafayette Parish LA,1.0
-22,1300,22055,LA,Lafayette Parish LA,1.0
-22,1100,22055,LA,Lafayette Parish LA,1.0
-22,1201,22055,LA,Lafayette Parish LA,1.0
-22,1300,22055,LA,Lafayette Parish LA,1.0
-22,1100,22045,LA,Iberia Parish LA,1.0
-22,1200,22099,LA,St. Martin Parish LA,1.0
-22,1201,22045,LA,Iberia Parish LA,0.7851
-22,1201,22099,LA,St. Martin Parish LA,0.2149
-22,1300,22045,LA,Iberia Parish LA,0.5751
-22,1300,22099,LA,St. Martin Parish LA,0.4249
-22,1400,22099,LA,St. Martin Parish LA,1.0
-22,1300,22047,LA,Iberville Parish LA,1.0
-22,1400,22037,LA,East Feliciana Parish LA,0.1645
-22,1400,22047,LA,Iberville Parish LA,0.2699
-22,1400,22077,LA,Pointe Coupee Parish LA,0.1856
-22,1400,22121,LA,West Baton Rouge Parish LA,0.2431
-22,1400,22125,LA,West Feliciana Parish LA,0.1369
-22,1502,22037,LA,East Feliciana Parish LA,1.0
-22,1600,22047,LA,Iberville Parish LA,1.0
-22,1400,22033,LA,East Baton Rouge Parish LA,1.0
-22,1501,22033,LA,East Baton Rouge Parish LA,1.0
-22,1502,22033,LA,East Baton Rouge Parish LA,1.0
-22,1501,22033,LA,East Baton Rouge Parish LA,1.0
-22,1502,22033,LA,East Baton Rouge Parish LA,1.0
+22,100,22015,LA,Bossier Parish LA,0.0179
+22,100,22017,LA,Caddo Parish LA,0.9821
+22,101,22015,LA,Bossier Parish LA,0.0
+22,101,22017,LA,Caddo Parish LA,0.9998
+22,101,22031,LA,De Soto Parish LA,0.0001
+22,200,22013,LA,Bienville Parish LA,0.0015
+22,200,22015,LA,Bossier Parish LA,0.7576
+22,200,22017,LA,Caddo Parish LA,0.0201
+22,200,22027,LA,Claiborne Parish LA,0.0008
+22,200,22119,LA,Webster Parish LA,0.22
+22,300,22013,LA,Bienville Parish LA,0.0739
+22,300,22015,LA,Bossier Parish LA,0.0001
+22,300,22017,LA,Caddo Parish LA,0.0004
+22,300,22027,LA,Claiborne Parish LA,0.082
+22,300,22031,LA,De Soto Parish LA,0.1571
+22,300,22049,LA,Jackson Parish LA,0.0033
+22,300,22061,LA,Lincoln Parish LA,0.2812
+22,300,22069,LA,Natchitoches Parish LA,0.2182
+22,300,22073,LA,Ouachita Parish LA,0.0046
+22,300,22079,LA,Rapides Parish LA,0.0016
+22,300,22081,LA,Red River Parish LA,0.0447
+22,300,22085,LA,Sabine Parish LA,0.1299
+22,300,22111,LA,Union Parish LA,0.0014
+22,300,22115,LA,Vernon Parish LA,0.0
+22,300,22119,LA,Webster Parish LA,0.0011
+22,300,22127,LA,Winn Parish LA,0.0003
+22,400,22021,LA,Caldwell Parish LA,0.0011
+22,400,22049,LA,Jackson Parish LA,0.0009
+22,400,22067,LA,Morehouse Parish LA,0.0001
+22,400,22073,LA,Ouachita Parish LA,0.9975
+22,400,22111,LA,Union Parish LA,0.0004
+22,500,22013,LA,Bienville Parish LA,0.0009
+22,500,22021,LA,Caldwell Parish LA,0.065
+22,500,22025,LA,Catahoula Parish LA,0.0003
+22,500,22027,LA,Claiborne Parish LA,0.0003
+22,500,22029,LA,Concordia Parish LA,0.0011
+22,500,22035,LA,East Carroll Parish LA,0.052
+22,500,22041,LA,Franklin Parish LA,0.1378
+22,500,22049,LA,Jackson Parish LA,0.099
+22,500,22059,LA,La Salle Parish LA,0.0013
+22,500,22061,LA,Lincoln Parish LA,0.003
+22,500,22065,LA,Madison Parish LA,0.0698
+22,500,22067,LA,Morehouse Parish LA,0.1786
+22,500,22073,LA,Ouachita Parish LA,0.0085
+22,500,22083,LA,Richland Parish LA,0.1397
+22,500,22107,LA,Tensas Parish LA,0.0289
+22,500,22111,LA,Union Parish LA,0.145
+22,500,22123,LA,West Carroll Parish LA,0.068
+22,500,22127,LA,Winn Parish LA,0.0008
+22,600,22009,LA,Avoyelles Parish LA,0.3325
+22,600,22021,LA,Caldwell Parish LA,0.0011
+22,600,22025,LA,Catahoula Parish LA,0.076
+22,600,22029,LA,Concordia Parish LA,0.1589
+22,600,22039,LA,Evangeline Parish LA,0.0004
+22,600,22043,LA,Grant Parish LA,0.1803
+22,600,22049,LA,Jackson Parish LA,0.001
+22,600,22059,LA,La Salle Parish LA,0.1252
+22,600,22079,LA,Rapides Parish LA,0.0074
+22,600,22097,LA,St. Landry Parish LA,0.0007
+22,600,22107,LA,Tensas Parish LA,0.0
+22,600,22127,LA,Winn Parish LA,0.1165
+22,700,22003,LA,Allen Parish LA,0.0011
+22,700,22009,LA,Avoyelles Parish LA,0.0045
+22,700,22011,LA,Beauregard Parish LA,0.0034
+22,700,22039,LA,Evangeline Parish LA,0.0004
+22,700,22043,LA,Grant Parish LA,0.0063
+22,700,22069,LA,Natchitoches Parish LA,0.0017
+22,700,22079,LA,Rapides Parish LA,0.7133
+22,700,22115,LA,Vernon Parish LA,0.2693
+22,800,22003,LA,Allen Parish LA,0.1491
+22,800,22011,LA,Beauregard Parish LA,0.2415
+22,800,22019,LA,Calcasieu Parish LA,0.6014
+22,800,22039,LA,Evangeline Parish LA,0.0008
+22,800,22053,LA,Jefferson Davis Parish LA,0.0032
+22,800,22079,LA,Rapides Parish LA,0.0023
+22,800,22115,LA,Vernon Parish LA,0.0016
+22,900,22003,LA,Allen Parish LA,0.0017
+22,900,22019,LA,Calcasieu Parish LA,0.7715
+22,900,22023,LA,Cameron Parish LA,0.0336
+22,900,22039,LA,Evangeline Parish LA,0.0
+22,900,22053,LA,Jefferson Davis Parish LA,0.1926
+22,900,22113,LA,Vermilion Parish LA,0.0007
+22,1000,22001,LA,Acadia Parish LA,0.0055
+22,1000,22003,LA,Allen Parish LA,0.0006
+22,1000,22009,LA,Avoyelles Parish LA,0.0008
+22,1000,22039,LA,Evangeline Parish LA,0.2774
+22,1000,22055,LA,Lafayette Parish LA,0.0049
+22,1000,22079,LA,Rapides Parish LA,0.0004
+22,1000,22097,LA,St. Landry Parish LA,0.7106
+22,1100,22001,LA,Acadia Parish LA,0.4943
+22,1100,22023,LA,Cameron Parish LA,0.0007
+22,1100,22039,LA,Evangeline Parish LA,0.0005
+22,1100,22045,LA,Iberia Parish LA,0.0006
+22,1100,22055,LA,Lafayette Parish LA,0.006
+22,1100,22097,LA,St. Landry Parish LA,0.003
+22,1100,22113,LA,Vermilion Parish LA,0.4948
+22,1200,22001,LA,Acadia Parish LA,0.0004
+22,1200,22055,LA,Lafayette Parish LA,0.9953
+22,1200,22099,LA,St. Martin Parish LA,0.003
+22,1200,22113,LA,Vermilion Parish LA,0.0012
+22,1201,22045,LA,Iberia Parish LA,0.0037
+22,1201,22055,LA,Lafayette Parish LA,0.9953
+22,1201,22099,LA,St. Martin Parish LA,0.001
+22,1300,22045,LA,Iberia Parish LA,0.4058
+22,1300,22047,LA,Iberville Parish LA,0.0001
+22,1300,22055,LA,Lafayette Parish LA,0.0045
+22,1300,22099,LA,St. Martin Parish LA,0.2998
+22,1300,22101,LA,St. Mary Parish LA,0.2889
+22,1300,22113,LA,Vermilion Parish LA,0.0009
+22,1400,22005,LA,Ascension Parish LA,0.0032
+22,1400,22007,LA,Assumption Parish LA,0.001
+22,1400,22033,LA,East Baton Rouge Parish LA,0.0132
+22,1400,22037,LA,East Feliciana Parish LA,0.1614
+22,1400,22047,LA,Iberville Parish LA,0.2649
+22,1400,22077,LA,Pointe Coupee Parish LA,0.1821
+22,1400,22091,LA,St. Helena Parish LA,0.0012
+22,1400,22099,LA,St. Martin Parish LA,0.0001
+22,1400,22121,LA,West Baton Rouge Parish LA,0.2386
+22,1400,22125,LA,West Feliciana Parish LA,0.1343
 22,1500,22033,LA,East Baton Rouge Parish LA,1.0
 22,1501,22033,LA,East Baton Rouge Parish LA,1.0
-22,1500,22033,LA,East Baton Rouge Parish LA,1.0
-22,1501,22033,LA,East Baton Rouge Parish LA,1.0
-22,1400,22005,LA,Ascension Parish LA,1.0
-22,1600,22005,LA,Ascension Parish LA,1.0
-22,2000,22005,LA,Ascension Parish LA,1.0
-22,1400,22091,LA,St. Helena Parish LA,1.0
-22,1600,22063,LA,Livingston Parish LA,1.0
-22,1700,22063,LA,Livingston Parish LA,0.9319
-22,1700,22091,LA,St. Helena Parish LA,0.0681
-22,1800,22063,LA,Livingston Parish LA,0.6484
-22,1800,22091,LA,St. Helena Parish LA,0.3516
-22,1700,22105,LA,Tangipahoa Parish LA,1.0
-22,1800,22105,LA,Tangipahoa Parish LA,0.7449
-22,1800,22117,LA,Washington Parish LA,0.2551
-22,2200,22117,LA,Washington Parish LA,1.0
-22,1600,22093,LA,St. James Parish LA,1.0
-22,1900,22089,LA,St. Charles Parish LA,0.4569
-22,1900,22093,LA,St. James Parish LA,0.1737
-22,1900,22095,LA,St. John the Baptist Parish LA,0.3694
-22,2000,22093,LA,St. James Parish LA,1.0
-22,1400,22007,LA,Assumption Parish LA,1.0
-22,1600,22007,LA,Assumption Parish LA,1.0
-22,1900,22007,LA,Assumption Parish LA,1.0
-22,2000,22007,LA,Assumption Parish LA,0.1774
-22,2000,22057,LA,Lafourche Parish LA,0.8226
-22,2100,22057,LA,Lafourche Parish LA,1.0
-22,2500,22057,LA,Lafourche Parish LA,1.0
-22,1300,22101,LA,St. Mary Parish LA,1.0
-22,2000,22109,LA,Terrebonne Parish LA,1.0
-22,2100,22109,LA,Terrebonne Parish LA,1.0
-22,1800,22103,LA,St. Tammany Parish LA,1.0
-22,2200,22103,LA,St. Tammany Parish LA,1.0
+22,1502,22033,LA,East Baton Rouge Parish LA,0.9916
+22,1502,22037,LA,East Feliciana Parish LA,0.0084
+22,1600,22005,LA,Ascension Parish LA,0.9952
+22,1600,22007,LA,Assumption Parish LA,0.0028
+22,1600,22047,LA,Iberville Parish LA,0.0002
+22,1600,22063,LA,Livingston Parish LA,0.0001
+22,1600,22093,LA,St. James Parish LA,0.0017
+22,1700,22063,LA,Livingston Parish LA,0.9265
+22,1700,22091,LA,St. Helena Parish LA,0.0677
+22,1700,22105,LA,Tangipahoa Parish LA,0.0058
+22,1800,22063,LA,Livingston Parish LA,0.0046
+22,1800,22091,LA,St. Helena Parish LA,0.0025
+22,1800,22103,LA,St. Tammany Parish LA,0.0015
+22,1800,22105,LA,Tangipahoa Parish LA,0.7385
+22,1800,22117,LA,Washington Parish LA,0.2529
+22,1900,22007,LA,Assumption Parish LA,0.0007
+22,1900,22051,LA,Jefferson Parish LA,0.0002
+22,1900,22089,LA,St. Charles Parish LA,0.4565
+22,1900,22093,LA,St. James Parish LA,0.1735
+22,1900,22095,LA,St. John the Baptist Parish LA,0.369
+22,2000,22005,LA,Ascension Parish LA,0.0024
+22,2000,22007,LA,Assumption Parish LA,0.173
+22,2000,22051,LA,Jefferson Parish LA,0.0
+22,2000,22057,LA,Lafourche Parish LA,0.8022
+22,2000,22093,LA,St. James Parish LA,0.0
+22,2000,22109,LA,Terrebonne Parish LA,0.0223
+22,2100,22057,LA,Lafourche Parish LA,0.0227
+22,2100,22109,LA,Terrebonne Parish LA,0.9773
+22,2200,22103,LA,St. Tammany Parish LA,0.9989
+22,2200,22117,LA,Washington Parish LA,0.0011
 22,2201,22103,LA,St. Tammany Parish LA,1.0
-22,1900,22051,LA,Jefferson Parish LA,1.0
 22,2300,22051,LA,Jefferson Parish LA,1.0
-22,2301,22051,LA,Jefferson Parish LA,1.0
-22,2300,22051,LA,Jefferson Parish LA,1.0
-22,2301,22051,LA,Jefferson Parish LA,1.0
-22,2302,22051,LA,Jefferson Parish LA,1.0
-22,2500,22051,LA,Jefferson Parish LA,1.0
-22,2301,22071,LA,Orleans Parish LA,1.0
+22,2301,22051,LA,Jefferson Parish LA,0.9987
+22,2301,22071,LA,Orleans Parish LA,0.0013
+22,2302,22051,LA,Jefferson Parish LA,0.9982
+22,2302,22075,LA,Plaquemines Parish LA,0.0018
 22,2400,22071,LA,Orleans Parish LA,1.0
-22,2401,22071,LA,Orleans Parish LA,1.0
-22,2301,22071,LA,Orleans Parish LA,1.0
-22,2400,22071,LA,Orleans Parish LA,1.0
-22,2401,22071,LA,Orleans Parish LA,1.0
 22,2401,22071,LA,Orleans Parish LA,1.0
 22,2402,22071,LA,Orleans Parish LA,1.0
-22,2000,22051,LA,Jefferson Parish LA,1.0
-22,2302,22075,LA,Plaquemines Parish LA,1.0
-22,2500,22051,LA,Jefferson Parish LA,0.4521
-22,2500,22075,LA,Plaquemines Parish LA,0.1902
-22,2500,22087,LA,St. Bernard Parish LA,0.3577
+22,2500,22051,LA,Jefferson Parish LA,0.4539
+22,2500,22057,LA,Lafourche Parish LA,0.0001
+22,2500,22075,LA,Plaquemines Parish LA,0.1895
+22,2500,22087,LA,St. Bernard Parish LA,0.3565

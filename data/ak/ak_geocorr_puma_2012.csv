@@ -1,47 +1,45 @@
 State code,PUMA,County code,State abbr.,County_Name,allocation factor
 2,400,2013,AK,Aleutians East Borough AK,0.0303
-2,400,2016,AK,Aleutians West Census Area AK,0.0464
-2,101,2020,AK,Anchorage Borough AK,1
-2,102,2020,AK,Anchorage Borough AK,1
-2,200,2020,AK,Anchorage Borough AK,1
-2,101,2020,AK,Anchorage Borough AK,1
-2,102,2020,AK,Anchorage Borough AK,1
-2,400,2050,AK,Bethel Census Area AK,0.1654
+2,400,2016,AK,Aleutians West Census Area AK,0.0463
+2,101,2020,AK,Anchorage Borough AK,0.9987
+2,102,2020,AK,Anchorage Borough AK,1.0
+2,200,2020,AK,Anchorage Borough AK,0.0003
+2,400,2050,AK,Bethel Census Area AK,0.1652
 2,400,2060,AK,Bristol Bay Borough AK,0.0075
-2,200,2063,AK,Chugach Census Area AK,0.0455
+2,200,2063,AK,Chugach Census Area AK,0.0
 2,300,2063,AK,Chugach Census Area AK,0.0435
 2,300,2066,AK,Copper River Census Area AK,0.016
-2,200,2068,AK,Denali Borough AK,0.9091
+2,200,2068,AK,Denali Borough AK,0.0001
 2,300,2068,AK,Denali Borough AK,0.0098
-2,400,2068,AK,Denali Borough AK,0.0115
+2,400,2068,AK,Denali Borough AK,0.0
 2,400,2070,AK,Dillingham Census Area AK,0.043
-2,300,2090,AK,Fairbanks North Star Borough AK,0.5857
-2,400,2090,AK,Fairbanks North Star Borough AK,0.7241
+2,300,2090,AK,Fairbanks North Star Borough AK,0.5855
+2,400,2090,AK,Fairbanks North Star Borough AK,0.0006
 2,300,2100,AK,Haines Borough AK,0.0127
-2,300,2105,AK,Hoonah-Angoon Census Area AK,0.0781
+2,300,2105,AK,Hoonah-Angoon Census Area AK,0.0
 2,400,2105,AK,Hoonah-Angoon Census Area AK,0.0209
-2,300,2110,AK,Juneau Borough AK,0.1975
-2,400,2110,AK,Juneau Borough AK,0.2644
-2,102,2122,AK,Kenai Peninsula Borough AK,1
-2,200,2122,AK,Kenai Peninsula Borough AK,0.3548
-2,300,2130,AK,Ketchikan Gateway Borough AK,0.0855
-2,400,2150,AK,Kodiak Island Borough AK,0.1161
+2,300,2110,AK,Juneau Borough AK,0.1974
+2,400,2110,AK,Juneau Borough AK,0.0002
+2,102,2122,AK,Kenai Peninsula Borough AK,0.0
+2,200,2122,AK,Kenai Peninsula Borough AK,0.3547
+2,300,2130,AK,Ketchikan Gateway Borough AK,0.0854
+2,400,2150,AK,Kodiak Island Borough AK,0.116
 2,400,2158,AK,Kusilvak Census Area AK,0.0741
 2,400,2164,AK,Lake and Peninsula Borough AK,0.0131
-2,101,2170,AK,Matanuska-Susitna Borough AK,1
-2,200,2170,AK,Matanuska-Susitna Borough AK,0.6452
-2,400,2170,AK,Matanuska-Susitna Borough AK,1
-2,400,2180,AK,Nome Census Area AK,0.089
-2,400,2185,AK,North Slope Borough AK,0.0977
+2,101,2170,AK,Matanuska-Susitna Borough AK,0.0012
+2,200,2170,AK,Matanuska-Susitna Borough AK,0.6448
+2,400,2170,AK,Matanuska-Susitna Borough AK,0.0001
+2,400,2180,AK,Nome Census Area AK,0.0889
+2,400,2185,AK,North Slope Borough AK,0.0976
 2,400,2188,AK,Northwest Arctic Borough AK,0.069
 2,400,2195,AK,Petersburg Census Area AK,0.0301
-2,400,2198,AK,Prince of Wales-Hyder Census Area AK,0.051
+2,400,2198,AK,Prince of Wales-Hyder Census Area AK,0.0509
 2,400,2220,AK,Sitka Borough AK,0.0749
 2,300,2230,AK,Skagway Municipality AK,0.0076
-2,200,2240,AK,Southeast Fairbanks Census Area AK,0.0455
+2,200,2240,AK,Southeast Fairbanks Census Area AK,0.0
 2,300,2240,AK,Southeast Fairbanks Census Area AK,0.0417
 2,400,2275,AK,Wrangell City and Borough AK,0.0188
 2,400,2282,AK,Yakutat Borough AK,0.0059
-2,200,2290,AK,Yukon-Koyukuk Census Area AK,1
-2,300,2290,AK,Yukon-Koyukuk Census Area AK,0.9219
-2,400,2290,AK,Yukon-Koyukuk Census Area AK,0.0468
+2,200,2290,AK,Yukon-Koyukuk Census Area AK,0.0
+2,300,2290,AK,Yukon-Koyukuk Census Area AK,0.0004
+2,400,2290,AK,Yukon-Koyukuk Census Area AK,0.0467

@@ -1,95 +1,70 @@
 """
-Configuration file for HCV analysis scripts.
+Configuration settings for the HCV-GAPS analysis pipeline.
 
-This file contains paths to the CSV files and other configuration options
-used in the HCV analysis process. It also supports processing multiple states by including:
-- A list of state abbreviations (users can modify as needed).
-- A base directory for state-specific data (relative to the repository root).
-- Template strings for state-specific file paths.
-- Optional API settings for fetching data instead of using local CSV files.
+This module defines the CONFIG dictionary used across the project. It includes:
+- File path templates for input data
+- State/year lists for batch processing
+- Which PSH program labels to link
+- Toggles for incarceration data and verbosity
+- API settings for optionally fetching IPUMS data automatically 
+- API token loading
 
-For IPUMS data:
-  - If "ipums_data_path" is set to "API" (or left empty), the system will fetch the data via the API.
-  - In that case, ensure that "api_settings" has "use_ipums_api" set to True, along with a valid API token.
-  - The API call will download the data into the directory specified by "api_settings.download_dir" (default is "api_downloads").
-
-Attributes:
-    CONFIG (dict): A dictionary containing configuration options, including file paths
-                   and various processing options.
-      - ipums_data_path: str, A placeholder for IPUMS data. Set to "API" or empty to trigger API download.
-      - crosswalk_2012_path: str, Path to the 2012 MCDC crosswalk dataset CSV file.
-      - crosswalk_2022_path: str, Path to the 2022 MCDC crosswalk dataset CSV file.
-      - income_limits_path: str, Path to the income limits dataset CSV file.
-      - incarceration_data_path: str, Path to the incarceration dataset CSV file.
-      - hud_hcv_data_path: str, Path to the HUD Picture of Subsidized Housing CSV file.
-      - output_directory: str, The base directory where output files will be saved.
-      - verbose: bool, If True, enables logging at INFO level.
-      - prisoners_identified_by_GQTYPE2: bool, If True, uses GQTYPE == 2 for identifying prisoners.
-      - race_sampling: bool, If True, performs race-based sampling when adjusting eligibility.
-      - display_race_stats: bool, If True, includes race statistics in the output.
-      - states: list, A list of state abbreviations to process.
-      - ipums_years: list, A list of years for which to process IPUMS data.
-      - data_dir: str, Base directory for state-specific data.
-      - [Template strings]: Templates for state-specific file paths that will be used to update
-        the core keys dynamically.
-      - api_settings: dict, Optional API settings for data sources.
-          Example keys:
-              use_ipums_api: bool, whether to fetch IPUMS data via an API.
-              ipums_api_token: str, the API token for IPUMS.
-              download_dir: str, the directory where API downloads should be saved (default "api_downloads").
-              use_hud_api: bool, whether to fetch HUD data via an API.
-              hud_api_token: str, the API token for HUD data access.
-
-Usage:
-    To use this configuration, import this file in your script and access the CONFIG dictionary.
-    Update the file paths and API settings according to your system.
-
-Example:
-    For state "ak" (Alaska), the expected files are:
-      - ak_geocorr_puma_2012.csv
-      - ak_geocorr_puma_2022.csv
-      - ak_hud_income_limits_2022.csv
-      - ak_incarc_data.csv
-      - ak_hud_hcv_picsubhhds_2022.csv
-
-The core keys (e.g., "crosswalk_2012_path") will be updated dynamically using the template strings.
+To use: import this module and access the CONFIG dictionary.
+Ensure you run Python from the project root, so that "secrets/ipums_token.txt" resolves correctly.
 """
 
-from .file_utils import get_default_output_directory
+import os
+from .file_utils import get_default_output_directory, load_ipums_api_token
+
+# Path to the API token file (relative to project root)
+ipums_token_path = os.path.join("secrets", "ipums_token.txt")
+
+# Load the IPUMS token from the secrets file
+ipums_api_token = load_ipums_api_token(ipums_token_path)
 
 CONFIG = {
-    # IPUMS data: if set to "API" (or left empty), the system will fetch data via the API.
-    "ipums_data_path": "API",
-
-    # The default output directory is set via file_utils. (Users can override this.)
+    # === DATA SOURCE CONTROLS ===
+    "ipums_data_path": "API",  # Use "API" or "" to trigger IPUMS API fetch; or set a local CSV path
     "output_directory": get_default_output_directory(),
 
-    # User-entered settings:
-    "states": ["fl"],
-    "ipums_years": [2022],
+    # === MAIN USER INPUTS ===
+    "states": ["hi", "dc"],         # Example: ["fl", "ak", "ct"]
+    "ipums_years": [2023,2020],    # Example: [2021, 2022]
+    "program_labels": [       # Which HUD PSH programs to produce linked summaries for
+        "Summary of All HUD Programs", 
+       # "Mod Rehab", 
+        "Public Housing", 
+       # "Section 236", 
+      #  "Section 8 NC/SR",  
+       # "LIHTC", 
+        "Housing Choice Vouchers", 
+      #  "Multi-Family Other",
+      #  "811/PRAC",
+       # "202/PRAC"
+    ],
 
-    # Base directory for state-specific data (relative to the repository root)
-    "data_dir": "data",
+    # === INPUT DATA LOCATION ===
+    "data_dir": "data",  # Base directory for all state-specific input files
 
-    # Template strings for state-specific file paths.
+    # Template strings for input file paths
     "crosswalk_2012_template": "{data_dir}/{state}/{state}_geocorr_puma_2012.csv",
     "crosswalk_2022_template": "{data_dir}/{state}/{state}_geocorr_puma_2022.csv",
-    "income_limits_template": "{data_dir}/{state}/{state}_hud_income_limits_2022.csv",
-    "incarceration_template": "{data_dir}/{state}/{state}_incarc_data.csv",
-    "hud_hcv_template": "{data_dir}/{state}/{state}_hud_hcv_picsubhhds_{year}.csv",
+    "income_limits_template":   "{data_dir}/{state}/{state}_income_limits/{state}_{year}_income_limits.csv",
+    "incarceration_template":   "{data_dir}/{state}/{state}_incarc_data.csv",
+    "hud_hcv_template":         "{data_dir}/{state}/{state}_hud_pic_sub_housing/{state}_hud_hcv_picsubhhds_{year}.csv",
 
-    # Other configuration options:
-    "verbose": False,
-    "prisoners_identified_by_GQTYPE2": False,
-    "race_sampling": True,
-    "display_race_stats": True,
-
-    # Optional API settings for data sources:
+    # === PROCESSING OPTIONS ===
+    "verbose": False,                          # Enables logging and reporting
+    "exclude_group_quarters": False,  # if True, zeroes out eligibilities for any GQTYPE==2 rows
+    "race_sampling": True,                    # Enables race-based prisoner eligibility adjustments
+    "split_households_into_families": True,   # Use family-level weights vs. household-level
+    "income_limit_agg": "max",   # one of ["min","max","median","mean"] for Counties with multiple Income Limits (e.g. in CT)
+    
+    # === API SETTINGS ===
     "api_settings": {
         "use_ipums_api": True,
-        "ipums_api_token": "59cba10d8a5da536fc06b59d00bd2ef7132749b49eb77e67e1286a95",
-        "download_dir": "data/api_downloads",  # API downloads will be saved in a subfolder in the data directory.
-        "use_hud_api": False,
-        "hud_api_token": ""
+        "ipums_api_token": ipums_api_token,
+        "download_dir": "data/api_downloads",   # Where API-fetched files will be temporarily saved
+        "clear_api_cache": True
     },
 }

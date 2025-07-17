@@ -1,154 +1,172 @@
 """
-hcv_prisoner_adjustment.py
-Adjusts incarcerated persons HCV eligibility
+Adjust HCV eligibility by removing or sampling incarcerated individuals.
 
-This module contains a function to adjust Housing Choice Voucher (HCV) eligibility by removing incarcerated individuals
-based on county prisoner counts and demographics. It provides options to directly identify prisoners using GQTYPE,
-and to perform race-based sampling when adjusting eligibility.
+This module provides a function to adjust Housing Choice Voucher (HCV) eligibility
+by accounting for prisoners in each county. It can directly mark group-quartered
+individuals (GQTYPE==2) as ineligible, or perform race-based sampling to remove
+households until county prisoner totals are met.
 
 Functions:
-
-1. stratified_selection_for_incarcerated_individuals(eligibility_df, incarceration_df=None, prisoners_identified_by_GQTYPE2=False, race_sampling=False, verbose=False):
-    Adjusts HCV eligibility of group-quartered individuals based on county prisoner counts and demographics. Optionally
-    uses GQTYPE to identify prisoners directly or performs race-based sampling.
-
-Usage:
-To use, import this module and call the `stratified_selection_for_incarcerated_individuals` function with the eligibility
-dataframe and optionally the incarceration dataframe.
-
-Example:
-    import hcv_prisoner_adjustment as hcv_prisoner
-
-    ipums_df = load_ipums_data('path_to_ipums_data.csv')
-    incarceration_df = load_incarceration_data('path_to_incarceration_data.csv')
-
-    adjusted_ipums_df = hcv_prisoner.stratified_selection_for_incarcerated_individuals(ipums_df, incarceration_df)
+    - stratified_selection_for_incarcerated_individuals: Zeroes out eligibility for
+      selected households based on incarceration data and options.
 """
 
 import logging
+import numpy as np
 
-logging.info("This is a log message from hcv_prisoner_adjustment.py")
 
-def stratified_selection_for_incarcerated_individuals(eligibility_df, incarceration_df=None,
-                                                      prisoners_identified_by_GQTYPE2=False, race_sampling=False, verbose=False):
+def stratified_selection_for_incarcerated_individuals(
+        eligibility_df,
+        incarceration_df=None,
+        exclude_group_quarters=False,
+        race_sampling=False,
+        verbose=False
+    ):
     """
-    Adjust eligibility of group-quartered individuals based on county prisoner counts and demographics.
-
-    This function adjusts HCV eligibility by removing incarcerated individuals from the eligibility list based on
-    county prisoner counts and demographics. It can use GQTYPE to identify prisoners directly, and it supports
-    race-based sampling to adjust the eligibility counts.
+    Adjust HCV eligibility by removing/incorporating incarcerated individuals.
 
     Parameters:
-    ----------
-    eligibility_df : pd.DataFrame
-        The IPUMS dataframe with eligibility determinations calculated.
-    incarceration_df : pd.DataFrame, optional
-        The incarceration dataset containing prisoner counts and race percentages for each county.
-    prisoners_identified_by_GQTYPE2 : bool
-        If True, use GQTYPE == 2 to identify prisoners directly.
-    race_sampling : bool
-        If True, perform race-based sampling; if False, just remove by county count.
-    verbose : bool
-        If True, print the count of removed individuals for each county and race group.
+        eligibility_df (pd.DataFrame):
+            IPUMS DataFrame with eligibility flags and at least:
+            'County_Name', 'GQTYPE', 'FAMSIZE', 'Eligible_at_80%',
+            'REALHHWT', 'RACE', and the weighted eligibility columns.
+
+        incarceration_df (pd.DataFrame, optional):
+            DataFrame containing county prisoner counts with columns:
+            ['County_Name', 'Ttl_Incarc', 'Ttl_White_Incarc', 'Ttl_Minority_Incarc'].
+            If None, no adjustment is applied (unless GQTYPE2 is used).
+
+        prisoners_identified_by_GQTYPE2 (bool):
+            If True, mark all GQTYPE==2 households as ineligible directly.
+
+        race_sampling (bool):
+            If True, perform race-based sampling within each county to match
+            Ttl_White_Incarc and Ttl_Minority_Incarc targets. Otherwise, remove
+            by total count (Ttl_Incarc).
+
+        verbose (bool):
+            If True, log counts removed per county and race.
 
     Returns:
-    -------
-    pd.DataFrame
-        The updated eligibility dataframe with adjusted eligibility status for incarcerated individuals.
-
-    Notes:
-    -----
-    - When `prisoners_identified_by_GQTYPE2` is True, the function directly marks individuals with GQTYPE == 2 as ineligible.
-    - When `race_sampling` is True, the function performs race-based sampling to adjust the eligibility counts by race.
-    - Prints detailed information if `verbose` is True, helping to track the adjustment process.
+        pd.DataFrame:
+            Updated eligibility DataFrame with incarcerated households set to zero
+            for all eligibility columns.
     """
+    # Columns to zero out when a household is deemed ineligible
+    eligibility_columns = [
+        'Eligible_at_30%', 'Eligible_at_50%', 'Eligible_at_80%',
+        'Weighted_Eligibility_Count_30%', 'Weighted_Eligibility_Count_50%', 'Weighted_Eligibility_Count_80%',
+        'Weighted_White_HH_Eligibility_Count_30%', 'Weighted_White_HH_Eligibility_Count_50%', 'Weighted_White_HH_Eligibility_Count_80%',
+        'Weighted_Minority_HH_Eligibility_Count_30%', 'Weighted_Minority_HH_Eligibility_Count_50%', 'Weighted_Minority_HH_Eligibility_Count_80%'
+    ]
 
-    eligibility_columns = ['Eligible_at_30%', 'Eligible_at_50%', 'Eligible_at_80%',
-                           'Weighted_Eligibility_Count_30%', 'Weighted_Eligibility_Count_50%', 'Weighted_Eligibility_Count_80%',
-                           'Weighted_White_HH_Eligibility_Count_30%', 'Weighted_White_HH_Eligibility_Count_50%', 'Weighted_White_HH_Eligibility_Count_80%',
-                           'Weighted_Minority_HH_Eligibility_Count_30%', 'Weighted_Minority_HH_Eligibility_Count_50%', 'Weighted_Minority_HH_Eligibility_Count_80%']
-
-    if prisoners_identified_by_GQTYPE2:
-        prisoners_df = eligibility_df[eligibility_df['GQTYPE'] == 2]
-        for county_name, county_group in prisoners_df.groupby('County_Name_state_abbr'):
-            prisoners_count = county_group['REALHHWT'].sum()
-            eligibility_df.loc[county_group.index, eligibility_columns] = 0
+    # Option 1: Directly mark GQTYPE==2 as ineligible
+    if exclude_group_quarters:
+        prisoners = eligibility_df[eligibility_df['GQTYPE'] == 2]
+        for county, grp in prisoners.groupby('County_Name'):
+            eligibility_df.loc[grp.index, eligibility_columns] = 0
             if verbose:
-                logging.info(f"County: {county_name}, Removed Prisoner Count: {prisoners_count}")
-
-        total_prisoners_removed = prisoners_df['REALHHWT'].sum()
+                total_weight = grp['REALHHWT'].sum()
+                logging.info(f"County: {county}, Removed Prisoner Weight: {total_weight}")
         if verbose:
-            logging.info(f"Total Prisoners Marked Ineligible: {total_prisoners_removed}")
+            total_removed = prisoners['REALHHWT'].sum()
+            logging.info(f"Total prisoners marked ineligible: {total_removed}")
         return eligibility_df
 
+    # Option 2: Use incarceration_df to sample/remove households
     if incarceration_df is None:
         if verbose:
-            logging.info("No incarceration data provided, returning eligibility_df unchanged.")
+            logging.info("No incarceration data provided; skipping adjustment.")
         return eligibility_df
 
-    potential_inmates = eligibility_df[
+    # Filter potential inmates: group-quartered (GQTYPE==1), single-family (FAMSIZE==1), eligible at 80%
+    potential = eligibility_df[
         (eligibility_df['GQTYPE'] == 1) &
         (eligibility_df['FAMSIZE'] == 1) &
         (eligibility_df['Eligible_at_80%'] == 1)
-    ]
+    ].copy()
 
-    if verbose:
-        logging.info("Potential inmates dataframe:")
-        logging.info(potential_inmates.head())
+    # Use categorical dtype for faster grouping
+    potential['County_Name'] = potential['County_Name'].astype('category')
+    potential['RACE'] = potential['RACE'].astype('category')
 
-    def select_inmates(target_count, inmates):
-        selected_count = 0
-        selected_indices = []
-        while selected_count < target_count:
-            if inmates.empty:
-                break
-            selected_row = inmates.sample(n=1)
-            selected_indices.append(selected_row.index[0])
-            selected_count += selected_row['REALHHWT'].values[0]
-            inmates = inmates.drop(selected_row.index)
-            if selected_count >= target_count or abs(selected_count - target_count) <= 5:
-                break
-        return selected_indices
+    # Pre-group by county for repeated access
+    county_groups = potential.groupby('County_Name')
 
-    for _, incar_row in incarceration_df.iterrows():
-        county_name = incar_row['County_Name']
-        total_incarc = incar_row['Ttl_Incarc']
+    def select_inmates_vec(df, target):
+        """
+        Randomly select rows until cumulative REALHHWT ≈ target.
 
+        Performs one random shuffle and cumulative sum. Chooses the subset whose
+        sum is closest to the target.
+
+        Parameters:
+            df (pd.DataFrame): Subset of households in one county/race.
+            target (float): Total weight to remove.
+
+        Returns:
+            Index (list-like): Row indices to mark as removed.
+        """
+        if df.empty or target <= 0:
+            return []
+
+        # Shuffle by random key and compute cumulative sum
+        df2 = df.assign(_rand=np.random.rand(len(df))).sort_values('_rand')
+        csum = df2['REALHHWT'].cumsum()
+
+        # Mask A: all rows where csum ≤ target
+        maskA = csum <= target
+
+        # Mask B: rows up to closest to target
+        idx_closest = (csum - target).abs().idxmin()
+        maskB = df2.index <= idx_closest
+
+        # Choose which mask yields sum closer to target
+        sumA = csum[maskA].sum()
+        sumB = csum[maskB].sum()
+        best_mask = maskA if abs(sumA - target) < abs(sumB - target) else maskB
+
+        return df2.index[best_mask]
+
+    # Iterate through each county’s incarceration row
+    for _, incar in incarceration_df.iterrows():
+        county = incar['County_Name']
         if verbose:
-            logging.info(f"Processing county: {county_name}, Total Incarcerated: {total_incarc}, Race Sampling: {race_sampling}")
+            logging.info(
+                f"Processing {county}: Total Incarc={incar['Ttl_Incarc']}, "
+                f"RaceSampling={race_sampling}"
+            )
 
-        county_inmates = potential_inmates[potential_inmates['County_Name_state_abbr'] == county_name]
-        if verbose and county_inmates.empty:
-            logging.info(f"No potential inmates found for county: {county_name}")
+        try:
+            df_cty = county_groups.get_group(county)
+        except KeyError:
+            if verbose:
+                logging.info(f"No potential inmates for county: {county}")
+            continue
 
         if race_sampling:
-            total_white_incarc = incar_row['Ttl_White_Incarc']
-            total_minority_incarc = incar_row['Ttl_Minority_Incarc']
+            # Separate by race
+            whites      = df_cty[df_cty['RACE'] == 1]
+            minorities  = df_cty[df_cty['RACE'] != 1]
 
-            white_inmates = county_inmates[county_inmates['RACE'] == 1]
-            minority_inmates = county_inmates[county_inmates['RACE'] != 1]
+            # Select based on white/minority targets
+            sel_w = select_inmates_vec(whites,     incar['Ttl_White_Incarc'])
+            sel_m = select_inmates_vec(minorities, incar['Ttl_Minority_Incarc'])
 
-            selected_white_indices = select_inmates(total_white_incarc, white_inmates)
-            selected_minority_indices = select_inmates(total_minority_incarc, minority_inmates)
-
-            eligibility_df.loc[selected_white_indices, eligibility_columns] = 0
-            eligibility_df.loc[selected_minority_indices, eligibility_columns] = 0
+            eligibility_df.loc[sel_w, eligibility_columns] = 0
+            eligibility_df.loc[sel_m, eligibility_columns] = 0
 
             if verbose:
-                white_removed_count = sum(eligibility_df.loc[selected_white_indices, 'REALHHWT'])
-                minority_removed_count = sum(eligibility_df.loc[selected_minority_indices, 'REALHHWT'])
-                logging.info(f"County: {county_name}, Adjusted White REALHHWT: {white_removed_count}")
-                logging.info(f"County: {county_name}, Adjusted Minority REALHHWT: {minority_removed_count}")
+                w_removed = eligibility_df.loc[sel_w, 'REALHHWT'].sum()
+                m_removed = eligibility_df.loc[sel_m, 'REALHHWT'].sum()
+                logging.info(f"{county}: Removed White weight={w_removed}, Minority weight={m_removed}")
         else:
-            selected_indices = select_inmates(total_incarc, county_inmates)
-
-            if verbose and len(selected_indices) == 0:
-                logging.info(f"No inmates selected for county: {county_name}, Total Incarcerated: {total_incarc}")
-
-            eligibility_df.loc[selected_indices, eligibility_columns] = 0
+            # Remove based on total incarcerated count
+            sel_all = select_inmates_vec(df_cty, incar['Ttl_Incarc'])
+            eligibility_df.loc[sel_all, eligibility_columns] = 0
 
             if verbose:
-                removed_count = sum(eligibility_df.loc[selected_indices, 'REALHHWT'])
-                logging.info(f"County: {county_name}, Adjusted Total REALHHWT: {removed_count}")
+                total_removed = eligibility_df.loc[sel_all, 'REALHHWT'].sum()
+                logging.info(f"{county}: Removed total weight={total_removed}")
 
     return eligibility_df

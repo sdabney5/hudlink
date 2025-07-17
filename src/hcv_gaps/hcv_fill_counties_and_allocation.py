@@ -1,109 +1,97 @@
-"""
-hcv_fill_counties_and_allocation.py
-Fills missing county values and allocates household weights using PUMA-to-county crosswalks.
-
-This module fills missing county values in the IPUMS dataset by matching PUMA values to counties
-using MCDC Geocorr crosswalk data. Since some PUMAs overlap multiple counties, this module also
-allocates household weights (`HHWT`) based on population-based allocation factors.
-
-Functions:
-
-1. fill_missing_county_values(ipums_df, crosswalk_2012_df, crosswalk_2022_df):
-    - Matches PUMA values in the IPUMS dataset to counties using 2012 and 2022 crosswalk data.
-    - Allocates household weights (`HHWT`) for PUMAs that span multiple counties.
-    - Standardizes county names for consistency in later processing.
-    - Logs any unmatched PUMAs for debugging.
-
-Usage:
-To use, import this module and call `fill_missing_county_values` with the required datasets.
-
-Example:
-    import hcv_fill_counties_and_allocation as hcv_allocation
-
-    ipums_df = load_ipums_data('path_to_ipums_data.csv')
-    crosswalk_2012_df, crosswalk_2022_df = load_crosswalk_data('crosswalk_2012.csv', 'crosswalk_2022.csv')
-
-    ipums_df = hcv_allocation.fill_missing_county_values(ipums_df, crosswalk_2012_df, crosswalk_2022_df)
-"""
-
 import pandas as pd
 import logging
 
-logging.info("This is a log message from hcv_fill_counties_and_allocation.py")
-
 def fill_missing_county_values(ipums_df, crosswalk_2012_df, crosswalk_2022_df):
     """
-    Fill missing county values in the IPUMS dataframe using separate 2012 and 2022 crosswalk datasets.
-    Allocate household weights (HHWT) to counties based on the allocation factor.
+    Fill missing county values in the IPUMS DataFrame and compute Allocated_HHWT.
 
     Parameters:
-    -------
-    ipums_df : pd.DataFrame
-        The IPUMS dataframe containing PUMA, COUNTYICP, HHWT, and MULTYEAR columns.
-    crosswalk_2012_df : pd.DataFrame
-        The 2012 crosswalk dataframe containing PUMA (2012), allocation factor, and county information.
-    crosswalk_2022_df : pd.DataFrame
-        The 2022 crosswalk dataframe containing PUMA (2022), allocation factor, and county information.
+        ipums_df (pd.DataFrame):
+            IPUMS person‐level data containing at least the columns
+            'PUMA', 'COUNTYICP', 'HHWT', and 'MULTYEAR'.
+        crosswalk_2012_df (pd.DataFrame):
+            2012 MCDC Geocorr crosswalk with columns 'PUMA', 'allocation factor', and 'County_Name'.
+        crosswalk_2022_df (pd.DataFrame):
+            2022 MCDC Geocorr crosswalk with columns 'PUMA', 'allocation factor', and 'County_Name'.
 
     Returns:
-    -------
-    pd.DataFrame
-        The updated IPUMS dataframe with counties filled and `Allocated_HHWT` calculated.
+        pd.DataFrame:
+            A new DataFrame with:
+              - 'Allocated_HHWT' computed for each row
+              - 'County_Name' filled (or set to 'Unknown County')
+              - 'County_Name_Alt' standardized (e.g., ends with 'County')
+            If a merge error occurs, returns a copy of the original IPUMS DataFrame.
     """
-    # Copy the original dataframe to avoid modifying in place
-    ipums_df_copy = ipums_df.copy()
+    df_copy = ipums_df.copy()
 
     try:
-        # Ensure PUMA column types match
-        ipums_df_copy['PUMA'] = ipums_df_copy['PUMA'].astype(str).str.strip()
+        # 1) Normalize PUMA codes on all three DataFrames
+        df_copy['PUMA'] = df_copy['PUMA'].astype(str).str.strip()
         crosswalk_2012_df['PUMA'] = crosswalk_2012_df['PUMA'].astype(str).str.strip()
         crosswalk_2022_df['PUMA'] = crosswalk_2022_df['PUMA'].astype(str).str.strip()
 
-        # Split IPUMS data into two subsets based on MULTYEAR
-        ipums_2012_df = ipums_df_copy[ipums_df_copy['MULTYEAR'] <= 2021]
-        ipums_2022_df = ipums_df_copy[ipums_df_copy['MULTYEAR'] >= 2022]
+        # 2) If any record was interviewed in 2023 or later:
+        #    use 2022 crosswalk for everyone.
+        if (df_copy['MULTYEAR'].astype(int) >= 2023).any():
+            merged = pd.merge(
+                df_copy,
+                crosswalk_2022_df,
+                on='PUMA',
+                how='left'
+            )
+            merged['Allocated_HHWT'] = merged['HHWT'] * merged['allocation factor']
 
-        # Merge IPUMS 2012 data with crosswalk 2012
-        merged_2012_df = pd.merge(ipums_2012_df, crosswalk_2012_df, on='PUMA', how='left')
-        logging.info('merged 2012 df columns *****************************')
-        logging.info(merged_2012_df.columns)
+        else:
+            # 3) Otherwise (no 2023+ rows), split at MULTYEAR 2019/2020
+            df_2012  = df_copy[df_copy['MULTYEAR'].astype(int) <= 2019]
+            df_2022  = df_copy[df_copy['MULTYEAR'].astype(int) >= 2020]
 
-        # Calculate Allocated_HHWT for 2012
-        merged_2012_df['Allocated_HHWT'] = merged_2012_df['HHWT'] * merged_2012_df['allocation factor']
+            # merge each subset
+            merged_2012 = pd.merge(
+                df_2012,
+                crosswalk_2012_df,
+                on='PUMA',
+                how='left'
+            )
+            merged_2012['Allocated_HHWT'] = (
+                merged_2012['HHWT'] * merged_2012['allocation factor']
+            )
 
-        # Merge IPUMS 2022 data with crosswalk 2022
-        merged_2022_df = pd.merge(ipums_2022_df, crosswalk_2022_df, on='PUMA', how='left')
-        logging.info('merged 2022 df columns *****************************')
-        logging.info(merged_2022_df.columns)
-        logging.info('***********************************************')
+            merged_2022 = pd.merge(
+                df_2022,
+                crosswalk_2022_df,
+                on='PUMA',
+                how='left'
+            )
+            merged_2022['Allocated_HHWT'] = (
+                merged_2022['HHWT'] * merged_2022['allocation factor']
+            )
 
-        # Calculate Allocated_HHWT for 2022
-        merged_2022_df['Allocated_HHWT'] = merged_2022_df['HHWT'] * merged_2022_df['allocation factor']
+            # recombine
+            merged = pd.concat([merged_2012, merged_2022], ignore_index=True)
 
-        # Concatenate the two merged subsets back together
-        merged_df = pd.concat([merged_2012_df, merged_2022_df], ignore_index=True)
+        # 4) Fill missing County_Name
+        merged['County_Name'] = merged['County_Name'].fillna('Unknown County')
 
-        # Fill missing County_Name values with "Unknown County"
-        merged_df['County_Name'].fillna('Unknown County', inplace=True)
+        # 5) Warn about any truly unmatched
+        unmatched = merged.loc[merged['County_Name']=='Unknown County', 'PUMA'].unique()
+        if len(unmatched):
+            logging.warning("Unmatched PUMAs found: %s", list(unmatched))
 
-        # List unmatched PUMAs for debugging
-        unmatched_pumas = merged_df.loc[merged_df['County_Name'] == 'Unknown County', 'PUMA'].unique()
-        if len(unmatched_pumas) > 0:
-            logging.info(f"WARNING: There are unmatched PUMAs in this dataset. Unmatched PUMAs: {list(unmatched_pumas)}")
-
-        # Standardize county names for compatibility with later processing
-        merged_df['County_Name_Alt'] = merged_df['County_Name'].apply(
+        # 6) Standardize County_Name_Alt
+        merged['County_Name_Alt'] = merged['County_Name'].apply(
             lambda x: x[:-2] + 'County' if x != 'Unknown County' else x
         )
 
-        
-        return merged_df
+        return merged
 
     except KeyError as e:
-        logging.info(f"KeyError: {e}. Please ensure the input dataframes contain the necessary columns.")
-        return ipums_df_copy  # Return original dataframe on failure
+        logging.error(
+            "KeyError in fill_missing_county_values: %s. Check that input DataFrames have the required columns.",
+            e
+        )
+        return df_copy
+
     except Exception as e:
-        logging.info(f"An error occurred: {e}")
-        return ipums_df_copy  # Return original dataframe on failure
-    
-    
+        logging.error("Unexpected error in fill_missing_county_values: %s", e)
+        return df_copy
