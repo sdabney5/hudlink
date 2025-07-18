@@ -5,13 +5,13 @@ Processes states and years specified in the global configuration by:
     - Updating paths in the configuration for each state and year.
     - Managing IPUMS data acquisition (local or via API).
     - Setting up appropriate output directory structures.
-    - Delegating core data processing to the `process_hcv_eligibility` function.
+    - Delegating core data processing to the `process_eligibility` function.
 """
 
 import os
 import copy
 import logging
-from .hcv_processing import process_hcv_eligibility
+from .hudlink_processing import process_eligibility
 from .file_utils import create_output_structure
 from .api_calls import fetch_ipums_data_api
 
@@ -34,7 +34,7 @@ def update_config_for_state(config, state):
         data_dir=config["data_dir"], state=state)
     state_config["incarceration_data_path"] = config["incarceration_template"].format(
         data_dir=config["data_dir"], state=state)
-    # HUD HCV data path is year-specific and updated separately.
+    # HUD PSH data path is year-specific and updated separately.
     return state_config
 
 
@@ -78,7 +78,7 @@ def get_ipums_data_file(config):
 
 def process_all_states(config):
     """
-    Process HCV eligibility data for all states and years specified in the configuration.
+    Process eligibility data for all states and years specified in the configuration.
 
     Parameters:
         config (dict): Global configuration with states, years, paths, and API details.
@@ -99,14 +99,14 @@ def process_all_states(config):
             state_config["income_limits_path"] = config["income_limits_template"].format(
                 data_dir=config["data_dir"], state=state, year=year)
 
-            state_config["hud_hcv_data_path"] = config["hud_hcv_template"].format(
+            state_config["hud_psh_data_path"] = config["hud_psh_template"].format(
                 data_dir=config["data_dir"], state=state, year=year)
 
             ipums_file = get_ipums_data_file(state_config)
             state_config["ipums_data_path"] = ipums_file
 
             if ipums_file:
-                process_hcv_eligibility(state_config)
+                process_eligibility(state_config)
                 try:
                     if os.path.exists(ipums_file):
                         os.remove(ipums_file)

@@ -1,15 +1,22 @@
-# HCVGAPS: County-Level Housing Choice Voucher Gap Calculation
+# hudlink: Multi-Program Housing Subsidy Coverage Analysis
 
 ## Overview
-HCVGAPS is a Python-based framework for calculating county-level Housing Choice Voucher gaps across the United States. The methodology expands upon previous research (Dabney, 2024) by scaling the analysis from **Florida** to a **nationwide scope**, and incorporating multi-year crosswalk datasets to improve county-level accuracy. Since **5-Year ACS datasets** span multiple years, and Geocorr updates crosswalks periodically, **multiple crosswalk datasets may be necessary for accurate county mapping**. For example, the **2022 5-Year ACS dataset** includes survey years from 2018 to 2022, meaning that survey data from 2022 should reference a **2022 Geocorr crosswalk**, while the other years in the dataset should reference the **2018 Geocorr crosswalk**. This method two-crosswalk-datasets method will be necessary until **2027**, when a single crosswalk dataset (e.g., Geocorr 2022) will be sufficient.
+hudlink provides two core outputs:
+
+1. Household-level eligibility DataFrame: flags every ACS household as eligible or not at 30%, 50%, and 80% HUD AMI income-limit thresholds, with full access to any IPUMS ACS variables.
+
+2. County-level summaries: produces separate summary DataFrames for each HUD program plus an “All HUD programs” view, optionally including counts and percentages by sensitive variables (default set provided, user‑extensible).
+
+Works for any ACS year from 2007 through 2023.
+
+This project builds upon the original HCVGAPS methodology (Dabney 2024), extending scope from voucher-only to a multi-program analysis. See Citation below for details.
+
 
 ## Key Features
-- **Handles national- or state-level HCV analysis** (previously Florida-only).
-- **Allows multiple Geocorr crosswalk datasets** (2018 and 2022).
-- **Accounts for multifamily households** by splitting and weighting families within shared housing units.
-- **Incorporates incarceration data** to adjust HCV eligibility estimates.
-- **Computes voucher gaps and allocation rates** at county and state levels, with optional race-based analysis.
-- **Fully automated workflow**—data loading, processing, and final report generation.
+- **Micro and Macro outputs:** Produces a full eligibility DataFrame of ACS households plus a linked county‑level summary for PSH data.
+- **Configurable analysis:** Select states, years, HUD Programs, ACS variables, and (optionally) split multi family households into separate households by family, via a single CONFIG dictionary
+- **API integration:** Optional IPUMS API fetch of ACS PUMS data (requires a valid token in secrets/ipums_token.txt)
+- **Fully automated, reproducible workflow:** results can be replicated on any machine
 
 ## Important Considerations for County Equivalents
 Some states have **county equivalents** that require manual adjustments for accurate county-level mapping. These include:
@@ -33,27 +40,60 @@ This version follows an expanded methodology:
 ## Installation
 Clone the repository and install required dependencies:
 ```
-git clone https://github.com/sdabney5/HCVGAPS.git
-cd HCVGAPS
+git clone https://github.com/sdabney5/hudlink.git
+cd hudlink
 pip install -r requirements.txt
 ```
 
 ## Configuration
 Update the `config.py` file to specify your dataset paths:
 ```python
+# Configuration settings for the hudlink pipeline
+# File: src/hudlink/config.py
+import os
+from .file_utils import get_default_output_directory, load_ipums_api_token
+
+# Load IPUMS API token from secrets/ipums_token.txt
+ipums_token_path = os.path.join("secrets", "ipums_token.txt")
+ipums_api_token = load_ipums_api_token(ipums_token_path)
+
 CONFIG = {
-    "ipums_data_path": "sample_data/sample_fl_ipums.csv",
-    "crosswalk_2012_path": "sample_data/sample_fl_geocorr_puma2012.csv",
-    "crosswalk_2022_path": "sample_data/sample_fl_geocorr_puma2022.csv",
-    "income_limits_path": "sample_data/sample_fl_income_limits.csv",
-    "incarceration_data_path": "sample_data/sample_fl_incarceration.csv",
-    "hud_hcv_data_path": "sample_data/sample_fl_hud_hcv.csv",
-    "output_directory": "output/",
-    "prisoners_identified_by_GQTYPE2": True,
+    # Data source controls
+    "ipums_data_path": "API",          # "API" triggers IPUMS fetch; or set a local CSV path
+    "output_directory": get_default_output_directory(),
+
+    # Main user inputs
+    "states": ["fl"],           # e.g. ["fl","ak","ct"]
+    "ipums_years": [2023],      # e.g. [2021, 2022]
+    "program_labels": [                   #include any 'program_labels' values from HUD's PSH dataset
+        "Summary of All HUD Programs",
+        "Public Housing",
+        "Housing Choice Vouchers",
+    ],
+
+    # Input data location
+    "data_dir": "data",                # Base folder for state subdirectories
+    "crosswalk_2012_template": "{data_dir}/{state}/{state}_geocorr_puma_2012.csv",
+    "crosswalk_2022_template": "{data_dir}/{state}/{state}_geocorr_puma_2022.csv",
+    "income_limits_template":   "{data_dir}/{state}/{state}_income_limits/{state}_{year}_income_limits.csv",
+    "incarceration_template":   "{data_dir}/{state}/{state}_incarc_data.csv",
+    "hud_psh_template":         "{data_dir}/{state}/{state}_hud_pic_sub_housing/{state}_hud_hcv_picsubhhds_{year}.csv",
+
+    # Processing toggles
+    "verbose": False,
+    "exclude_group_quarters": False,
     "race_sampling": True,
-    "verbose": True,
-    "display_race_stats": True,
-}
+    "split_households_into_families": True,
+    "income_limit_agg": "max",
+
+    # API settings
+    "api_settings": {
+        "use_ipums_api": True,
+        "ipums_api_token": ipums_api_token,
+        "download_dir": "data/api_downloads",
+        "clear_api_cache": True,
+    },
+}}
 ```
 
 ## Usage
@@ -90,8 +130,9 @@ This project is licensed under the MIT License.
 For questions or issues, contact **sdabney@fsu.edu**
 
 ## Citation
-If you use this methodology, please cite:
-Dabney, Shane. 2024. *Calculating County-Level Housing Choice Voucher Gaps: A Methodology.* Cityscape (Washington, D.C.) 26 (2): 401–12.
+This implementation is based on the HCVGAPS methodology:Dabney, Shane. “Calculating County-Level Housing Choice Voucher Gaps: A Methodology.” Cityscape 26, no. 2 (2024): 401–12.
+
+If you use hudlink, please cite:Dabney, Shane. hudlink: Multi-Program Housing Subsidy Coverage Analysis. Version 2.0.0, 2025.
 
 ## Contributing
 Contributions are welcome! See `CONTRIBUTING.md` for guidelines.

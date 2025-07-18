@@ -16,17 +16,17 @@ Functions:
 4. load_incarceration_df(filepath):
     - Loads incarceration data and validates key columns and data integrity.
 
-5. load_hud_hcv_data(config):
-    - Loads HUD HCV data, cleans problematic codes, and generates reports if verbose.
+5. load_hud_psh_data(config):
+    - Loads HUD PSH data, cleans problematic codes, and generates reports if verbose.
 
 Usage:
-    import hcv_data_loading as hcv_data
+    import hudlink_data_loading as hudlink_data
 
-    ipums_df = hcv_data.load_ipums_data("path_to_ipums_data.csv")
-    crosswalk_df = hcv_data.load_crosswalk_data("path_to_crosswalk_data.csv")
-    income_limits_df = hcv_data.load_income_limits("path_to_income_limits.csv")
-    incarceration_df = hcv_data.load_incarceration_df("path_to_incarceration_data.csv")
-    hud_hcv_df = hcv_data.load_hud_hcv_data(config)
+    ipums_df = hudlink_data.load_ipums_data("path_to_ipums_data.csv")
+    crosswalk_df = hudlink_data.load_crosswalk_data("path_to_crosswalk_data.csv")
+    income_limits_df = hudlink_data.load_income_limits("path_to_income_limits.csv")
+    incarceration_df = hudlink_data.load_incarceration_df("path_to_incarceration_data.csv")
+    hud_psh_df = hudlink_data.load_hud_psh_data(config)
 """
 
 #Imports
@@ -34,7 +34,7 @@ import pandas as pd
 import logging
 from pandas.api import types as pd_types
 
-logging.info("hcv_data_loading module loaded.")
+logging.info("hudlink_data_loading module loaded.")
 
 
 
@@ -318,11 +318,11 @@ def load_incarceration_df(filepath=None):
 
 
 
-def load_hud_hcv_data(config):
+def load_hud_psh_data(config):
     """
     Load and clean the HUD PSH CSV for downstream linkage.
 
-    - Reads the full CSV at config['hud_hcv_data_path'].
+    - Reads the full CSV at config['hud_psh_data_path'].
     - Converts all non-identifier columns to numeric (stripping commas,
       coercing errors to NaN, preserving negative codes).
     - Normalizes raw 'program_label' values via an in-function lookup,
@@ -330,7 +330,7 @@ def load_hud_hcv_data(config):
 
     Parameters:
         config (dict): Must contain:
-            - 'hud_hcv_data_path': Path to the HUD CSV file.
+            - 'hud_psh_data_path': Path to the HUD CSV file.
 
     Returns:
         pd.DataFrame: Cleaned HUD PSH DataFrame with:
@@ -338,7 +338,7 @@ def load_hud_hcv_data(config):
             - All other columns as floats.
             - A cleaned 'program_label' column only.
     """
-    path = config['hud_hcv_data_path']
+    path = config['hud_psh_data_path']
     try:
         df = pd.read_csv(path, dtype=str)
     except Exception as e:

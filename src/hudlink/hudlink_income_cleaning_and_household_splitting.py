@@ -1,11 +1,9 @@
 """
-hcv_income_cleaning_and_household_splitting.py
+hudlink_income_cleaning_and_household_splitting.py
 Performs income data cleaning and multi-family household splitting.
 
 This module contains functions for cleaning income data and splitting multifamily households
-into distinct families within the IPUMS dataset. These steps are essential for accurately
-determining Housing Choice Voucher (HCV) eligibility.
-
+into distinct families within the IPUMS dataset.
 Functions:
 
 - clean_single_family_income_data: Cleans income data for single-family households.

@@ -1,7 +1,7 @@
 """
-Adjust HCV eligibility by removing or sampling incarcerated individuals.
+Adjust eligibility by removing or sampling incarcerated individuals.
 
-This module provides a function to adjust Housing Choice Voucher (HCV) eligibility
+This module provides a function to adjust eligibility
 by accounting for prisoners in each county. It can directly mark group-quartered
 individuals (GQTYPE==2) as ineligible, or perform race-based sampling to remove
 households until county prisoner totals are met.
@@ -23,7 +23,7 @@ def stratified_selection_for_incarcerated_individuals(
         verbose=False
     ):
     """
-    Adjust HCV eligibility by removing/incorporating incarcerated individuals.
+    Adjust eligibility by removing/incorporating incarcerated individuals.
 
     Parameters:
         eligibility_df (pd.DataFrame):

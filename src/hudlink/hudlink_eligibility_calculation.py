@@ -1,20 +1,20 @@
 """
-Calculate Housing Choice Voucher (HCV) eligibility based on household income and family size
-using HUD income limits. Adds eligibility flags for 30%, 50%, and 80% thresholds and computes
+Calculate subsidy eligibility based on household income and family size
+using HUD Section 8 income limits. Adds eligibility flags for 30%, 50%, and 80% thresholds and computes
 weighted eligibility counts.
 
 Functions:
 
-- calculate_hcv_eligibility: Merges IPUMS data with income limits, adjusts family size,
+- calculate_eligibility: Merges IPUMS data with income limits, adjusts family size,
   adds eligibility flags for each threshold, and computes weighted eligibility counts.
 """
 
 import logging
 
 
-def calculate_hcv_eligibility(df, income_limits_df, weight_col, exclude_group_quarters=False):
+def calculate_eligibility(df, income_limits_df, weight_col, exclude_group_quarters=False):
     """
-    Calculate HCV eligibility for each household.
+    Calculate eligibility for each household.
 
     Parameters:
         df (pd.DataFrame):

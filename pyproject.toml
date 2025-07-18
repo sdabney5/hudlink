@@ -3,7 +3,7 @@ requires = ["setuptools>=64", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hcv-gaps"
+name = "hudlink"
 version = "2.0.0"
 description = "Code to measure Housing Choice Voucher gaps"
 authors = [{ name = "Shane Dabney", email = "sdabney@fsu.edu" }]
@@ -18,4 +18,4 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [project.scripts]
-hcv-gaps = "hcv_gaps.main:main"
+hudlink = "hudlink.main:main"

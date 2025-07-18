@@ -1,7 +1,7 @@
 """
-HCV Processing Module
+hudlink Processing Module
 
-This module contains the core function that processes HCV eligibility data for a single state-year combination.
+This module contains the core function that produces hudink eligibility data for a single state-year combination.
 The workflow includes:
   1. Load IPUMS person-level data.
   2. Load crosswalk data.
@@ -11,7 +11,7 @@ The workflow includes:
   6. Clean and split multi-family households.
   7. Engineer household-level flags.
   8. Flatten to one row per household.
-  9. Calculate HCV eligibility at 30/50/80% thresholds.
+  9. Calculate eligibility at 30/50/80% thresholds.
   10. Generate one program-linked summary CSV per HUD program.
   11. Optionally clear the IPUMS API cache.
 
@@ -29,37 +29,37 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-from .hcv_data_loading import (
+from .hudlink_data_loading import (
     load_ipums_data,
     load_crosswalk_data,
     load_income_limits,
-    load_hud_hcv_data
+    load_hud_psh_data
 )
-from .hcv_fill_counties_and_allocation import fill_missing_county_values
-from .hcv_income_cleaning_and_household_splitting import (
+from .hudlink_fill_counties_and_allocation import fill_missing_county_values
+from .hudlink_income_cleaning_and_household_splitting import (
     clean_single_family_income_data,
     split_multifamily_households,
     process_multi_family_income_data
 )
-from .hcv_family_feature_engineering import (
+from .hudlink_family_feature_engineering import (
     family_feature_engineering,
     flatten_households_to_single_rows
 )
-from .hcv_eligibility_calculation import calculate_hcv_eligibility
-from .hcv_final_outputs import calculate_and_save_linked_summaries
+from .hudlink_eligibility_calculation import calculate_eligibility
+from .hudlink_final_outputs import calculate_and_save_linked_summaries
 from .file_utils import clear_api_downloads
 
 
-def process_hcv_eligibility(config: dict) -> None:
+def process_eligibility(config: dict) -> None:
     """
-    Process Housing Choice Voucher (HCV) eligibility data for a single state-year combination.
+    Process eligibility data for a single state-year combination.
 
     Parameters:
         config (dict): Configuration dictionary containing:
             - 'ipums_data_path'
             - 'crosswalk_2012_path', 'crosswalk_2022_path'
             - 'income_limits_path'
-            - 'hud_hcv_data_path'
+            - 'hud_psh_data_path'
             - 'output_directory'
             - 'state', 'year'
             - 'split_households_into_families' (bool)
@@ -96,7 +96,7 @@ def process_hcv_eligibility(config: dict) -> None:
     logging.info("Loaded income limits")
 
     # 4. Load HUD PSH data
-    hud_psh_df = load_hud_hcv_data(config)
+    hud_psh_df = load_hud_psh_data(config)
     if hud_psh_df is None:
         logging.error("Failed to load HUD PSH data; exiting.")
         return
@@ -132,13 +132,13 @@ def process_hcv_eligibility(config: dict) -> None:
         weight_col = "REALHHWT"
         weight_suffix = "_HH"
 
-    ipums_df = calculate_hcv_eligibility(
+    ipums_df = calculate_eligibility(
         ipums_df,
         income_limits_df,
         weight_col=weight_col,
         exclude_group_quarters=config.get("exclude_group_quarters", False)
     )
-    logging.info("Calculated HCV eligibility at 30/50/80% thresholds")
+    logging.info("Calculated eligibility at 30/50/80% thresholds")
 
     # 10. Final outputs: one linked summary per program label
     calculate_and_save_linked_summaries(

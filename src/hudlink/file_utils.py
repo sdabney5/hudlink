@@ -1,5 +1,5 @@
 """
-File Utilities Module for HCV-GAPS.
+File Utilities Module for hudlink.
 
 This module provides utility functions for:
 - Creating standardized output directories for each state-year combo.
@@ -53,10 +53,10 @@ def get_default_output_directory():
     Return the default output directory path on the user's Desktop.
 
     Returns:
-        str: Path to ~/Desktop/HCV_GAPS_output
+        str: Path to ~/Desktop/hudlink_output
     """
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-    return os.path.join(desktop, "HCV_GAPS_output")
+    return os.path.join(desktop, "hudlink_output")
 
 
 def clean_eligibility_df(elig_df, state, year):

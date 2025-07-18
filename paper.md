@@ -1,5 +1,5 @@
 ---
-title: 'HCVGAPS: A Framework for Estimating County-Level Housing Choice Voucher Gaps'
+title: 'hudlink: A python package for linking ACS data to HUD PSH data for analysis and audits'
 authors:
   - name: Shane Dabney
     affiliation: 1
@@ -16,7 +16,7 @@ bibliography: references.bib
 ---
 
 # Summary
-HCVGAPS is a Python-based framework for estimating county-level Housing Choice Voucher (HCV) gaps across the United States. It builds upon previous work (Dabney, 2024) by extending its geographic scope from Florida to all U.S. states and enhancing data integration for more accurate voucher allocation estimates. The framework automates the process of determining HCV eligibility, handling missing county data, and adjusting for incarcerated individuals, providing researchers and policymakers with a scalable tool for housing policy analysis.
+hudlink is a Python-based framework for estimating county-level Housing Choice Voucher (HCV) gaps across the United States. It builds upon previous work (Dabney, 2024) by extending its geographic scope from Florida to all U.S. states and enhancing data integration for more accurate voucher allocation estimates. The framework automates the process of determining HCV eligibility, handling missing county data, and adjusting for incarcerated individuals, providing researchers and policymakers with a scalable tool for housing policy analysis.
 
 # Statement of Need
 Housing affordability remains a critical policy issue in the United States, and the Housing Choice Voucher program plays a key role in supporting low-income renters. However, understanding where voucher allocation gaps exist is challenging due to discrepancies in data availability, county-level aggregation issues, and multi-family household complexities. HCVGAPS addresses these challenges by:
@@ -29,7 +29,7 @@ Housing affordability remains a critical policy issue in the United States, and 
 This framework provides a reproducible, scalable, and open-source solution for housing policy researchers studying voucher allocation disparities.
 
 # Methodology
-HCVGAPS follows a structured workflow to estimate HCV gaps at the county level:
+hudlink follows a structured workflow to estimate HCV gaps at the county level:
 1. **Data Loading:** Imports ACS IPUMS data, HUD’s Picture of Subsidized Households, HUD income limits, incarceration data, and Geocorr crosswalks.
 2. **County Imputation:** Uses **dual crosswalk datasets** (Geocorr 2018 & 2022) to impute missing county names for PUMA-based observations. If a PUMA spans multiple counties, the framework applies population-based allocation factors.
 3. **Household Processing:** Splits multi-family households, cleans income variables, and adjusts statistical weights (`HHWT`) to ensure representativeness.
@@ -46,7 +46,7 @@ HCVGAPS follows a structured workflow to estimate HCV gaps at the county level:
 - **Automated Report Generation:** Produces structured output datasets for further analysis.
 
 # Usage
-HCVGAPS is designed for **housing policy researchers**, **economists**, and **public sector analysts** who need a standardized methodology for estimating county-level voucher allocation gaps. The framework can be run with minimal setup by configuring dataset paths in `config.py` and executing:
+hudlink is designed for **housing policy researchers**, **economists**, and **public sector analysts** who need a standardized methodology for estimating county-level voucher allocation gaps. The framework can be run with minimal setup by configuring dataset paths in `config.py` and executing:
 
 ```cmd
 python main.py

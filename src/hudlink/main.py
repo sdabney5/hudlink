@@ -1,5 +1,5 @@
 """
-Main entry point for processing Housing Choice Voucher (HCV) eligibility data.
+Main entry point for processing and producing hudlink data.
 
 Delegates the task to the `state_processor` module, which processes all states 
 and years specified in the configuration (`CONFIG`).
@@ -13,9 +13,9 @@ def main():
     """
     Called by the console‐script entry. Sets up logging and runs the pipeline.
     """
-    logging.info("Starting HCV eligibility data processing.")
+    logging.info("Starting hudlink eligibility data processing.")
     process_all_states(CONFIG)
-    logging.info("Completed HCV eligibility data processing.")
+    logging.info("Completed hudlink eligibility data processing.")
 
 if __name__ == "__main__":
     main()

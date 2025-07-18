@@ -1,5 +1,5 @@
 """
-Configuration settings for the HCV-GAPS analysis pipeline.
+Configuration settings for the hudlink analysis pipeline.
 
 This module defines the CONFIG dictionary used across the project. It includes:
 - File path templates for input data
@@ -51,7 +51,7 @@ CONFIG = {
     "crosswalk_2022_template": "{data_dir}/{state}/{state}_geocorr_puma_2022.csv",
     "income_limits_template":   "{data_dir}/{state}/{state}_income_limits/{state}_{year}_income_limits.csv",
     "incarceration_template":   "{data_dir}/{state}/{state}_incarc_data.csv",
-    "hud_hcv_template":         "{data_dir}/{state}/{state}_hud_pic_sub_housing/{state}_hud_hcv_picsubhhds_{year}.csv",
+    "hud_psh_template":         "{data_dir}/{state}/{state}_hud_pic_sub_housing/{state}_hud_hcv_picsubhhds_{year}.csv",
 
     # === PROCESSING OPTIONS ===
     "verbose": False,                          # Enables logging and reporting

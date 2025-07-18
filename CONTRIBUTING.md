@@ -1,6 +1,6 @@
-# Contributing to HCVGAPS
+# Contributing to hudlink:
 
-Thank you for considering contributing to the HCVGAPS project! Here are a few guidelines to help you get started:
+Thank you for considering contributing to the hudlink project! Here are a few guidelines to help you get started:
 
 ## How to Contribute
 
