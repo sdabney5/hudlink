@@ -28,19 +28,19 @@ CONFIG = {
     "output_directory": get_default_output_directory(),
 
     # === MAIN USER INPUTS ===
-    "states": ["hi", "dc"],         # Example: ["fl", "ak", "ct"]
-    "ipums_years": [2023,2020],    # Example: [2021, 2022]
+    "states": ["fl"],         # Example: ["fl", "ak", "ct"]
+    "ipums_years": [2023],    # Example: [2021, 2022]
     "program_labels": [       # Which HUD PSH programs to produce linked summaries for
         "Summary of All HUD Programs", 
-       # "Mod Rehab", 
+      # "Mod Rehab", 
         "Public Housing", 
-       # "Section 236", 
+      # "Section 236", 
       #  "Section 8 NC/SR",  
-       # "LIHTC", 
+      # "LIHTC", 
         "Housing Choice Vouchers", 
       #  "Multi-Family Other",
       #  "811/PRAC",
-       # "202/PRAC"
+      # "202/PRAC"
     ],
 
     # === INPUT DATA LOCATION ===
@@ -57,7 +57,7 @@ CONFIG = {
     "verbose": False,                          # Enables logging and reporting
     "exclude_group_quarters": False,  # if True, zeroes out eligibilities for any GQTYPE==2 rows
     "race_sampling": True,                    # Enables race-based prisoner eligibility adjustments
-    "split_households_into_families": True,   # Use family-level weights vs. household-level
+    "split_households_into_families": False,   # Use family-level weights vs. household-level
     "income_limit_agg": "max",   # one of ["min","max","median","mean"] for Counties with multiple Income Limits (e.g. in CT)
     
     # === API SETTINGS ===

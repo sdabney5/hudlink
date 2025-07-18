@@ -108,15 +108,6 @@ CONFIG = {
    ```
 3. **Results:** Final CSV outputs are saved in the `output/` directory.
 
-## Sample Data
-This repository includes **sample datasets** in `sample_data/` for testing:
-- `sample_fl_ipums.csv` – Sample IPUMS dataset for Florida.
-- `sample_fl_geocorr_puma2012.csv` – Geocorr 2012 crosswalk sample.
-- `sample_fl_geocorr_puma2022.csv` – Geocorr 2022 crosswalk sample.
-- `sample_fl_income_limits.csv` – HUD income limits sample.
-- `sample_fl_hud_hcv.csv` – HUD Picture of Subsidized Households sample.
-- `sample_fl_incarceration.csv` – Sample incarceration dataset.
-
 ## Acknowledgments
 Special thanks to **Iris Bui** and **Mira Scannapieco**, UROP interns at Florida State University, for their assistance with data processing and methodology refinement.
 

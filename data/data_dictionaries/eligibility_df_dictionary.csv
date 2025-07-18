@@ -1,0 +1,85 @@
+Variable,Type,Description
+County_Name_state_abbr,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+County_Name_Alt,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+YEAR,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+COUNTYICP,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+PUMA,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+SERIAL,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+CBSERIAL,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+CLUSTER,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+FAMSIZE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+ACTUAL_HH_INCOME,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+HHTYPE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+REALHHWT,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+HHWT,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+MULTYEAR,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+SAMPLE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+STRATA,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+GQ,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+GQTYPE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+GQTYPED,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+RACED,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+OWNERSHP,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+DIFFSENS,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+State code,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+DIFFREM,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+County code,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+STATEFIP,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+HISPAN,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+HISPAND,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+SEX,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+DIFFMOB,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+MORTGAGE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+EMPSTATD,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+EMPSTAT,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+NCHILD,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+CITIZEN,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+OWNERSHPD,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+RACE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+DIFFPHYS,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+State_Alpha,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+County_Name,string,County name derived from PUMA value via Geocorr crosswalk
+FAMILYNUMBER,string,"Unique family ID within household (concatenation of CBSERIAL, FAMUNIT, and County_Name)"
+NFAMS_B4_SPLIT,int,Number of families in household before family splitting logic
+ADJUSTED_FAMSIZE,int,Family size after splitting households into distinct families 
+Allocated_HHWT,float,Reweighted household weight after PUMA-to-county crosswalk (HHWT * allocation factor)
+allocation factor,float,Geocorr PUMA-to-county allocation factor for given PUMA
+elig_2adults,int (0/1),Binary indicator of exactly two adults in a household with children
+elig_1adult,int (0/1),Binary indicator of exactly one adult in a household with children
+elig_female_head,int (0/1),Binary indicator of female-headed household
+elig_female_head_child,int (0/1),Binary indicator of female-headed household with children
+elig_male_head,int (0/1),Binary indicator of male-headed household in the household
+elig_male_head_child,int (0/1),Binary indicator of male-headed household with children in the household
+elig_age62plus,int (0/1),Binary indicator of at least one household member aged 62 or older
+elig_age75plus,int (0/1),Binary indicator of at least one household member aged 75 or older
+elig_minority,int (0/1),Binary indicator of household classified as a racial/ethnic minority (True if NOT white_nonhsp)
+elig_white_nonhsp,int (0/1),Binary indicator of non-Hispanic white household
+elig_black_nonhsp,int (0/1),Binary indicator of non-Hispanic Black household
+elig_native_american_nonhsp,int (0/1),Binary indicator of non-Hispanic Native American/Alaska Native household
+elig_asian_nonhsp,int (0/1),Binary indicator of non-Hispanic Asian household
+elig_mixed_nonhsp,int (0/1),Binary indicator of non-Hispanic multiracial household
+elig_otherrace,int (0/1),Binary indicator of non-Hispanic household of other race
+elig_hispanic,int (0/1),Binary indicator of Hispanic (any race) household
+elig_noncitizen,int (0/1),Binary indicator of non-citizen household
+elig_owner,int (0/1),Binary indicator of owner-occupied household
+elig_renter,int (0/1),Binary indicator of renter-occupied household
+elig_mortgage_paid,int (0/1),Binary indicator of owner household with mortgage fully paid
+elig_disab_hearing_vision,int (0/1),Binary indicator of at least one member with hearing or vision disability
+elig_disab_ambulatory,int (0/1),Binary indicator of at least one member with ambulatory disability
+elig_disab_cognitative,int (0/1),Binary indicator of at least one member with cognitive disability
+elig_disab_independent_living,int (0/1),Binary indicator of at least one member with independent-living disability
+elig_veteran,int (0/1),Binary indicator of at least one veteran in the household
+elig_hs_complete,int (0/1),Binary indicator of at least one member with high-school diploma or equivalent
+elig_bachelor_complete,int (0/1),Binary indicator of at least one member with bachelor's degree
+elig_grad_school,int (0/1),Binary indicator of at least one member with graduate-level education
+elig_employed,int (0/1),Binary indicator of at least one employed member
+elig_disab_any,int (0/1),Binary indicator of at least one member with any disability
+il30_p1–p8,float,"HUD AMI 30% income limits for given county, for household sizes of 1-8 persons"
+il50_p1–p8,float,"HUD AMI 50% income limits for given county, for household sizes of 1-8 persons"
+il80_p1–p8,float,"HUD AMI 80% income limits for given county, for household sizes of 1-8 persons"
+Eligible_at_30%,int (0/1),Binary indicator of subsidy eligibility at 30% HUD AMI level
+Weighted_Eligibility_Count_30%,float,"If Eligible at 30% HUD AMI level, number of eligible households represented by this record"
+Eligible_at_50%,int (0/1),Binary indicator of subsidy eligibility at 50% HUD AMI level
+Weighted_Eligibility_Count_50%,float,"If Eligible at 50% HUD AMI level, number of eligible households represented by this record"
+Eligible_at_80%,int (0/1),Binary indicator of subsidy eligibility at 80% HUD AMI level
+Weighted_Eligibility_Count_80%,float,"If Eligible at 80% HUD AMI level, number of eligible households represented by this record"
