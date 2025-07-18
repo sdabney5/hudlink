@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hudlink"
-version = "2.0.0"
-description = "Code to measure Housing Choice Voucher gaps"
+version = "3.0.0"
+description = "Produces household level HUD subsidy eligibility dataframe and county-level summary df linked to HUD PSH data"
 authors = [{ name = "Shane Dabney", email = "sdabney@fsu.edu" }]
 readme = "README.md"
 requires-python = ">=3.9"
