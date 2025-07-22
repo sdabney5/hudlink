@@ -200,7 +200,7 @@ def flatten_households_to_single_rows(df: pd.DataFrame) -> pd.DataFrame:
     # 5) Catch extra columns via first()
     extras = set(df.columns) - set(static_cols) - set(elig_flags) - set(sum_fields) - {'FAMILYNUMBER'}
     if extras:
-        logging.info("Flatten: first() on extra columns: %s", ", ".join(sorted(extras)))
+        logging.info("Flatten: first() on extra columns")
         agg_map.update({c: 'first' for c in extras})
 
     # 6) Group and aggregate

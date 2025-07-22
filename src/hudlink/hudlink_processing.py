@@ -74,32 +74,20 @@ def process_eligibility(config: dict) -> None:
     """
     # 1. Load IPUMS person-level data
     ipums_df = load_ipums_data(config["ipums_data_path"])
-    if ipums_df is None:
-        logging.error("Failed to load IPUMS data; exiting.")
-        return
     logging.info("Loaded IPUMS data")
 
     # 2. Load crosswalk data
     crosswalk_2012_df, crosswalk_2022_df = load_crosswalk_data(
         config["crosswalk_2012_path"], config["crosswalk_2022_path"]
     )
-    if crosswalk_2012_df is None or crosswalk_2022_df is None:
-        logging.error("Failed to load crosswalk data; exiting.")
-        return
     logging.info("Loaded crosswalk data")
 
     # 3. Load income limits
     income_limits_df = load_income_limits(config["income_limits_path"], config["income_limit_agg"])
-    if income_limits_df is None:
-        logging.error("Failed to load income limits; exiting.")
-        return
     logging.info("Loaded income limits")
 
     # 4. Load HUD PSH data
     hud_psh_df = load_hud_psh_data(config)
-    if hud_psh_df is None:
-        logging.error("Failed to load HUD PSH data; exiting.")
-        return
     logging.info("Loaded HUD PSH data")
 
     # 5. Fill missing county values in IPUMS

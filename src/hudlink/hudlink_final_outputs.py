@@ -123,8 +123,8 @@ def calculate_and_save_linked_summaries(
             rate_col = f"{prog_safe}_allocation_rate_{pct}"
 
             # default to retaining negative total_units code
-            merged[gap_col] = merged["total_units"].astype(float)
-            merged[rate_col] = merged["total_units"].astype(float)
+            merged[gap_col] = merged["total_units"].astype('float64')
+            merged[rate_col] = merged["total_units"].astype('float64')
 
             # only compute for valid (non-negative) total_units
             valid = merged["total_units"] >= 0
@@ -134,9 +134,11 @@ def calculate_and_save_linked_summaries(
             )
             # rate = total_units / weighted total
             denom = merged.loc[valid, total_w].replace({0: pd.NA})
-            merged.loc[valid, rate_col] = (
-                merged.loc[valid, "total_units"] / denom * 100
-            )
+            
+            rate_calculation = merged.loc[valid, "total_units"] / denom * 100
+            rate_values = pd.to_numeric(rate_calculation, errors='coerce')
+            merged.loc[valid, rate_col] = rate_values
+            
 
         # 5) Finalize and save
         linked = tidy_summary_df(merged, state)
