@@ -1,4 +1,9 @@
-# hudlink: Multi-Program Housing Subsidy Coverage Analysis
+
+# hudlink
+
+[![Tests](https://github.com/sdabney5/hudlink/actions/workflows/tests.yaml/badge.svg)](https://github.com/sdabney5/hudlink/actions)
+
+A Python package for analyzing housing subsidy eligibility and allocation patterns by demographic characteristics across all major HUD programs using linked ACS microdata and HUD administrative records.
 
 ## Overview
 hudlink provides two core outputs:
