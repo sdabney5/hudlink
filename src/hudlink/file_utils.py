@@ -55,7 +55,16 @@ def get_default_output_directory():
     Returns:
         str: Path to ~/Desktop/hudlink_output
     """
-    desktop = os.path.join(os.path.expanduser("~"), "Desktop")
+    # Try OneDrive Desktop first, then regular Desktop
+    user_dir = os.path.expanduser("~")
+    onedrive_desktop = os.path.join(user_dir, "OneDrive", "Desktop")
+    regular_desktop = os.path.join(user_dir, "Desktop")
+    
+    if os.path.exists(onedrive_desktop):
+        desktop = onedrive_desktop
+    else:
+        desktop = regular_desktop
+        
     return os.path.join(desktop, "hudlink_output")
 
 
