@@ -19,9 +19,23 @@ Functions:
 import logging
 import gzip
 import shutil
+import warnings
+from ipumspy.readers import CitationWarning
 from datetime import datetime
 from pathlib import Path
-from ipumspy import IpumsApiClient, MicrodataExtract, readers  # Ensure ipumspy is installed
+import threading
+from ipumspy import IpumsApiClient, MicrodataExtract, readers
+from .file_utils import (
+    show_hudlink_banner, 
+    show_download_messages,  
+    show_waiting_messages,
+    show_success_message,
+    show_temporary_message
+    )
+
+# Suppress the specific IPUMS citation warning
+warnings.filterwarnings("ignore", category=CitationWarning)
+
 
 def get_ipums_sample_code(year):
     """
@@ -121,6 +135,8 @@ def fetch_ipums_data_api(config):
     
     additional = config.get("additional_ipums_vars", "")
     variables = required_vars + [v.strip() for v in additional.split(",") if v.strip()]
+    
+    show_hudlink_banner()
 
     try:
         sample_code = get_ipums_sample_code(int(config["year"]))
@@ -143,8 +159,22 @@ def fetch_ipums_data_api(config):
     try:
         extract.select_cases("STATEFIP", [fip_code])
         ipums.submit_extract(extract)
-        ipums.wait_for_extract(extract)
-        logging.info(f"Extract {extract.extract_id} completed.")
+        
+        #Start animated message
+        stop_messages = threading.Event()
+        message_thread = threading.Thread(target=show_waiting_messages, args=(stop_messages,))
+        message_thread.start()
+        
+        
+        try:
+            ipums.wait_for_extract(extract)
+            stop_messages.set()
+            show_success_message("Extract successful!")
+            logging.info(f"Extract {extract.extract_id} completed.")
+        finally:
+            stop_messages.set()
+            message_thread.join()
+        
     except Exception as e:
         logging.error(f"Extract failure: {e}")
         return None
@@ -153,7 +183,17 @@ def fetch_ipums_data_api(config):
     download_dir.mkdir(parents=True, exist_ok=True)
 
     try:
-        ipums.download_extract(extract, download_dir=download_dir)
+        stop_download_messages = threading.Event()
+        download_message_thread = threading.Thread(target=show_download_messages, args=(stop_download_messages,))
+        download_message_thread.start()
+        
+        try:
+            ipums.download_extract(extract, download_dir=download_dir)
+            stop_download_messages.set()
+            show_success_message("Download successful!")
+        finally:
+            stop_download_messages.set()
+            download_message_thread.join()
     except Exception as e:
         logging.error(f"Download failed: {e}")
         return None

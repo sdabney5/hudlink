@@ -31,16 +31,16 @@ CONFIG = {
     "states": ["fl"],         # Example: ["fl", "ak", "ct"]
     "ipums_years": [2023],    # Example: [2021, 2022]
     "program_labels": [       # Which HUD PSH programs to produce linked summaries for
-        "Summary of All HUD Programs", 
-      # "Mod Rehab", 
-        "Public Housing", 
-      # "Section 236", 
-      #  "Section 8 NC/SR",  
-      # "LIHTC", 
-        "Housing Choice Vouchers", 
-      #  "Multi-Family Other",
-      #  "811/PRAC",
-      # "202/PRAC"
+         "Summary of All HUD Programs", 
+         # "Mod Rehab",             # uncomment to add programs
+         # "Public Housing", 
+         # "Section 236", 
+         #  "Section 8 NC/SR",  
+         # "LIHTC", 
+         # "Housing Choice Vouchers", 
+         #  "Multi-Family Other",
+         #  "811/PRAC",
+         # "202/PRAC"
     ],
 
     # === INPUT DATA LOCATION ===

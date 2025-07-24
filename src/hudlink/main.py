@@ -1,21 +1,25 @@
 """
-Main entry point for processing and producing hudlink data.
+Main entry point for hudlink housing analysis package.
 
-Delegates the task to the `state_processor` module, which processes all states 
-and years specified in the configuration (`CONFIG`).
+This module serves as the primary entry point for the hudlink package, delegating
+to the command-line interface module for argument parsing and user interaction.
+The module maintains backwards compatibility with direct imports while providing
+a clean separation between the CLI interface and core processing logic.
+
+The main() function is called by the console script entry point defined in
+pyproject.toml, allowing users to run 'hudlink' from the command line after
+installation. All user interface logic, argument parsing, and configuration
+management is handled by the cli module.
+
+Entry Points:
+    Console script: 'hudlink' command after pip installation
+    Direct import: Can be imported and called programmatically
+    Module execution: python -m hudlink.main
+
+Author: Shane Dabney
 """
 
-import logging
-from .state_processor import process_all_states
-from .config import CONFIG
-
-def main():
-    """
-    Called by the console‐script entry. Sets up logging and runs the pipeline.
-    """
-    logging.info("Starting hudlink eligibility data processing.")
-    process_all_states(CONFIG)
-    logging.info("Completed hudlink eligibility data processing.")
+from .cli import main
 
 if __name__ == "__main__":
     main()

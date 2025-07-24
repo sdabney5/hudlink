@@ -12,8 +12,15 @@ import os
 import copy
 import logging
 from .hudlink_processing import process_eligibility
-from .file_utils import create_output_structure
+from .file_utils import (
+    create_output_structure, 
+    expand_program_names, 
+    show_state_completion_message, 
+    show_hudlink_completion_banner,
+    show_temporary_message
+)
 from .api_calls import fetch_ipums_data_api
+
 
 
 def update_config_for_state(config, state):
@@ -70,7 +77,7 @@ def get_ipums_data_file(config):
     df = fetch_ipums_data_api(config)
     if df is None:
         raise RuntimeError("IPUMS API fetch failed.")
-
+    show_temporary_message("hudlink is preparing your data. One moment, please...", duration=2)
     df.to_csv(file_path, index=False)
     logging.info(f"IPUMS data saved: {file_path}")
     return file_path
@@ -86,6 +93,9 @@ def process_all_states(config):
     Returns:
         None
     """
+    
+    config["program_labels"] = expand_program_names(config["program_labels"])
+    
     for state in config["states"]:
         for year in config["ipums_years"]:
             logging.info(f"Processing state: {state.upper()} for year: {year}")
@@ -107,9 +117,12 @@ def process_all_states(config):
 
             if ipums_file:
                 process_eligibility(state_config)
+                show_state_completion_message(state, year)
                 try:
                     if os.path.exists(ipums_file):
                         os.remove(ipums_file)
                         logging.info(f"Deleted downloaded IPUMS file: {ipums_file}")
                 except Exception as e:
                     logging.error(f"Error deleting downloaded IPUMS file: {e}")
+                    
+    show_hudlink_completion_banner()

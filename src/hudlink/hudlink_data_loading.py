@@ -33,6 +33,7 @@ Usage:
 import pandas as pd
 import logging
 from pandas.api import types as pd_types
+from .file_utils import show_income_aggregation_warning
 
 logging.info("hudlink_data_loading module loaded.")
 
@@ -166,14 +167,15 @@ import pandas as pd
 
 
 
-def load_income_limits(filepath, agg_method="min"):
+def load_income_limits(filepath, agg_method="min", state=None):
     """
     Load income limits data from a CSV file and perform validation checks.
 
     Parameters:
     filepath (str): Path to the CSV file.
     agg_method (str): How to collapse multiple rows per county. One of {"min","max","median","mean"}.
-
+    state (str): State abbreviation for display in messages (optional).
+    
     Returns:
     pd.DataFrame: Loaded, validated (and if needed, deduplicated) income limits data.
 
@@ -228,10 +230,7 @@ def load_income_limits(filepath, agg_method="min"):
             raise ValueError(f"Unknown agg_method '{agg_method}'")
 
         if income_limits_df.duplicated(subset=["County_Name"]).any():
-            logging.warning(
-                "Multiple rows for County_Name found in %s; collapsing with %s()",
-                filepath, agg_method
-            )
+            show_income_aggregation_warning(state, agg_method)
             agg_dict = {c: agg_method for c in limit_cols}
             # keep County_Name as-is
             agg_dict["County_Name"] = "first"
