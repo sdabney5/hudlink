@@ -32,8 +32,7 @@ Usage:
 #Imports
 import pandas as pd
 import logging
-from pandas.api import types as pd_types
-from .file_utils import show_income_aggregation_warning
+from .ui import show_income_aggregation_warning
 
 logging.info("hudlink_data_loading module loaded.")
 
@@ -247,76 +246,6 @@ def load_income_limits(filepath, agg_method="min", state=None):
     return income_limits_df
 
 
-
-def load_incarceration_df(filepath=None):
-    """
-    Load incarceration data from a CSV file
-    
-    Parameters:
-    filepath (str or None): Path to the CSV file.
-
-    Returns
-    -------
-    pd.DataFrame or None
-
-    Raises
-    ------
-    ValueError
-        If the file is missing required columns, or if County_Name
-        is not textual or contains "0".
-    """
-    if filepath is None:
-        logging.info("No incarceration data provided.")
-        return None
-
-    # Only load the columns we need, force County_Name to pandas StringDtype
-    needed_cols = [
-        "State",
-        "County_Name",
-        "Ttl_Incarc",
-        "Ttl_Minority_Incarc",
-        "Ttl_White_Incarc",
-    ]
-
-    try:
-        df = pd.read_csv(
-            filepath,
-            usecols=needed_cols,
-            dtype={"County_Name": "string"},
-            low_memory=False,
-        )
-    except Exception as e:
-        raise ValueError(f"Failed to read incarceration CSV at {filepath!r}: {e}")
-
-    # Check that all needed columns are present
-    missing = [c for c in needed_cols if c not in df.columns]
-    if missing:
-        raise ValueError(f"Incarceration data missing columns: {missing!r}")
-
-    # Ensure County_Name is truly a string dtype
-    if not pd_types.is_string_dtype(df["County_Name"]):
-        raise ValueError(
-            f"'County_Name' must be text, but got dtype {df['County_Name'].dtype}"
-        )
-
-    # Guard against the “all zeros” bug: if any entry is exactly "0", it's wrong
-    zero_mask = df["County_Name"] == "0"
-    if zero_mask.any():
-        bad_idxs = df.index[zero_mask][:5].tolist()
-        raise ValueError(
-            f"Found literal '0' in County_Name at rows {bad_idxs}; "
-            "please verify the CSV path and contents."
-        )
-
-    logging.info(
-        "Loaded incarceration data from %r (%d rows)",
-        filepath,
-        len(df)
-    )
-    return df
-
-
-
 def load_hud_psh_data(config):
     """
     Load and clean the HUD PSH CSV for downstream linkage.
@@ -382,3 +311,124 @@ def load_hud_psh_data(config):
     )
 
     return df
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+############################################
+############################################
+#function in progress#
+
+# def load_incarceration_df(filepath=None):
+#     """
+#     ***This feature is not yet ready.***
+    
+#     Load incarceration data from a CSV file
+    
+#     Parameters:
+#     filepath (str or None): Path to the CSV file.
+
+#     Returns
+#     -------
+#     pd.DataFrame or None
+
+#     Raises
+#     ------
+#     ValueError
+#         If the file is missing required columns, or if County_Name
+#         is not textual or contains "0".
+#     """
+#     if filepath is None:
+#         logging.info("No incarceration data provided.")
+#         return None
+
+#     # Only load the columns we need, force County_Name to pandas StringDtype
+#     needed_cols = [
+#         "State",
+#         "County_Name",
+#         "Ttl_Incarc",
+#         "Ttl_Minority_Incarc",
+#         "Ttl_White_Incarc",
+#     ]
+
+#     try:
+#         df = pd.read_csv(
+#             filepath,
+#             usecols=needed_cols,
+#             dtype={"County_Name": "string"},
+#             low_memory=False,
+#         )
+#     except Exception as e:
+#         raise ValueError(f"Failed to read incarceration CSV at {filepath!r}: {e}")
+
+#     # Check that all needed columns are present
+#     missing = [c for c in needed_cols if c not in df.columns]
+#     if missing:
+#         raise ValueError(f"Incarceration data missing columns: {missing!r}")
+
+#     # Ensure County_Name is truly a string dtype
+#     if not pd_types.is_string_dtype(df["County_Name"]):
+#         raise ValueError(
+#             f"'County_Name' must be text, but got dtype {df['County_Name'].dtype}"
+#         )
+
+#     # Guard against the “all zeros” bug: if any entry is exactly "0", it's wrong
+#     zero_mask = df["County_Name"] == "0"
+#     if zero_mask.any():
+#         bad_idxs = df.index[zero_mask][:5].tolist()
+#         raise ValueError(
+#             f"Found literal '0' in County_Name at rows {bad_idxs}; "
+#             "please verify the CSV path and contents."
+#         )
+
+#     logging.info(
+#         "Loaded incarceration data from %r (%d rows)",
+#         filepath,
+#         len(df)
+#     )
+#     return df

@@ -42,6 +42,11 @@ CONFIG = {
          #  "811/PRAC",
          # "202/PRAC"
     ],
+    "additional_ipums_vars": [ # here include any additional IPUMS ACS Variables beyond the default variables
+        #"PROPINSR",
+        #"COSTGAS"
+        #ETC...
+        ],
 
     # === INPUT DATA LOCATION ===
     "data_dir": "data",  # Base directory for all state-specific input files
@@ -50,16 +55,14 @@ CONFIG = {
     "crosswalk_2012_template": "{data_dir}/{state}/{state}_geocorr_puma_2012.csv",
     "crosswalk_2022_template": "{data_dir}/{state}/{state}_geocorr_puma_2022.csv",
     "income_limits_template":   "{data_dir}/{state}/{state}_income_limits/{state}_{year}_income_limits.csv",
-    "incarceration_template":   "{data_dir}/{state}/{state}_incarc_data.csv",
     "hud_psh_template":         "{data_dir}/{state}/{state}_hud_pic_sub_housing/{state}_hud_hcv_picsubhhds_{year}.csv",
 
     # === PROCESSING OPTIONS ===
     "verbose": False,                          # Enables logging and reporting
     "exclude_group_quarters": False,  # if True, zeroes out eligibilities for any GQTYPE==2 rows
-    "race_sampling": True,                    # Enables race-based prisoner eligibility adjustments
     "split_households_into_families": False,   # Use family-level weights vs. household-level
     "income_limit_agg": "max",   # one of ["min","max","median","mean"] for Counties with multiple Income Limits (e.g. in CT)
-    
+
     # === API SETTINGS ===
     "api_settings": {
         "use_ipums_api": True,

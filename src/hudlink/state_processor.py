@@ -14,7 +14,9 @@ import logging
 from .hudlink_processing import process_eligibility
 from .file_utils import (
     create_output_structure, 
-    expand_program_names, 
+    expand_program_names
+)
+from .ui import(
     show_state_completion_message, 
     show_hudlink_completion_banner,
     show_temporary_message
@@ -38,8 +40,6 @@ def update_config_for_state(config, state):
     state_config["crosswalk_2012_path"] = config["crosswalk_2012_template"].format(
         data_dir=config["data_dir"], state=state)
     state_config["crosswalk_2022_path"] = config["crosswalk_2022_template"].format(
-        data_dir=config["data_dir"], state=state)
-    state_config["incarceration_data_path"] = config["incarceration_template"].format(
         data_dir=config["data_dir"], state=state)
     # HUD PSH data path is year-specific and updated separately.
     return state_config
@@ -77,7 +77,7 @@ def get_ipums_data_file(config):
     df = fetch_ipums_data_api(config)
     if df is None:
         raise RuntimeError("IPUMS API fetch failed.")
-    show_temporary_message("hudlink is preparing your data. One moment, please...", duration=2)
+    show_temporary_message("hudlink is preparing your data. This should take about 10 seconds", duration=5)
     df.to_csv(file_path, index=False)
     logging.info(f"IPUMS data saved: {file_path}")
     return file_path

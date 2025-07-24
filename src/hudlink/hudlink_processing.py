@@ -42,7 +42,8 @@ from .hudlink_family_feature_engineering import (
 )
 from .hudlink_eligibility_calculation import calculate_eligibility
 from .hudlink_final_outputs import calculate_and_save_linked_summaries
-from .file_utils import clear_api_downloads, show_processing_spinner
+from .file_utils import clear_api_downloads
+from .ui import show_processing_spinner
 
 
 def process_eligibility(config: dict) -> None:

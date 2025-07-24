@@ -25,12 +25,11 @@ from datetime import datetime
 from pathlib import Path
 import threading
 from ipumspy import IpumsApiClient, MicrodataExtract, readers
-from .file_utils import (
+from .ui import (
     show_hudlink_banner, 
     show_download_messages,  
     show_waiting_messages,
     show_success_message,
-    show_temporary_message
     )
 
 # Suppress the specific IPUMS citation warning
@@ -133,8 +132,8 @@ def fetch_ipums_data_api(config):
     "EDUCD", "EMPSTAT",
 ]
     
-    additional = config.get("additional_ipums_vars", "")
-    variables = required_vars + [v.strip() for v in additional.split(",") if v.strip()]
+    additional = config.get("additional_ipums_vars", [])
+    variables = required_vars + [v.strip() for v in additional if v.strip()]
     
     show_hudlink_banner()
 
