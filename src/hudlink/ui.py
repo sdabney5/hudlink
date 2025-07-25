@@ -242,7 +242,7 @@ def show_income_aggregation_warning(state, agg_method):
     print("\033[2K\r")
     print("\033[2K\r" + f"     hudlink found multiple HUD income limit values for some {state.upper()} counties.")
     print("\033[2K\r" + f" ⚠️  Consolidating using '{agg_method}' method (taking the {agg_method} value per county).")
-    print("\033[2K\r" + "     You can change this in the config or with --agg-method [min|max|median|mean] if preferred.")
+    print("\033[2K\r" + "     You can change the aggregation method:--agg-method [min|max|median|mean] if preferred.")
     print("\033[2K\r")
     print("\033[2K\r" + colored_text("─" * 90, "yellow"))
     print("\033[2K\r" + colored_text("─" * 90, "yellow"))
@@ -313,8 +313,8 @@ hudlink_logo = [
 "       #                                #    ##                       ##              ",
 "       ## ###       #     #        ###  #    ##     #     #  ###      ##    ##        ",
 "       #     ##     #     #     ##     ##    ##     #     ##    #     ##  ##          ",
-"       #      #     #     #     #       #    ##     #     #     ##    #####           ",
-"       #      #     #     #     ##     ##    ##     #     #     ##    ##  ##          ",
+"       #      #     #     #     #       #    ##     #     #      #    #####           ",
+"       #      #     #     #     ##     ##    ##     #     #      #    ##  ##          ",
 "       #      #     #######      ########    ##     #     #      #    ##   ###        ",
 "                                                                                      "    
 ]

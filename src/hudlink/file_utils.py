@@ -104,7 +104,7 @@ def get_default_output_directory():
 
 
     
-def clean_eligibility_df(elig_df, state, year):
+def clean_eligibility_df(elig_df, state, year, warning=False):
     """
     Clean eligibility DataFrame by removing unnecessary columns and correcting county labels.
 
@@ -121,35 +121,35 @@ def clean_eligibility_df(elig_df, state, year):
     """
     df = elig_df.drop(columns=["State abbr."], errors="ignore").copy()
 
-    if state == "CT" and int(year) == 2023:
-        show_CT_warning()
-
+    if state == "CT" and int(year) >= 2023:
+        if warning:
+            show_CT_warning()
         ct_puma_to_county = {
-            "20100": "Northwest Hills Planning Region CT",
-            "20201": "Capitol Planning Region CT",
-            "20202": "Lower Connecticut River Valley Planning Region CT",
-            "20203": "Capitol Planning Region CT",
-            "20204": "Capitol Planning Region CT",
-            "20205": "Capitol Planning Region CT",
-            "20206": "Capitol Planning Region CT",
-            "20207": "Capitol Planning Region CT",
-            "20301": "Northeastern Connecticut Planning Region CT",
-            "20401": "Southeastern Connecticut Planning Region CT",
-            "20402": "Southeastern Connecticut Planning Region CT",
-            "20500": "Lower Connecticut River Valley Planning Region CT",
-            "20601": "South Central Connecticut Planning Region CT",
-            "20602": "South Central Connecticut Planning Region CT",
-            "20603": "South Central Connecticut Planning Region CT",
-            "20604": "South Central Connecticut Planning Region CT",
-            "20701": "Naugatuck Valley Planning Region CT",
-            "20702": "Naugatuck Valley Planning Region CT",
-            "20703": "Naugatuck Valley Planning Region CT",
-            "20801": "Greater Bridgeport Planning Region CT",
-            "20802": "Greater Bridgeport Planning Region CT",
-            "20901": "Western Connecticut Planning Region CT",
-            "20902": "Western Connecticut Planning Region CT",
-            "20903": "Western Connecticut Planning Region CT",
-            "20904": "Western Connecticut Planning Region CT"
+            "20100": "Northwest Hills Planning Region",
+            "20201": "Capitol Planning Region",
+            "20202": "Lower Connecticut River Valley Planning Region",
+            "20203": "Capitol Planning Region",
+            "20204": "Capitol Planning Region",
+            "20205": "Capitol Planning Region",
+            "20206": "Capitol Planning Region",
+            "20207": "Capitol Planning Region",
+            "20301": "Northeastern Connecticut Planning Region",
+            "20401": "Southeastern Connecticut Planning Region",
+            "20402": "Southeastern Connecticut Planning Region",
+            "20500": "Lower Connecticut River Valley Planning Region",
+            "20601": "South Central Connecticut Planning Region",
+            "20602": "South Central Connecticut Planning Region",
+            "20603": "South Central Connecticut Planning Region",
+            "20604": "South Central Connecticut Planning Region",
+            "20701": "Naugatuck Valley Planning Region",
+            "20702": "Naugatuck Valley Planning Region",
+            "20703": "Naugatuck Valley Planning Region",
+            "20801": "Greater Bridgeport Planning Region",
+            "20802": "Greater Bridgeport Planning Region",
+            "20901": "Western Connecticut Planning Region",
+            "20902": "Western Connecticut Planning Region",
+            "20903": "Western Connecticut Planning Region",
+            "20904": "Western Connecticut Planning Region"
         }
 
         if "PUMA" in df.columns:

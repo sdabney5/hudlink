@@ -27,7 +27,7 @@ def save_flat_eligibility_df(
     """
     Clean and save the household‐level eligibility DataFrame.
     """
-    df_clean = clean_eligibility_df(elig_df, state, year)
+    df_clean = clean_eligibility_df(elig_df, state, year, warning=True)
     fname = f"{state}_{year}_eligibility{weight_suffix}.csv"
     path = os.path.join(output_dir, fname)
     df_clean.to_csv(path, index=False)
@@ -54,6 +54,9 @@ def calculate_and_save_linked_summaries(
 
     # 1) Save the flat household‐level eligibility table
     save_flat_eligibility_df(elig_df, output_dir, state, year, weight_suffix)
+    
+    #1 a) Clean again
+    elig_df = clean_eligibility_df(elig_df, state, year)
 
     # 2) Build county summary (weighted totals + weighted flag counts + shares)
     flags = [c for c in elig_df.columns if c.startswith("elig_")]
