@@ -59,7 +59,7 @@ CONFIG = {
 
     # === PROCESSING OPTIONS ===
     "verbose": False,                          # Enables logging and reporting
-    "exclude_group_quarters": False,  # if True, zeroes out eligibilities for any GQTYPE==2 rows
+    "exclude_group_quarters": True,  # if True, zeroes out eligibilities for any GQTYPE!=0 rows
     "split_households_into_families": False,   # Use family-level weights vs. household-level for summary data output
     "income_limit_agg": "max",   # one of ["min","max","median","mean"] for Counties with multiple Income Limits (e.g. in CT)
 

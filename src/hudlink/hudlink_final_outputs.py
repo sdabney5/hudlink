@@ -11,7 +11,12 @@ import re
 import logging
 import pandas as pd
 
-from .file_utils import clean_eligibility_df, tidy_summary_df
+from .file_utils import(
+    clean_eligibility_df, 
+    tidy_summary_df, 
+    clean_up_eligibility_df, 
+    add_fips_codes_to_df
+    )
 
 # AMI thresholds to process
 THRESHOLDS = ["30%", "50%", "80%"]
@@ -28,9 +33,11 @@ def save_flat_eligibility_df(
     Clean and save the household‐level eligibility DataFrame.
     """
     df_clean = clean_eligibility_df(elig_df, state, year, warning=True)
+    df_clean= add_fips_codes_to_df(df_clean)
+    df_even_cleaner = clean_up_eligibility_df(df_clean)
     fname = f"{state}_{year}_eligibility{weight_suffix}.csv"
     path = os.path.join(output_dir, fname)
-    df_clean.to_csv(path, index=False)
+    df_even_cleaner.to_csv(path, index=False)
     logging.info("Saved flat eligibility to %s", path)
 
 
@@ -57,6 +64,7 @@ def calculate_and_save_linked_summaries(
     
     #1 a) Clean again
     elig_df = clean_eligibility_df(elig_df, state, year)
+    elig_df= add_fips_codes_to_df(elig_df)
 
     # 2) Build county summary (weighted totals + weighted flag counts + shares)
     flags = [c for c in elig_df.columns if c.startswith("elig_")]

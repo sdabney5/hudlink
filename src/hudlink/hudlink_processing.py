@@ -131,7 +131,7 @@ def process_eligibility(config: dict) -> None:
             ipums_df,
             income_limits_df,
             weight_col=weight_col,
-            exclude_group_quarters=config.get("exclude_group_quarters", False)
+            exclude_group_quarters=config.get("exclude_group_quarters", True)
         )
         logging.info("Calculated eligibility at 30/50/80% thresholds")
     

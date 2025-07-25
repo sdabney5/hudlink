@@ -34,7 +34,7 @@ def calculate_eligibility(df, income_limits_df, weight_col, exclude_group_quarte
             
         exclude_group_quarters (bool, optional):
             If True, zeroes out eligibility and weighted counts for any household
-            where GQTYPE == 2 (institutional group quarters).
+            where GQTYPE != 0 (institutional group quarters).
 
     Returns:
         pd.DataFrame:
@@ -81,7 +81,7 @@ def calculate_eligibility(df, income_limits_df, weight_col, exclude_group_quarte
         
     # Exclude group-quarter households if requested
     if exclude_group_quarters and 'GQTYPE' in merged_df.columns:
-        mask = merged_df['GQTYPE'] == 2
+        mask = merged_df['GQTYPE'] != 0
         for threshold in thresholds:
             elig_col = f'Eligible_at_{threshold}'
             wt_col   = f'Weighted_Eligibility_Count_{threshold}'
