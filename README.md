@@ -126,7 +126,7 @@ hudlink --states FL --years 2023 \
 - `--exclude-group-quarters`: Exclude group quarters from eligibility counts
 - `--income-agg`: Income limit aggregation method (max, min, mean, median, mode)
 - `--programs`: Specific HUD programs to analyze
-- '--create-gap-visual'          Create choropleth map visualization after processing
+- `--create-gap-visual`: Create choropleth map visualization after processing
 - `--help`: Show detailed help with all options
 
 ### Python Scripts
@@ -230,18 +230,12 @@ County-level aggregations with:
 When `create_gap_visual` is enabled, hudlink generates an interactive choropleth map showing HUD program allocation rates across all processed states:
 
 - **`hud_allocation_gap_map_[year].html`**: Interactive county-level map
-  - Color-coded by allocation rate (red = low performance, blue = high performance)  
+  - Color-coded by allocation rate (at 50% ami Threshold) 
   - Hover tooltips show county name, state, and exact allocation percentage
   - Uses "Summary of All HUD Programs" data, or first program in your config list
   - Includes all states specified in your configuration
   - Opens in any web browser, no internet connection required
   - Fully self-contained HTML file suitable for sharing or embedding
-
-**Example visualization features:**
-- Zoom and pan controls for detailed county-level analysis
-- Professional styling with clear legends and titles
-- Responsive design works on desktop and mobile browsers
-- Export options for presentations and reports
 
 **Note:** Visualizations are created after all state processing is complete and are saved to your main output directory alongside the individual state folders.
 
