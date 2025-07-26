@@ -67,7 +67,7 @@ def test_full_pipeline():
     
     # Calculate validation metrics
     familynumber_counts = eligibility_df["FAMILYNUMBER"].value_counts()
-    elig_weight_total = eligibility_df["REALHHWT"].sum()
+    elig_weight_total = eligibility_df["HHWT_stable"].sum()
     ipums_base_weight_total = ipums_test_df_rollup["HHWT"].sum()
     tolerance = 2  # Allow small rounding differences
     
@@ -82,7 +82,7 @@ def test_full_pipeline():
         f"Weight totals don't match: {elig_weight_total} vs {ipums_base_weight_total}"
     
     # Check required columns exist
-    required_cols = ["FAMILYNUMBER", "Allocated_HHWT", "Eligible_at_80%", "Eligible_at_50%", "Eligible_at_30%"]
+    required_cols = ["FAMILYNUMBER", "HHWT_fam_adjusted", "Eligible_at_80%", "Eligible_at_50%", "Eligible_at_30%"]
     missing_cols = [col for col in required_cols if col not in eligibility_df.columns]
     assert not missing_cols, f"Missing required columns in eligibility output: {missing_cols}"
     
