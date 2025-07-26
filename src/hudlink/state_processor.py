@@ -125,4 +125,13 @@ def process_all_states(config):
                 except Exception as e:
                     logging.error(f"Error deleting downloaded IPUMS file: {e}")
                     
+    # CREATE GAP VISUAL AFTER ALL STATES AND YEARS ARE PROCESSED
+    try:
+        from .hudlink_visuals import maybe_create_gap_visual
+        maybe_create_gap_visual(config)
+    except ImportError:
+        logging.warning("hudlink_visuals module not found - skipping visualization creation")
+    except Exception as e:
+        logging.error(f"Error creating gap visual: {e}")
+                    
     show_hudlink_completion_banner()

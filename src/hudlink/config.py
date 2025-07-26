@@ -46,7 +46,9 @@ CONFIG = {
         #"PROPINSR",
         #"COSTGAS"
         #ETC...
-        ],
+    ],
+    "create_gap_visual": True, # Create a sample viz of allocation rates at 50% AMI for selected states
+    "open_visualizations": True, # Automatically open viz when complete
 
     # === INPUT DATA LOCATION ===
     "data_dir": "data",  # Base directory for all state-specific input files

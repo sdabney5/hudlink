@@ -109,7 +109,7 @@ def fetch_ipums_data_api(config):
     "HHINCOME", "FTOTINC", "INCWAGE", "INCSS", "INCWELFR",
     "INCINVST", "INCRETIR", "INCSUPP", "INCEARN", "INCOTHER",
     # weights
-    "HHWT",            # if you ever need the person weight
+    "HHWT",            # 
     "FAMUNIT",         # family identifier
     "CBSERIAL",        # household identifier
     # household & family
@@ -189,7 +189,7 @@ def fetch_ipums_data_api(config):
         try:
             ipums.download_extract(extract, download_dir=download_dir)
             stop_download_messages.set()
-            show_success_message("Download successful!")
+            show_success_message("Download successful! - Processing will start soon.")
         finally:
             stop_download_messages.set()
             download_message_thread.join()

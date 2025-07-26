@@ -126,6 +126,7 @@ hudlink --states FL --years 2023 \
 - `--exclude-group-quarters`: Exclude group quarters from eligibility counts
 - `--income-agg`: Income limit aggregation method (max, min, mean, median, mode)
 - `--programs`: Specific HUD programs to analyze
+- '--create-gap-visual'          Create choropleth map visualization after processing
 - `--help`: Show detailed help with all options
 
 ### Python Scripts
@@ -179,6 +180,9 @@ CONFIG = {
         "Public Housing",
         "LIHTC"
     ],
+
+    "create_gap_visual": True, # Create a sample viz of allocation rates at 50% AMI for selected states
+    "open_visualizations": True, # Automatically open viz when complete
     
     # Advanced processing options
     "split_households_into_families": True,    # Family vs household analysis
@@ -221,6 +225,27 @@ County-level aggregations with:
 - **HUD program data**: Linked Picture of Subsidized Housing administrative data
 - **Allocation rates**: Units available / eligible households
 - **Gap estimates**: Unmet housing need by county and demographic group
+
+### 3. Visualizations
+When `create_gap_visual` is enabled, hudlink generates an interactive choropleth map showing HUD program allocation rates across all processed states:
+
+- **`hud_allocation_gap_map_[year].html`**: Interactive county-level map
+  - Color-coded by allocation rate (red = low performance, blue = high performance)  
+  - Hover tooltips show county name, state, and exact allocation percentage
+  - Uses "Summary of All HUD Programs" data, or first program in your config list
+  - Includes all states specified in your configuration
+  - Opens in any web browser, no internet connection required
+  - Fully self-contained HTML file suitable for sharing or embedding
+
+**Example visualization features:**
+- Zoom and pan controls for detailed county-level analysis
+- Professional styling with clear legends and titles
+- Responsive design works on desktop and mobile browsers
+- Export options for presentations and reports
+
+**Note:** Visualizations are created after all state processing is complete and are saved to your main output directory alongside the individual state folders.
+
+
 
 ## Core Features
 

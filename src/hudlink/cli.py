@@ -131,6 +131,12 @@ Examples:
         version='%(prog)s 3.0.0'
     )
     
+    parser.add_argument(
+    '--create-gap-visual',
+    action='store_true', 
+    help='Create choropleth map visualization after processing'
+    )
+    
     return parser
 
 
@@ -193,6 +199,9 @@ def parse_and_validate_args(args):
     
     if args.no_race_sampling:
         config_updates['race_sampling'] = False
+    
+    if args.create_gap_visual:
+        config_updates['create_gap_visual'] = True
     
     if args.verbose:
         config_updates['verbose'] = True

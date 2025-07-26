@@ -64,7 +64,6 @@ def calculate_and_save_linked_summaries(
     
     #1 a) Clean again
     elig_df = clean_eligibility_df(elig_df, state, year)
-    elig_df= add_fips_codes_to_df(elig_df, state)
 
     # 2) Build county summary (weighted totals + weighted flag counts + shares)
     flags = [c for c in elig_df.columns if c.startswith("elig_")]
@@ -153,6 +152,7 @@ def calculate_and_save_linked_summaries(
 
         # 5) Finalize and save
         linked = tidy_summary_df(merged, state)
+        linked = add_fips_codes_to_df(linked, state)
         fname = f"{state}_{year}_{prog_safe}_linked_summary{weight_suffix}.csv"
         path = os.path.join(output_dir, fname)
         linked.to_csv(path, index=False)

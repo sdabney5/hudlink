@@ -4,14 +4,14 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 46,100,46063,SD,Harding SD,0.007
 46,100,46081,SD,Lawrence SD,0.1373
 46,100,46093,SD,Meade SD,0.1591
-46,100,46102,SD,"Oglala Lakota, SD (N)",0.0005
+46,100,46102,SD,Oglala Lakota,0.0005
 46,100,46103,SD,Pennington SD,0.5821
 46,100,46105,SD,Perkins SD,0.0151
 46,200,46007,SD,Bennett SD,0.0337
 46,200,46017,SD,Buffalo SD,0.0194
 46,200,46023,SD,Charles Mix SD,0.0933
 46,200,46031,SD,Corson SD,0.0388
-46,200,46033,SD,Custer SD,0.0
+46,200,46033,SD,Custer SD,0
 46,200,46041,SD,Dewey SD,0.0522
 46,200,46043,SD,Douglas SD,0.0001
 46,200,46047,SD,Fall River SD,0.0694
@@ -23,8 +23,8 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 46,200,46075,SD,Jones SD,0.0091
 46,200,46085,SD,Lyman SD,0.037
 46,200,46095,SD,Mellette SD,0.0191
-46,200,46102,SD,"Oglala Lakota, SD (N)",0.1352
-46,200,46103,SD,Pennington SD,0.0
+46,200,46102,SD,Oglala Lakota,0.1352
+46,200,46103,SD,Pennington SD,0
 46,200,46117,SD,Stanley SD,0.0297
 46,200,46119,SD,Sully SD,0.0144
 46,200,46121,SD,Todd SD,0.0928
@@ -56,7 +56,7 @@ State code,PUMA,County code,State abbr.,County_Name,allocation factor
 46,400,46059,SD,Hand SD,0.0234
 46,400,46061,SD,Hanson SD,0.0258
 46,400,46067,SD,Hutchinson SD,0.0553
-46,400,46069,SD,Hyde SD,0.0
+46,400,46069,SD,Hyde SD,0
 46,400,46073,SD,Jerauld SD,0.0124
 46,400,46077,SD,Kingsbury SD,0.0386
 46,400,46079,SD,Lake SD,0.0824
