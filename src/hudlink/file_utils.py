@@ -402,6 +402,8 @@ def add_fips_codes_to_df(df, state, fips_mapping=None):
     return result_df
 
 COUNTY_FIPS_MAPPING = {
+    ('AK', 'Wade Hampton Census Area'): '02270',
+    ('AK', 'Valdez-Cordova Census Area'): '02261',
     ('AK', 'Aleutians East Borough'): '02013',
     ('AK', 'Aleutians West Census Area'): '02016',
     ('AK', 'Anchorage Borough'): '02020',
@@ -716,6 +718,15 @@ COUNTY_FIPS_MAPPING = {
     ('CT', 'New London County'): '09011',
     ('CT', 'Tolland County'): '09013',
     ('CT', 'Windham County'): '09015',
+    ('CT', 'Capitol Planning Region'):                     '09110',
+    ('CT', 'Greater Bridgeport Planning Region'):          '09120',
+    ('CT', 'Lower Connecticut River Valley Planning Region'):'09130',
+    ('CT', 'Naugatuck Valley Planning Region'):             '09140',
+    ('CT', 'Northeastern Connecticut Planning Region'):    '09150',
+    ('CT', 'Northwest Hills Planning Region'):             '09160',
+    ('CT', 'South Central Connecticut Planning Region'):   '09170',
+    ('CT', 'Southeastern Connecticut Planning Region'):    '09180',
+    ('CT', 'Western Connecticut Planning Region'):         '09190',
     ('DC', 'District of Columbia County'): '11001',
     ('DC', 'Montgomery County'): '11031',
     ('DE', 'Kent County'): '10001',
