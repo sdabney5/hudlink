@@ -1,0 +1,6 @@
+# MANIFEST.in
+recursive-include data *.csv *.txt
+recursive-include secrets *.txt
+include README.md
+include LICENSE
+include CONTRIBUTING.md
