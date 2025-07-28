@@ -140,8 +140,9 @@ cython_debug/
 # .idea/
 
 # --- Project-specific directories ---
-# Final analysis outputs
+# Data and final analysis outputs
 outputs/
+data/
 
 # API downloaded data (e.g., IPUMS extracts)
 data/api_downloads/
