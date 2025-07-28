@@ -5,10 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hudlink"
 version = "3.0.0"
-description = "Produces household level HUD subsidy eligibility dataframe and county-level summary df linked to HUD PSH data"
+description = "Automated ACS-HUD data linking for housing analysis: eligibility determination, protected-class analysis, and analysis-ready county summaries"
 authors = [{ name = "Shane Dabney", email = "sdabney@fsu.edu" }]
 readme = "README.md"
+license = { text = "MIT" }
 requires-python = ">=3.9"
+keywords = ["housing-economics", "housing-policy", "affordable-housing", "HUD", "ACS", "economic-analysis", "policy-research", "urban-planning"]
 
 dependencies = [
    "pandas>=1.3.0",
@@ -17,18 +19,38 @@ dependencies = [
    "plotly>=5.0.0"
 ]
 
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: GIS",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+]
+
 [project.optional-dependencies]
 test = [
    "pytest>=6.0",
    "pytest-cov>=3.0",
 ]
 
-# setuptools should look for packages under src/
+[project.urls]
+"Homepage" = "https://github.com/sdabney5/hudlink"
+"Bug Tracker" = "https://github.com/sdabney5/hudlink/issues"
+"Documentation" = "https://github.com/sdabney5/hudlink#readme"
+
+[project.scripts]
+hudlink = "hudlink.main:main"
+
 [tool.setuptools]
+include-package-data = true
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[project.scripts]
-hudlink = "hudlink.main:main"

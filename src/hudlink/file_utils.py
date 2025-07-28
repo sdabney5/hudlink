@@ -12,7 +12,7 @@ import os
 import logging
 import shutil
 from pathlib import Path
-from .ui import show_CT_warning
+from .ui import show_CT_warning, show_success_message
 
 
 
@@ -320,31 +320,52 @@ def tidy_summary_df(summary_df, state):
     
     return df
 
-def load_ipums_api_token(path):
-    """
-    Load the IPUMS API token from a plain text file.
+def load_ipums_api_token(token_path):
+    """Load IPUMS API token from file, prompting user if needed."""
+    token = None
+    
+    # Try to load from file if it exists
+    if os.path.exists(token_path):
+        try:
+            with open(token_path, 'r') as f:
+                token = f.read().strip()
+        except Exception as e:
+            logging.warning(f"Could not read token file: {e}")
+            token = None
+    
+    # Check if token is missing (file doesn't exist), empty, or placeholder
+    if not token or token in ["", "YOUR TOKEN HERE", "YOUR IPUMS TOKEN HERE"]:
+        token_message = """IPUMS API Token Required
 
-    Parameters:
-        path (str): Path to the token file.
+To download ACS microdata with hudlink, you need an IPUMS API token.
+Get a free token at: https://account.ipums.org/api_keys.
 
-    Returns:
-        str: API token string.
 
-    Raises:
-        FileNotFoundError: If the token file does not exist.
-        ValueError: If the file is empty or contains only whitespace.
-    """
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Missing IPUMS API token file at: {path}")
-
-    with open(path, "r", encoding="utf-8") as f:
-        token = f.read().strip()
-
-    if not token:
-        raise ValueError(f"IPUMS API token file at {path} is empty.")
-
+Options:
+1. Enter your token now (it will be saved for future use)
+2. Press Enter to skip (you'll need to add it to secrets/ipums_token.txt)"""
+        
+        show_success_message(token_message)
+        
+        user_token = input("\nEnter your IPUMS API token (or press Enter to skip): ").strip()
+        
+        if user_token:
+            # Create directory if it doesn't exist
+            from pathlib import Path
+            secrets_dir = Path(os.path.dirname(token_path))
+            secrets_dir.mkdir(exist_ok=True)
+            
+            # Save the token
+            with open(token_path, 'w') as f:
+                f.write(user_token)
+            
+            show_success_message(f"Token saved to {token_path}")
+            return user_token
+        else:
+            show_success_message("Skipping API download. Please add your token to secrets/ipums_token.txt")
+            return None
+    
     return token
-
 
 def clear_api_downloads(folder):
     """

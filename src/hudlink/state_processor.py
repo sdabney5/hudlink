@@ -77,7 +77,7 @@ def get_ipums_data_file(config):
     df = fetch_ipums_data_api(config)
     if df is None:
         raise RuntimeError("IPUMS API fetch failed.")
-    show_temporary_message("hudlink is preparing your data. This should take about 10 seconds", duration=5)
+    show_temporary_message("hudlink is preparing to process your data", duration=5)
     df.to_csv(file_path, index=False)
     logging.info(f"IPUMS data saved: {file_path}")
     return file_path
