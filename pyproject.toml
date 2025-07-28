@@ -7,7 +7,7 @@ name = "hudlink"
 version = "3.0.0"
 description = "Automated ACS-HUD data linking for housing analysis: eligibility determination, protected-class analysis, and analysis-ready county summaries"
 authors = [{ name = "Shane Dabney", email = "sdabney@fsu.edu" }]
-readme = "README.md"
+readme = {file = "README.md", content-type = "text/markdown"}
 license = { text = "MIT" }
 requires-python = ">=3.9"
 keywords = ["housing-economics", "housing-policy", "affordable-housing", "HUD", "ACS", "economic-analysis", "policy-research", "urban-planning"]
