@@ -1,6 +1,6 @@
 # hudlink
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![DOI](https://zenodo.org/badge/821527103.svg)](https://doi.org/10.5281/zenodo.16547053)
 [![PyPI version](https://badge.fury.io/py/hudlink.svg)](https://badge.fury.io/py/hudlink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
