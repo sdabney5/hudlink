@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hudlink"
-version = "3.0.0"
+version = "3.0.1"
 description = "Automated ACS-HUD data linking for housing analysis: eligibility determination, protected-class analysis, and analysis-ready county summaries"
 authors = [{ name = "Shane Dabney", email = "sdabney@fsu.edu" }]
 readme = {file = "README.md", content-type = "text/markdown"}
