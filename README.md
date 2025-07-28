@@ -384,7 +384,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- **Documentation**: [https://hudlink.readthedocs.io](https://hudlink.readthedocs.io) (coming soon)
 - **Issues**: Report bugs and request features via [GitHub Issues](https://github.com/sdabney5/hudlink/issues)
 - **Email**: [sdabney@fsu.edu](mailto:sdabney@fsu.edu) for methodological questions
 
