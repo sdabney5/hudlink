@@ -3,7 +3,7 @@ County_Name,string,County name
 Weighted_Eligibility_Count_30%,float,Total estimated number of households eligible at 30% HUD AMI based on ACS household weights
 Weighted_Eligibility_Count_50%,float,Total estimated number of households eligible at 50% HUD AMI based on ACS household weights
 Weighted_Eligibility_Count_80%,float,Total estimated number of households eligible at 80% HUD AMI based on ACS household weights
-Weighted_elig_<demographic>_Count_<threshold>%,float,Weighted estimated number of households meeting <demographic> and income eligibility at <threshold>% HUD AMI for each demographic and threshold
+Weighted_<demographic>_Count_<threshold>%,float,Weighted estimated number of households meeting <demographic> and income eligibility at <threshold>% HUD AMI for each demographic and threshold
 % Eligible <demographic> at <threshold>%,float,Percentage of households meeting <demographic> that are income-eligible at <threshold>% HUD AMI
 program_label / program / sub_program,string,"HUD Program label and identifiers for the summary (e.g., public housing, voucher, etc.)"
 "Quarter, gsl, states, entities, sumlevel",varies,"Metadata fields for time period, geographies, and summary level"

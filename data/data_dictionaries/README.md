@@ -21,6 +21,6 @@ This directory contains the machine-readable data dictionaries for the two prima
 
 - To keep the dictionaries concise, related fields have been **grouped** in the descriptions.  
   For example, rather than listing each HUD AMI limit variable (`il30_p1`, `il30_p2`, …), we describe them collectively as “AMI 30% income limits for households of 1–8 persons.”  
-- Similarly, demographic eligibility flags follow a consistent `elig_<criterion>` pattern; their CSV labels map directly to the corresponding `elig_*` columns in the code.
+- Similarly, demographic eligibility flags follow a consistent pattern.
 
 ---

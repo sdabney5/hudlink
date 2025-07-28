@@ -5,13 +5,13 @@ YEAR,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IP
 COUNTYICP,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 PUMA,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 SERIAL,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
-CBSERIAL,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+HOUSEHOLD_NUMBER/CBSERIAL,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 CLUSTER,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 FAMSIZE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
-ACTUAL_HH_INCOME,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+HH_INCOME,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 HHTYPE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
-REALHHWT,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
-HHWT,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+HHWT_stable,float,"Reweighted household weight for preserving Census counts. If multifam households were split by 'family', this weight reweights families into so that they are not counted as new households"
+HHWT_unmodified,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),"Renamed from IPUMS ""HHWT"" variable"
 MULTYEAR,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 SAMPLE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 STRATA,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
@@ -37,43 +37,43 @@ CITIZEN,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See
 OWNERSHPD,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 RACE,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 DIFFPHYS,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
-State_Alpha,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
+State,See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml),See IPUMS codebook (https://usa.ipums.org/usa/volii/codebooks.shtml)
 County_Name,string,County name derived from PUMA value via Geocorr crosswalk
 FAMILYNUMBER,string,"Unique family ID within household (concatenation of CBSERIAL, FAMUNIT, and County_Name)"
 NFAMS_B4_SPLIT,int,Number of families in household before family splitting logic
-ADJUSTED_FAMSIZE,int,Family size after splitting households into distinct families 
-Allocated_HHWT,float,Reweighted household weight after PUMA-to-county crosswalk (HHWT * allocation factor)
+FAMSIZE_adjusted,int,Family size after splitting households into distinct families 
+HHWT_fam_adjusted,float,"Reweighted household weight-explodes multifam households into distinct units. If multifam households were split by 'family', this weight reweights families into so that they are counted as new/distinct households"
 allocation factor,float,Geocorr PUMA-to-county allocation factor for given PUMA
-elig_2adults,int (0/1),Binary indicator of exactly two adults in a household with children
-elig_1adult,int (0/1),Binary indicator of exactly one adult in a household with children
-elig_female_head,int (0/1),Binary indicator of female-headed household
-elig_female_head_child,int (0/1),Binary indicator of female-headed household with children
-elig_male_head,int (0/1),Binary indicator of male-headed household in the household
-elig_male_head_child,int (0/1),Binary indicator of male-headed household with children in the household
-elig_age62plus,int (0/1),Binary indicator of at least one household member aged 62 or older
-elig_age75plus,int (0/1),Binary indicator of at least one household member aged 75 or older
-elig_minority,int (0/1),Binary indicator of household classified as a racial/ethnic minority (True if NOT white_nonhsp)
-elig_white_nonhsp,int (0/1),Binary indicator of non-Hispanic white household
-elig_black_nonhsp,int (0/1),Binary indicator of non-Hispanic Black household
-elig_native_american_nonhsp,int (0/1),Binary indicator of non-Hispanic Native American/Alaska Native household
-elig_asian_nonhsp,int (0/1),Binary indicator of non-Hispanic Asian household
-elig_mixed_nonhsp,int (0/1),Binary indicator of non-Hispanic multiracial household
-elig_otherrace,int (0/1),Binary indicator of non-Hispanic household of other race
-elig_hispanic,int (0/1),Binary indicator of Hispanic (any race) household
-elig_noncitizen,int (0/1),Binary indicator of non-citizen household
-elig_owner,int (0/1),Binary indicator of owner-occupied household
-elig_renter,int (0/1),Binary indicator of renter-occupied household
-elig_mortgage_paid,int (0/1),Binary indicator of owner household with mortgage fully paid
-elig_disab_hearing_vision,int (0/1),Binary indicator of at least one member with hearing or vision disability
-elig_disab_ambulatory,int (0/1),Binary indicator of at least one member with ambulatory disability
-elig_disab_cognitative,int (0/1),Binary indicator of at least one member with cognitive disability
-elig_disab_independent_living,int (0/1),Binary indicator of at least one member with independent-living disability
-elig_veteran,int (0/1),Binary indicator of at least one veteran in the household
-elig_hs_complete,int (0/1),Binary indicator of at least one member with high-school diploma or equivalent
-elig_bachelor_complete,int (0/1),Binary indicator of at least one member with bachelor's degree
-elig_grad_school,int (0/1),Binary indicator of at least one member with graduate-level education
-elig_employed,int (0/1),Binary indicator of at least one employed member
-elig_disab_any,int (0/1),Binary indicator of at least one member with any disability
+2adults,int (0/1),Binary indicator of exactly two adults in a household with children
+1adult,int (0/1),Binary indicator of exactly one adult in a household with children
+female_head,int (0/1),Binary indicator of female-headed household
+female_head_child,int (0/1),Binary indicator of female-headed household with children
+male_head,int (0/1),Binary indicator of male-headed household in the household
+male_head_child,int (0/1),Binary indicator of male-headed household with children in the household
+age62plus,int (0/1),Binary indicator of at least one household member aged 62 or older
+age75plus,int (0/1),Binary indicator of at least one household member aged 75 or older
+minority,int (0/1),Binary indicator of household classified as a racial/ethnic minority (True if NOT white_nonhsp)
+white_nonhsp,int (0/1),Binary indicator of non-Hispanic white household
+black_nonhsp,int (0/1),Binary indicator of non-Hispanic Black household
+native_american_nonhsp,int (0/1),Binary indicator of non-Hispanic Native American/Alaska Native household
+asian_nonhsp,int (0/1),Binary indicator of non-Hispanic Asian household
+mixed_nonhsp,int (0/1),Binary indicator of non-Hispanic multiracial household
+otherrace,int (0/1),Binary indicator of non-Hispanic household of other race
+hispanic,int (0/1),Binary indicator of Hispanic (any race) household
+noncitizen,int (0/1),Binary indicator of non-citizen household
+owner,int (0/1),Binary indicator of owner-occupied household
+renter,int (0/1),Binary indicator of renter-occupied household
+mortgage_paid,int (0/1),Binary indicator of owner household with mortgage fully paid
+disab_hearing_vision,int (0/1),Binary indicator of at least one member with hearing or vision disability
+disab_ambulatory,int (0/1),Binary indicator of at least one member with ambulatory disability
+disab_cognitative,int (0/1),Binary indicator of at least one member with cognitive disability
+disab_independent_living,int (0/1),Binary indicator of at least one member with independent-living disability
+veteran,int (0/1),Binary indicator of at least one veteran in the household
+hs_complete,int (0/1),Binary indicator of at least one member with high-school diploma or equivalent
+bachelor_complete,int (0/1),Binary indicator of at least one member with bachelor's degree
+grad_school,int (0/1),Binary indicator of at least one member with graduate-level education
+employed,int (0/1),Binary indicator of at least one employed member
+disab_any,int (0/1),Binary indicator of at least one member with any disability
 il30_p1–p8,float,"HUD AMI 30% income limits for given county, for household sizes of 1-8 persons"
 il50_p1–p8,float,"HUD AMI 50% income limits for given county, for household sizes of 1-8 persons"
 il80_p1–p8,float,"HUD AMI 80% income limits for given county, for household sizes of 1-8 persons"
