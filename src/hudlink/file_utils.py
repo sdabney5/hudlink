@@ -12,7 +12,10 @@ import os
 import logging
 import shutil
 from pathlib import Path
-from .ui import show_CT_warning, show_success_message
+from .ui import show_CT_warning, show_success_message, show_temporary_message
+import io
+import zipfile
+import requests
 
 
 
@@ -388,6 +391,32 @@ def clear_api_downloads(folder):
                 item.unlink()
         except Exception as exc:
             logging.warning("Could not delete %s: %s", item, exc)
+            
+            
+            
+
+def ensure_data_dir(data_dir: str, zip_url: str):
+    """
+    If `data_dir` doesn’t exist, download a ZIP from github repo
+    and extract it so that `data_dir` is populated.
+    """
+    if os.path.isdir(data_dir):
+        return
+        
+
+    print(f"Data folder not found. Downloading from {zip_url}…")
+    resp = requests.get(zip_url, stream=True)
+    resp.raise_for_status()
+
+    with zipfile.ZipFile(io.BytesIO(resp.content)) as zf:
+        # Extract all members while preserving the top-level 'data/' path
+        zf.extractall(path=os.path.dirname(data_dir))
+        show_success_message("hudlink successfully populated data folder.")
+        show_temporary_message("Starting hudlink", duration=5)
+        print("\n" * 5)
+     
+
+
             
 def add_fips_codes_to_df(df, state, fips_mapping=None):
     """

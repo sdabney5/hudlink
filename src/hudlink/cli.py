@@ -51,6 +51,11 @@ import logging
 import sys
 from .state_processor import process_all_states
 from .config import CONFIG
+from .file_utils import ensure_data_dir
+
+# Data Zip URL for data directory
+DATA_ZIP_URL = "https://github.com/sdabney5/hudlink/releases/download/v3.0.0/data.zip"
+
 
 
 def create_parser():
@@ -242,9 +247,11 @@ def main():
         print(f"  Output: {config['output_directory']}")
         print()
     
-    # Run the analysis
+    # Run it
     logging.info("Starting hudlink eligibility data processing.")
     try:
+        #Make sure data is present
+        ensure_data_dir(config["data_dir"], DATA_ZIP_URL)
         process_all_states(config)
         logging.info("Completed hudlink eligibility data processing.")
     except Exception as e:
