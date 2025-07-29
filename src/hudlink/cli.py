@@ -54,7 +54,7 @@ from .config import CONFIG
 from .file_utils import ensure_data_dir
 
 # Data Zip URL for data directory
-DATA_ZIP_URL = "https://github.com/sdabney5/hudlink/releases/download/v3.0.0/data.zip"
+DATA_ZIP_URL = DATA_ZIP_URL = "https://github.com/sdabney5/hudlink/releases/latest/download/data.zip"
 
 
 
@@ -133,7 +133,7 @@ Examples:
     parser.add_argument(
         '--version',
         action='version',
-        version='%(prog)s 3.0.2'
+        version='%(prog)s 3.1.0'
     )
     
     parser.add_argument(

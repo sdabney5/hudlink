@@ -170,7 +170,7 @@ def show_hudlink_banner():
     print("╚" + "═" * 48 + "╝")
     print("\n" + "If you use hudlink, please cite it:" + "\n" )
     print("Dabney, Shane. (2025). hudlink: Automated ACS-HUD") 
-    print("data linking for housing analysis. Version 3.0.2" + "\n" *5)
+    print("data linking for housing analysis. Version 3.1.0" + "\n" *5)
     
     
     
@@ -193,7 +193,7 @@ def show_hudlink_completion_banner():
     print("╚" + "═" * 48 + "╝")
     print("\n" + "If you use hudlink, please cite it:" + "\n")
     print("Dabney, Shane. (2025). hudlink: Automated ACS-HUD") 
-    print("data linking for housing analysis. Version 3.0.2" + "\n" *3)
+    print("data linking for housing analysis. Version 3.1.0" + "\n" *3)
     print("_________")
     print("Data sources (please cite in publications):")
     print("  • IPUMS USA, University of Minnesota, www.ipums.org")

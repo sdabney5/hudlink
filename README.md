@@ -368,10 +368,10 @@ If you use hudlink in your research, please cite:
 @software{dabney_hudlink_2025,
   author = {Dabney, Shane},
   title = {hudlink: Automated ACS-HUD Data Linking for Housing Analysis},
-  version = {3.0.2},
+  version = {3.1.0},
   year = {2025},
   url = {https://github.com/sdabney5/hudlink},
-  doi = {10.5281/zenodo.XXXXXXX}
+  doi = {10.5281/zenodo.16547053}
 }
 ```
 
