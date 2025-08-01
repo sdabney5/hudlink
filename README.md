@@ -100,8 +100,7 @@ CONFIG = {
 
 Then run:
 ```
-cd hudlink
-python -m hudlink.main
+hudlink
 ```
 
 ### Alternative: Command Line Interface
