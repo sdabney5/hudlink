@@ -4,6 +4,7 @@
 [![PyPI version](https://badge.fury.io/py/hudlink.svg)](https://badge.fury.io/py/hudlink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sdabney5/hudlink/blob/main/hudlink_notebook.ipynb?copy=true)
 
 Automated ACS-HUD data linking for housing analysis: eligibility determination, protected-class analysis, and analysis-ready county summaries.
 
@@ -30,9 +31,17 @@ cd hudlink
 pip install -e .
 ```
 
+### Option 2: Try the hudlink interactive notebook.
+This is the main recommended approach - it allows full customization through the configuration file:
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sdabney5/hudlink/blob/main/hudlink_notebook.ipynb?copy=true)
+
+*Click the badge above, choose **Save a copy in Drive**, paste your IPUMS token,select options, then hit **Run hudlink**.*
+
+
 ### Option 2: Install from PyPI
 
-For users who want a simple installation without customization options:
+Simplest installation; customization options using command line:
 
 ```
 pip install hudlink
@@ -392,7 +401,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Research Assistants**: Iris Bui and Mira Scannapieco (UROP interns, Florida State University)
 - **Funding**: Institute for Humane Studies
 - **Data Providers**: IPUMS USA, U.S. Department of Housing and Urban Development
-- **Institution**: Florida State University, Department of Urban & Regional Planning
+- **Institution**: Florida State University
 
 ---
 
