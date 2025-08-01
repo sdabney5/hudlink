@@ -212,7 +212,7 @@ CONFIG = {
 Then run:
 ```
 cd hudlink
-python -m hudlink.main
+hudlink
 ```
 
 ## Output Files
@@ -234,7 +234,7 @@ County-level aggregations with:
 - **Allocation rates**: Units available / eligible households
 - **Gap estimates**: Unmet housing need by county and demographic group
 
-### 3. Visualizations
+### 3. Visualizations (optional)
 When `create_gap_visual` is enabled, hudlink generates an interactive choropleth map showing HUD program allocation rates across all processed states:
 
 - **`hud_allocation_gap_map_[year].html`**: Interactive county-level map
@@ -399,7 +399,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Research Assistants**: Iris Bui and Mira Scannapieco (UROP interns, Florida State University)
 - **Funding**: Institute for Humane Studies
-- **Data Providers**: IPUMS USA, U.S. Department of Housing and Urban Development
+- **Data Providers**: IPUMS USA
 - **Institution**: Florida State University
 
 ---
