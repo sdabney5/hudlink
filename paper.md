@@ -1,61 +1,58 @@
 ---
-title: 'hudlink: A python package for linking ACS data to HUD PSH data for analysis and audits'
+title: 'hudlink: Automated ACS–HUD data linking for housing-economics research and analysis'
+tags:
+  - Python
+  - housing-economics
+  - affordable-housing
+  - policy-analysis
+  - ACS
+  - HUD
 authors:
   - name: Shane Dabney
+    orcid: 0000-0001-9446-2537
     affiliation: 1
-    email: sdabney@fsu.edu
-
 affiliations:
-  - index: 1
-    name: Florida State University
-
-date: 17 March 2025
-
-bibliography: references.bib
-
+  - name: Florida State University
+    index: 1
+date: 2025-08-01
+bibliography: paper.bib
 ---
 
 # Summary
-hudlink is a Python-based framework for estimating county-level Housing Choice Voucher (HCV) gaps across the United States. It builds upon previous work (Dabney, 2024) by extending its geographic scope from Florida to all U.S. states and enhancing data integration for more accurate voucher allocation estimates. The framework automates the process of determining HCV eligibility, handling missing county data, and adjusting for incarcerated individuals, providing researchers and policymakers with a scalable tool for housing policy analysis.
 
-# Statement of Need
-Housing affordability remains a critical policy issue in the United States, and the Housing Choice Voucher program plays a key role in supporting low-income renters. However, understanding where voucher allocation gaps exist is challenging due to discrepancies in data availability, county-level aggregation issues, and multi-family household complexities. HCVGAPS addresses these challenges by:
+**hudlink** is an open-source Python package that compresses a weeks-long tangle of data-wrangling steps into a single command for U.S. housing economists and policy researchers.  It
 
-- Using multiple crosswalk datasets to impute missing county values from Public Use Microdata Areas (PUMAs),
-- Adjusting family and household weights for multi-family units,
-- Integrating incarceration data to refine eligibility estimates,
-- Computing voucher gaps by comparing eligibility counts to actual HCV allocations.
+* ingests ACS micro-data via the IPUMS API or local files;  
+* deterministically imputes missing county codes while preserving survey weights;  
+* links HUD area-median-income limits (30%, 50%, 80%);  
+* flags program eligibility and protected-class characteristics;  
+* merges administrative records for Housing Choice Vouchers, LIHTC, Public Housing, and other programs; and  
+* exports both CHAS-style county summaries and fully flagged household-level micro-data.
 
-This framework provides a reproducible, scalable, and open-source solution for housing policy researchers studying voucher allocation disparities.
+Because public HUD releases supply only pre-aggregated tables, analysts cannot test household-level relationships or audit subsidy allocation for fairness without building bespoke pipelines.  **hudlink** removes that barrier, delivering reproducible, analysis-ready data for any U.S. state and any 5-year ACS release.
 
-# Methodology
-hudlink follows a structured workflow to estimate HCV gaps at the county level:
-1. **Data Loading:** Imports ACS IPUMS data, HUD’s Picture of Subsidized Households, HUD income limits, incarceration data, and Geocorr crosswalks.
-2. **County Imputation:** Uses **dual crosswalk datasets** (Geocorr 2018 & 2022) to impute missing county names for PUMA-based observations. If a PUMA spans multiple counties, the framework applies population-based allocation factors.
-3. **Household Processing:** Splits multi-family households, cleans income variables, and adjusts statistical weights (`HHWT`) to ensure representativeness.
-4. **Eligibility Calculation:** Determines voucher eligibility at the **30%, 50%, and 80% AMI thresholds**, based on HUD’s income limits.
-5. **Prisoner Adjustment:** Excludes incarcerated individuals from eligibility estimates using county-level incarceration data.
-6. **Voucher Gap Computation:** Compares eligibility counts to actual voucher allocations, computing HCV allocation rates and optional **race-based disparities.**
-7. **Final Outputs:** Generates county-level CSV reports for use in statistical analysis and visualization.
+# Statement of need
+Housing economists and policy analysts routinely need fine-grained evidence on housing affordability and the reach of federal subsidy programs. Building such datasets from scratch requires locating multiple sources, harmonizing inconsistencies, accounting for missing geography, rescaling survey weights, and coding eligibility rules. For research teams implementing these steps from scratch, the process is time-consuming, error-prone, and difficult to reproduce.
+**hudlink** automates this workflow. It outputs household-level ACS micro-data already merged with county-specific HUD income thresholds and eligibility flags, plus optional protected-class indicators. A simple, editable configuration lets users re-run the pipeline for new years, states, variables, or HUD programs without changing code.
 
-# Key Features
-- **National or State-Level Analysis:** Adapts to full national datasets or individual states.
-- **Dual Crosswalk Integration:** Uses multiple Geocorr crosswalk datasets to improve county assignment.
-- **Multi-Family Household Handling:** Ensures accurate representation of multi-family housing units.
-- **Prisoner Exclusion Option:** Allows refining estimates by removing incarcerated individuals.
-- **Automated Report Generation:** Produces structured output datasets for further analysis.
+# Implementation
+**Data sources.** IPUMS USA ACS PUMS micro-data [@ipums_usa_2025] retrieved on demand through the IPUMS Extract API [@ipums_api]; HUD Area-Median-Income limits for 2009 – 2023 [@hud_income_limits]; HUD Picture of Subsidized Households micro-records [@hud_picture_data]; and the Missouri Census Data Center Geocorr 2012 and 2022 PUMA-to-county crosswalks [@mcdc_geocorr2018; @mcdc_geocorr2022]. All non-IPUMS inputs are pre-processed and fetched automatically on the first run.
 
-# Usage
-hudlink is designed for **housing policy researchers**, **economists**, and **public sector analysts** who need a standardized methodology for estimating county-level voucher allocation gaps. The framework can be run with minimal setup by configuring dataset paths in `config.py` and executing:
+**Pipeline design.** Separate modules handle validation, geography harmonization, income cleaning, and eligibility determination. When county IDs are missing, a crosswalk deterministically assigns counties based on PUMA shares, producing weighted copies for split PUMAs and preserving sample design.
 
-```cmd
-python main.py
-```
+**Household splitting.** An optional procedure (adapted from [@dabney_cityscape_2024]) separates multi-family households into constituent family units when overcrowding suggests multiple subsidy-eligible families share the same dwelling. When enabled, hudlink adjusts survey weights to reflect the split families while also preserving the original weights for analyses requiring Census-consistent totals.
 
-# Acknowledgments
-Special thanks to **Iris Bui** and **Mira Scannapieco**, UROP interns at Florida State University, for their contributions to data processing and methodology refinement.
+# Research applications
+* **Current Application.** hudlink generalizes and extends the methodology from an earlier pilot, **HCVGAPS** [@dabney_cityscape_2024]. Despite its more limited scope, that pilot script was adopted and used in published research to audit federal housing-program efficacy and estimate projected federal costs of implementing certain policy recommendations, [@taylor_unlocking_2024]. Building on this momentum, `hudlink` has been reengineered to support all U.S. states and territories, any ACS 5-year release, and all major HUD programs, enabling even more robust nationwide, longitudinal, and cross-program analyses.
+* **Algorithmic-bias audits.** Analysts can use hudlink to construct a program-eligibility pool with variables such as race, ethnicity, disability status, veteran status, and education, merge this with HUD recipient micro-data, and then compare the resulting distributions or run simulated draws to test for statistically significant asymmetries.
+* **Housing Policy and Planning Research.** Using hudlink, researchers or state housing agencies can quickly estimate unmet housing assistance need by county, identify geographic disparities in program coverage, or evaluate policy changes over time.
 
-This project was supported by a grant from the **Institute for Humane Studies**.
-
+# Acknowledgements
+This project was supported in part by the Institute for Humane Studies (Grant No. IHS018262).
+I am grateful for the outstanding research assistance of FSU UROP students Iris Bui and Mira Scannapieco, as well as the valuable feedback and support from Parker Ridaught, Eliza Terziev, and Max Blumenfeld.
+I also thank the DeVoe L. Moore Center at Florida State University for providing resources and facilities throughout this project's development.
 # References
+
+
+
 
