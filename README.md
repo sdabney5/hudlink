@@ -1,5 +1,5 @@
 # hudlink
-
+[![status](https://joss.theoj.org/papers/9304e1e845a6191e5fd10c08f41adcb4/status.svg)](https://joss.theoj.org/papers/9304e1e845a6191e5fd10c08f41adcb4)
 [![DOI](https://zenodo.org/badge/821527103.svg)](https://doi.org/10.5281/zenodo.16547053)
 [![PyPI version](https://badge.fury.io/py/hudlink.svg)](https://badge.fury.io/py/hudlink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
