@@ -5,6 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sdabney5/hudlink/blob/main/hudlink_notebook.ipynb?copy=true)
+[![PyPI Downloads](https://static.pepy.tech/badge/hudlink)](https://pepy.tech/projects/hudlink)
 
 Automated ACS-HUD data linking for housing analysis: eligibility determination, protected-class analysis, and analysis-ready county summaries.
 
