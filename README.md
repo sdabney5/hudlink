@@ -22,7 +22,7 @@ hudlink provides reliable, high-quality, reproducible datasets for housing econo
 
 ## Installation
 
-### Option 1: Clone Repository (Recommended)
+### Option 1: Clone Repository
 
 This is the main recommended approach - it allows full customization through the configuration file:
 
@@ -32,15 +32,14 @@ cd hudlink
 pip install -e .
 ```
 
-### Option 2: Try the hudlink interactive notebook.
-This is the main recommended approach - it allows full customization through the configuration file:
+### Option 2: Try the hudlink interactive notebook! (easy, no-code option)
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/sdabney5/hudlink/blob/main/hudlink_notebook.ipynb?copy=true)
 
 *Click the badge above, choose **Save a copy in Drive**, paste your IPUMS token,select options, then hit **Run hudlink**.*
 
 
-### Option 2: Install from PyPI
+### Option 3: Install from PyPI
 
 Simplest installation; customization options using command line:
 
