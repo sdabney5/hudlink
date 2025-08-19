@@ -126,7 +126,7 @@ hudlink --states FL --years 2023 \
 ```
 
 **CLI Options:**
-- `--states`: State abbreviations (e.g., FL CA NY)
+- `--states`: State abbreviations (e.g., FL, CA, NY)
 - `--years`: ACS years to process (e.g., 2022 2023)
 - `--output-dir`: Output directory path
 - `--additional-vars`: Additional IPUMS ACS variables (comma-separated)
