@@ -109,10 +109,10 @@ hudlink also provides a CLI for quick analyses without editing the config file:
 
 ```
 # Basic usage - Florida and Texas, 2023 data
-hudlink --states FL TX --years 2023
+hudlink --states FL, TX --years 2023
 
 # Multiple years and custom output directory
-hudlink --states CA NY --years 2022 2023 --output-dir ./my_analysis
+hudlink --states CA, NY --years 2022, 2023 --output-dir ./my_analysis
 
 # Include additional IPUMS variables
 hudlink --states FL --years 2023 --additional-vars "CLASSWKR,TRANWORK,GRADEATT"
